@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css?family=Cantarell|Montserrat');
+body {
+  padding-top: 70px;
+  overflow-x: hidden;
+  font-family: 'Cantarell', sans-serif;
+  background-color: #2c313d;
+  color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.btn-dark {
+  color: #fff;
+  background-color: #121212;
+  box-shadow: 1px 1px 2px #000;
+}
+
+.espacos {
+  padding-top: 1em;
+}
+
+.success {
+  color: #25f129;
+}
+
+.danger {
+  color: #ff2d2d;
+}
+
+.warn {
+  color: #f5d91c;
+}
+
+.dark {
+  color: #111;
+}
+
+.light {
+  color: #eee;
+}
+
+.page-title {
+  font-size: 3em;
+}
+
+a {
+  color: #52a2c4;
+}
+
+a:hover {
+  color: #6ad2ff;
+}
+
+
+/*NavBar Style*/
+
+.navbar-inverse {
+  background-color: #121212;
+  box-shadow: 1px 1px 5px #000;
+}
+
+.navbar-collapse>ul>li:hover {
+  background-color: #24262a;
+}
+
+
+/*inputs de autenticação*/
+
+.input {
+  background: #121212;
+  color: #fff;
+  border: 1px groove #090909;
+}
+
+.input:disabled {
+  background: #171717;
+  opacity: 0.8;
+  color: #000;
+  border: 1px groove #090909;
+}
+
+.itens-register {
+  font-size: 1.25em;
+}
+
+/*Tabelas do Scoreboards*/
+
+.table-body-dark {
+  background-color: #121212;
+  border: 0px solid #121212;
+  border-top: 0px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #202020;
+}
+
+.table-body-transparent {
+  background-color: transparent;
+  border: 0px solid #121212;
+  border-top: 0px;
+  vertical-align: middle;
+}
+
+
+/*Classes da View desafios */
+
+.desafio-box {
+  background-color: #313c45;
+  padding: 0.5em;
+  margin-top: 0.8em;
+  border-radius: .2em;
+  box-shadow: 1px 1px 3px #000;
+  min-height: 200px;
+  max-height: 200px;
+}
+
+.desafio-box:hover {
+  background-color: #2e2f38;
+  cursor: pointer;
+  padding: 0.3em;
+}
+
+.desafio-informacao {
+  padding-top: 2.5em;
+  text-align: right;
+}
+
+.modal-desafio-title {
+  font-size: 1.8em;
+  background-color: #2c313d;
+}
+
+.modal-desafio-body {
+  text-align: justify;
+  padding-top: 0.6em;
+  background-color: #2c313d;
+  padding-left: 1em;
+}
+
+.modal-desafio-body>ul {
+  list-style: none;
+}
+
+.modal-desafio-body>ul>li>a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.modal-desafio-body>ul>li>a:hover {
+  text-decoration: underline;
+  color: #6ad2ff;
+}
+
+.modal-desafio-footer {
+  text-align: right;
+  padding-bottom: 1em;
+  padding-right: 1em;
+  background-color: #2c313d;
+}
+
+.modal-dialog {
+  background-color: #2c313d;
+}
+
+.modal-content {
+  background-color: #2c313d;
+  color: #fff;
+}
+
+
+/*Footer Style*/
+
+footer {
+  width: 100%;
+  text-align: center;
+  background-color: #121212;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}

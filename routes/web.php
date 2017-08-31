@@ -4,6 +4,9 @@ Route::get('/', 'User\UserController@index')->name('raiz');
 Route::group([ 'middleware' => ['auth'] ], function () {
     Route::group(['prefix' => '/usuario'], function () {
         Route::get('/', 'User\UserController@index')->name('home');
+        Route::get('/scoreboard', function(){
+          return view('user.scoreboard');
+        })->name('scoreUsers');
     });
 
     Route::group(['prefix' => '/challs'], function () {
@@ -33,4 +36,19 @@ Route::group(['prefix' => '/senha'], function () {
 Route::group(['prefix' => '/cadastrar'], function () {
     Route::get('/', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
     Route::post('/', ['as' => '', 'uses' => 'Auth\RegisterController@register']);
+});
+
+Route::get('/scoreboard', function(){
+  return view('guest.scoreboard');
+})->name('scoreGuest');
+
+
+Route::group(['prefix' => '/team'], function () {
+  Route::get('/cadastrar', function(){
+    return view('team.create');
+  })->name('teamCreate');
+
+  Route::get('/', function(){
+    return view('team.index');
+  })->name('teamCreate');
 });

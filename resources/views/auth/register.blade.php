@@ -1,4 +1,5 @@
 @extends('layout.guest')
+@section('register', 'active')
 @section('conteudo')
 <div class="container">
     <div class="row">
@@ -19,65 +20,89 @@
                 </div>
             </div>
         @endif
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6">
+          <h2>Políticas de Registro</h2>
+          <div class="warning warning-black">
+            <ul class="fa-ul">
+                <li class="itens-register">
+                    <i class="fa fa-thumbs-o-up warn" aria-hidden="true"></i>
+                    O login pode conter caracteres A-Z, a-z e 0-9
+                </li>
+                <li class="itens-register">
+                    <i class="fa fa-thumbs-o-up warn" aria-hidden="true"></i>
+                    Por favor, insira um email que você utilize para recuperação de senhas
+                </li>
+                <li class="itens-register">
+                    <i class="fa fa-thumbs-o-up warn" aria-hidden="true"></i>
+                    Sua senha deve conter no mínimo 8 e no máximo 256 caracteres
+                </li>
+                <li class="itens-register">
+                    <i class="fa fa-thumbs-o-up warn" aria-hidden="true"></i>
+                    Escolha uma categoria favorita dentre as listadas
+                </li>
+                <li class="itens-register">
+                    <i class="fa fa-thumbs-o-up warn" aria-hidden="true"></i>
+                    Após o registro, você deverá criar um
+                </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
             <h2 class="text-center">Registro de Usuário</h2>
             <div class="espacos"></div>
             <div class="espacos"></div>
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-                        <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
-                            <label for="nickname" class="col-md-4 control-label">Nickname: </label>
-                            <div class="col-md-6">
-                                <input id="nickname" type="text" class="form-control input" name="nickname" value="{{ old('nickname') }}" required autofocus>
-                                @if ($errors->has('nickname'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('nickname') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">Email: </label>
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control input" name="email" value="{{ old('email') }}" required>
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Senha: </label>
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control input" name="password" required>
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirmação de Senha: </label>
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control input" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group text-left">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="button button-black">
-                                    Registrar
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+            <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+                {{ csrf_field() }}
+                <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
+                    <label for="nickname" class="col-md-4 control-label">Nickname: </label>
+                    <div class="col-md-6">
+                        <input id="nickname" type="text" class="form-control input" name="nickname" value="{{ old('nickname') }}" required autofocus>
+                        @if ($errors->has('nickname'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('nickname') }}</strong>
+                            </span>
+                        @endif
+                    </div>
                 </div>
-            </div>
+                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                    <label for="email" class="col-md-4 control-label">Email: </label>
+                    <div class="col-md-6">
+                        <input id="email" type="email" class="form-control input" name="email" value="{{ old('email') }}" required>
+                        @if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                    <label for="password" class="col-md-4 control-label">Senha: </label>
+                    <div class="col-md-6">
+                        <input id="password" type="password" class="form-control input" name="password" required>
+                        @if ($errors->has('password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password-confirm" class="col-md-4 control-label">Confirmação de Senha: </label>
+                    <div class="col-md-6">
+                        <input id="password-confirm" type="password" class="form-control input" name="password_confirmation" required>
+                    </div>
+                </div>
+                <div class="form-group text-left">
+                    <div class="col-md-6 col-md-offset-4">
+                        <button type="submit" class="button button-black">
+                            Registrar
+                        </button>
+                    </div>
+                </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 </div>
 @endsection
