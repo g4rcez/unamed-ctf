@@ -1,4 +1,6 @@
-<?php namespace ctf\Http\Controllers\User;
+<?php
+
+namespace ctf\Http\Controllers\User;
 
 use Illuminate\Support\Facades\Auth;
 use ctf\Http\Controllers\Controller;
