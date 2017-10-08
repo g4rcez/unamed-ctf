@@ -3,6 +3,7 @@
 namespace ctf\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Use for MariaDB
+        Schema::defaultStringLength(191);
     }
 
     /**

@@ -17,7 +17,6 @@ class CreateChallengesResolvidosTable extends Migration {
 			$table->integer('id', true);
 			$table->char('users_id', 32)->index('fk_users_has_challenges_users1_idx');
 			$table->integer('challenges_id')->index('fk_users_has_challenges_challenges1_idx');
-			$table->primary(['id','users_id','challenges_id']);
 		});
 	}
 
