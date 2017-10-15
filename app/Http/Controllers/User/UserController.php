@@ -12,8 +12,6 @@ class UserController extends Controller
             return view('guest.index');
         }
         $usuario = Auth::user();
-        return view('user.index', compact(
-            'usuario'
-        ));
+        return view('user.index', compact());
     }
 }

@@ -21,6 +21,13 @@ h1, h2, h3, h4, h5, h6 {
   padding-top: 1em;
 }
 
+.paragrafos{
+  text-align: justify;
+  word-wrap: break-word;
+  word-break: break-all;
+  word-spacing: normal;
+}
+
 .success {
   color: #25f129;
 }
@@ -64,7 +71,6 @@ a:hover {
 .navbar-collapse>ul>li:hover {
   background-color: #24262a;
 }
-
 
 /*inputs de autenticação*/
 
