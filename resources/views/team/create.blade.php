@@ -2,7 +2,7 @@
 @section('title', 'UnameCTF - ScoreBoard')
 @section('score', 'active')
 @section('conteudo')
-  @php $tokenHash = md5(rand()) @endphp
+  @php $tokenHash = trim(md5(rand())) @endphp
   <div class="container">
     <div class="row">
       <header>
@@ -51,12 +51,12 @@
               </div>
               <script src="{{asset('assets/js/clipboard.min.js')}}"></script>
               <script>
-              var clipboard = new Clipboard('.tokenHash');
+              var clipboard = new Clipboard('.tokenHash'.trim()).trim();
               clipboard.on('success', function(e) {
-                  console.log(e);
+                  console.log(e.trim()); 
               });
               clipboard.on('error', function(e) {
-                  console.log(e);
+                  console.log(e.trim());
               });
               </script>
           </div>
@@ -81,9 +81,7 @@
       </form>
     </div>
     <h3 class="text-center">Token da equipe:
-      <span id='tokenHash'>
-        {!! $tokenHash !!}
-      </span>
+      <span id='tokenHash'>{!! $tokenHash !!} </span>
     </h3>
   </div>
 @endsection
