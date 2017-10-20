@@ -9,7 +9,7 @@ Route::group([ 'middleware' => ['auth'] ], function () {
         })->name('scoreUsers');
     });
 
-    
+
 });
 
 Route::group(['prefix' => '/login'], function () {
@@ -51,6 +51,7 @@ Route::group(['prefix' => '/team'], function () {
 });
 
 Route::group(['prefix' => '/challs'], function () {
-        Route::get('/adicionar', 'Challs\Challenges@viewCreate')->name('viewChall');
+        Route::get('/', 'Challs\Challenges@viewCreate')->name('viewChall');
+        Route::get('/viewUser', 'Challs\Challenges@viewCreate')->name('viewChall');
         Route::post('/adicionar', 'Challs\Challenges@create')->name('createChall');
-    });
+});

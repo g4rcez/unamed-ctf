@@ -17,7 +17,7 @@ class Challenges extends Controller
     }
 
     public function viewCreate(){
-        return view('challenges.create');
+        return view('challenges.index');
     }
 
     public function create(ChallsRequest $request){

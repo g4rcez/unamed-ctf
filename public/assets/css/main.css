@@ -114,19 +114,17 @@ a:hover {
 /*Classes da View desafios */
 
 .desafio-box {
-  background-color: #313c45;
+  background-color: #171717;
   padding: 0.5em;
   margin-top: 0.8em;
-  border-radius: .2em;
+  border-radius: 0;
   box-shadow: 1px 1px 3px #000;
   min-height: 200px;
-  max-height: 200px;
 }
 
 .desafio-box:hover {
-  background-color: #2e2f38;
+  background-color: #202020;
   cursor: pointer;
-  padding: 0.3em;
 }
 
 .desafio-informacao {
