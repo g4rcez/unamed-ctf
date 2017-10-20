@@ -7,7 +7,7 @@ class LoginController extends Controller
 {
 
     use AuthenticatesUsers;
-    protected $redirectTo = '/usuario';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class LoginController extends Controller
      */
     public function decayMinutes()
     {
-        return 15;
+        return 5;
     }
 
     public function showLoginForm(){

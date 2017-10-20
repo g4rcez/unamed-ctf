@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('titulo')</title>
     <!-- Styles and Fonts -->
-    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/beautify.min.css') !!}" />
-    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/font-awesome.min.css') !!}" />
-    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/main.css') !!}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/beautify.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }}" />
     <!-- Scripts -->
-    <script src="{!! asset('assets/js/beautify.min.js') !!}"></script>
+    <script src="{{ asset('assets/js/beautify.min.js') }}"></script>
 </head>
 <body>
 <header>
@@ -24,14 +24,14 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{route('raiz')}}">
+                    <a class="navbar-brand" href="{{route('root')}}">
                         <i class="fa fa-flag fa-lg"></i> C.T.F
                     </a>
                 </div>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="@yield('home')"><a href="{{route('raiz')}}" class=""><i class="fa fa-home" aria-hidden="true"></i> Inicial<span class="sr-only">(current)</span></a></li>
+                    <li class="@yield('home')"><a href="{{route('root')}}" class=""><i class="fa fa-home" aria-hidden="true"></i> Inicial<span class="sr-only">(current)</span></a></li>
                     <li class="@yield('score')"><a href="{{route('scoreGuest')}}" class=""><i class="fa fa-desktop" aria-hidden="true"></i> Classificação</a></li>
                     <li class="@yield('register')"><a href="{!! route('register') !!}"><i class="fa fa-plus" aria-hidden="true"></i> Registrar</a></li>
                     <li class="@yield('login')"><a href="{!! route('login') !!}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>

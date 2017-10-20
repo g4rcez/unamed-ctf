@@ -7,11 +7,12 @@ use ctf\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function index(){
-        if(Auth::guest()){
-            return view('guest.index');
-        }
+    public function index()
+    {
         $usuario = Auth::user();
-        return view('user.index', compact());
+        if (!Auth::guest()) {
+            return view('user.index', compact('usuario'));
+        }
+        return view('guest.index');
     }
 }

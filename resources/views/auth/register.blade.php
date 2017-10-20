@@ -24,7 +24,7 @@
             <h2 class="text-center">Registro de Usuário</h2>
             <div class="espacos"></div>
             <div class="espacos"></div>
-            <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ route('post-register') }}">
                 {{ csrf_field() }}
                 <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
                     <label for="nickname" class="col-md-4 control-label">Nickname: </label>
@@ -44,6 +44,28 @@
                         @if ($errors->has('email'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                    <label for="favorita" class="col-md-4 control-label">Categoria Favorita: </label>
+                    <div class="col-md-8">
+                        <input id="favorita" type="text" class="form-control input" name="categoria_favorita" value="{{ old('email') }}" required>
+                        @if ($errors->has('categoria_favorita'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('categoria_favorita') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                    <label for="favorita" class="col-md-4 control-label">Avatar: </label>
+                    <div class="col-md-8">
+                        <input id="avatar" type="text" class="form-control input" name="avatar" value="{{ old('email') }}" required>
+                        @if ($errors->has('avatar'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('avatar') }}</strong>
                             </span>
                         @endif
                     </div>

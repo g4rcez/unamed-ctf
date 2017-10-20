@@ -26,7 +26,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/usuario';
+    protected $redirectTo = "home";
 
     /**
      * Create a new controller instance.
@@ -38,10 +38,15 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+            return view('auth.register');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(UserRequest $data)
@@ -52,20 +57,20 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function register(UserRequest $request)
     {
         event(new Registered($user = $this->create($request->all())));
         $this->guard()->login($user);
-        return redirect()->route('home');
+        return redirect()->home();
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \ctf\User
      */
     protected function create(array $data)
@@ -75,6 +80,7 @@ class RegisterController extends Controller
             'nickname' => $data['nickname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'avatar' => $data['avatar']
         ]);
     }
 }

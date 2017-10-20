@@ -120,6 +120,7 @@ a:hover {
   border-radius: 0;
   box-shadow: 1px 1px 3px #000;
   min-height: 200px;
+  max-height: 100%;
 }
 
 .desafio-box:hover {
@@ -174,6 +175,16 @@ a:hover {
   color: #fff;
 }
 
+
+.box-users{
+  background-color: #121212;
+  padding: 20px;
+}
+
+.box-challs{
+  padding: 2px;
+  margin-bottom: 10px;
+}
 
 /*Footer Style*/
 

@@ -32,7 +32,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="@yield('home')"><a href="{{route('raiz')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicial<span class="sr-only">(current)</span></a></li>
+                    <li class="@yield('home')"><a href="{{route('root')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicial<span class="sr-only">(current)</span></a></li>
                     <li class="@yield('perfil')"><a href=""><i class="fa fa-user" aria-hidden="true"></i> Perfil</a></li>
                     <li class="@yield('challs')"><a href=""><i class="fa fa-flag" aria-hidden="true"></i> Desafios</a></li>
                     <li class="@yield('ranking')"><a href="{{route('scoreUsers')}}"><i class="fa fa-desktop" aria-hidden="true"></i> Classificação</a></li>
@@ -43,11 +43,10 @@
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<div class="conteiner-fluid">
+<div class="container">
     @yield('conteudo')
-    <div class="espacos"></div>
-    <div class="espacos"></div>
-    @include('layout.footer')
+    <div class="espacos"></div><div class="espacos"></div>
 </div>
+@include('layout.footer')
 </body>
 </html>

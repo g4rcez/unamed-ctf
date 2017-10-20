@@ -1,16 +1,22 @@
 <?php
-Route::get('/', 'User\UserController@index')->name('raiz');
+Route::get('/', 'User\UserController@index')->name('root');
 
 Route::group([ 'middleware' => ['auth'] ], function () {
-    Route::group(['prefix' => '/usuario'], function () {
+    Route::group(['prefix' => '/home'], function () {
         Route::get('/', 'User\UserController@index')->name('home');
-        Route::get('/scoreboard', function(){
-          return view('user.scoreboard');
+        Route::get('/scoreboard', function () {
+            return view('user.scoreboard');
         })->name('scoreUsers');
     });
-
-
+// Route::group([ 'middleware' => ['admin'] ], function () {
+//   Route::get('/viewUser', 'Challs\Challenges@viewCreate')->name('viewChall');
+//   Route::post('/adicionar', 'Challs\Challenges@create')->name('createChall');
+// });
+    Route::group(['prefix' => '/challs'], function () {
+      Route::get('/', 'Challs\Challenges@userView')->name('challs');
+    });
 });
+
 
 Route::group(['prefix' => '/login'], function () {
     Route::get('/', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
@@ -30,9 +36,11 @@ Route::group(['prefix' => '/senha'], function () {
     Route::get('reset/{token}', ['as' => 'password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
 });
 
-Route::group(['prefix' => '/cadastrar'], function () {
-    Route::get('/', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
-    Route::post('/', ['as' => '', 'uses' => 'Auth\RegisterController@register']);
+Route::group([ 'middleware' => ['guest'] ], function () {
+    Route::group(['prefix' => '/register'], function () {
+        Route::get('/', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
+        Route::post('/', ['as' => 'post-register', 'uses' => 'Auth\RegisterController@register']);
+    });
 });
 
 Route::get('/scoreboard', function(){
@@ -48,10 +56,4 @@ Route::group(['prefix' => '/team'], function () {
   Route::get('/', function(){
     return view('team.index');
   })->name('teamIndex');
-});
-
-Route::group(['prefix' => '/challs'], function () {
-        Route::get('/', 'Challs\Challenges@viewCreate')->name('viewChall');
-        Route::get('/viewUser', 'Challs\Challenges@viewCreate')->name('viewChall');
-        Route::post('/adicionar', 'Challs\Challenges@create')->name('createChall');
 });

@@ -14,6 +14,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'id', 'nickname', 'email', 'password',
+        'avatar', 'categoria_favorita',
     ];
 
     /**
@@ -28,11 +29,9 @@ class User extends Authenticatable
     public static function boot()
     {
         parent::boot();
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $model->{$model->getKeyName()} = md5(rand());
             return true;
         });
     }
-
 }
