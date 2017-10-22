@@ -91,7 +91,6 @@
               </script>
           </div>
       </div>
-
     </div>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
@@ -103,7 +102,10 @@
             <h4 class="modal-title" id="myModalLabel">Estátisticas de {{ $usuario->nickname }}</h4>
           </div>
           <div class="modal-body">
-            {{ $usuario->email }}
+            <ul>
+                <li>Total de flags capturadas: <strong>X</strong></li>
+                <li>Usuário desde <strong>X</strong></li>
+            </ul>
           </div>
           <div class="modal-footer">
             <button type="button" class="button button-red" data-dismiss="modal">Fechar</button>

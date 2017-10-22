@@ -1,7 +1,7 @@
 <?php
 Route::get('/', 'User\UserController@index')->name('root');
 
-Route::group([ 'middleware' => ['auth'] ], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/home'], function () {
         Route::get('/', 'User\UserController@index')->name('home');
         Route::get('/scoreboard', function () {
@@ -9,11 +9,25 @@ Route::group([ 'middleware' => ['auth'] ], function () {
         })->name('scoreUsers');
     });
 // Route::group([ 'middleware' => ['admin'] ], function () {
-//   Route::get('/viewUser', 'Challs\Challenges@viewCreate')->name('viewChall');
-//   Route::post('/adicionar', 'Challs\Challenges@create')->name('createChall');
+//   Route::get('/viewUser', 'Challs\ChallengesController@viewCreate')->name('viewChall');
+//   Route::post('/adicionar', 'Challs\ChallengesController@create')->name('createChall');
 // });
     Route::group(['prefix' => '/challs'], function () {
-      Route::get('/', 'Challs\Challenges@userView')->name('challs');
+        Route::get('/', 'Challs\ChallengesController@userView')->name('challs');
+    });
+
+    Route::group(['prefix' => '/categorias'], function () {
+        Route::get('/', 'Challs\CategoryController@view')->name('categorias');
+        Route::get('/nova', 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
+        Route::post('/nova', 'Challs\CategoryController@create')->name('categoriasCreate');
+        Route::get('/editar/{nome}/{id}', 'Challs\CategoryController@viewUpdate');
+        Route::post('/editar/{nome}/{id}', 'Challs\CategoryController@update')->name('updateCategoria');
+        Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete')->name('updateCategoria');
+    });
+
+    Route::group(['prefix' => '/maestria'], function () {
+        Route::get('/', 'User\MaestriaController@view')->name('maestrias');
+        Route::post('/', 'User\MaestriaController@view')->name('maestriaCreate');
     });
 });
 
@@ -36,24 +50,9 @@ Route::group(['prefix' => '/senha'], function () {
     Route::get('reset/{token}', ['as' => 'password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
 });
 
-Route::group([ 'middleware' => ['guest'] ], function () {
+Route::group(['middleware' => ['guest']], function () {
     Route::group(['prefix' => '/register'], function () {
         Route::get('/', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
         Route::post('/', ['as' => 'post-register', 'uses' => 'Auth\RegisterController@register']);
     });
-});
-
-Route::get('/scoreboard', function(){
-  return view('guest.scoreboard');
-})->name('scoreGuest');
-
-
-Route::group(['prefix' => '/team'], function () {
-  Route::get('/cadastrar', function(){
-    return view('team.create');
-  })->name('teamCreate');
-
-  Route::get('/', function(){
-    return view('team.index');
-  })->name('teamIndex');
 });

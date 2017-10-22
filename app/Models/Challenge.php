@@ -1,4 +1,6 @@
-<?php namespace ctf\Models;
+<?php
+
+namespace ctf\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

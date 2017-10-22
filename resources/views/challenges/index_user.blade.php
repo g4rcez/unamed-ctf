@@ -1,6 +1,6 @@
 @extends('layout.user')
 @section('challs','active')
-@section('title','CTF - Challenges')
+@section('title','ChallengesController')
 @section('conteudo')
 <div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
 <h2 class="text-center page-title"><i class="fa fa-flag" aria-hidden="true"></i> Capture the Flags</h2>

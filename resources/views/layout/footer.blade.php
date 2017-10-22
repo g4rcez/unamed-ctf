@@ -10,7 +10,7 @@
       <a href=""><i class="fa fa-youtube" aria-hidden="true"></i></a>
   </h2>
   <p>
-      Bla bla bla bla bla bla bla bla bla copyright
+      CTF de Hackerzão do Plano Inclinado
   </p>
   <div class="espacos"></div>
 </footer>

@@ -1,6 +1,6 @@
 @extends('layout.user')
 @section('challs','active')
-@section('title','CTF - Challenges')
+@section('title','ChallengesController')
 @section('conteudo')
 <div class="row">
     <div class="container">

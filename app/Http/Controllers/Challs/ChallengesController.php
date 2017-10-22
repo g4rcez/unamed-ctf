@@ -1,11 +1,13 @@
-<?php namespace ctf\Http\Controllers\Challs;
+<?php
+
+namespace ctf\Http\Controllers\Challs;
 
 use Request;
 use ctf\Models\Challenge;
 use ctf\Http\Controllers\Controller;
 
 
-class Challenges extends Controller
+class ChallengesController extends Controller
 {
 
     private $challenge;
@@ -15,7 +17,8 @@ class Challenges extends Controller
         $this->challenge = $challenge;
     }
 
-    public function userView(){
+    public function userView()
+    {
         return view('challenges.index_user');
     }
 }
