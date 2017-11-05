@@ -1,14 +1,14 @@
-<style>
-    [data-style=primary] + .popover {
-        background: #121212;
-        border-radius: 0;
-    }
-</style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 @extends('layout.user')
 @section('challs','active')
 @section('title','Visualizar categorias')
 @section('conteudo')
+    <style>
+        [data-style=primary] + .popover {
+            background: #121212;
+            border-radius: 0;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     @if (Session::has('nova'))
         <div class="row">
             <div class="container">
@@ -22,6 +22,7 @@
         </div>
     @endif
 
+
     <h2 class="page-title text-center">
         Maestrias
     </h2>
@@ -31,11 +32,12 @@
             </a></small>
     </h2>
     <div class="collapse" id="cadastrar">
-        <form class="form-horizontal" method="POST" action="">
-            <label for="nova-maestria">Nova Maestria: </label>
+        <form class="form-horizontal" method="POST" action="{{route('maestriaCreate')}}">
+            {{csrf_field()}}
+            <label for="nova-maestria">Adicionar Maestria: </label>
             <input name="maestria" class="form-control" id="novamaestria" placeholder="Nova maestria..."
                    data-toggle="popover" data-trigger="hover" data-style="primary"
-                   data-content="Item que caracteriza os jogadores" data-placement="left" />
+                   data-content="Item que caracteriza os jogadores" data-placement="left"/>
             <div class="espacos"></div>
             <input type="submit" class="button button-black" value="Criar Maestria">
         </form>
@@ -44,10 +46,9 @@
         <div class="container">
             @foreach($maestrias as $maestria)
                 <div class="col-xs-2 col-sm-3 col-lg-2 col-md-2">
-                    <a data-toggle="modal" data-target="#{{$maestria->maestria}}" style="color:#fff;cursor:pointer">
+                    <a data-toggle="modal" data-target="#{{$maestria->maestria}}" style="color:#fff;cursor:pointer;font-size: 1.4em">
                         <i class="fa fa-magic" aria-hidden="true"></i> {{ $maestria->maestria }}
                     </a>
-                    <i class="fa fa-asterisk" aria-hidden="true"></i> {{$i}}
                 </div>
             @endforeach
         </div>

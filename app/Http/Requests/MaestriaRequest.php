@@ -1,10 +1,9 @@
 <?php
 
 namespace ctf\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class MaestriaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,22 +24,19 @@ class CategoryRequest extends FormRequest
     {
         if ($this->method() == 'POST') {
             return [
-                'nome' => 'string|min:2|required',
-                'color' => 'string|required',
-                'descricao' => 'string|min:5|required'
+                'maestria' => 'string|min:2|required',
             ];
         }
         return [];
+
     }
 
     public function messages()
     {
         return [
-            'nome.required' => 'O nome é obrigatório',
-            'nome.min' => 'Número mínimo de caracteres: 02',
-            'nome.unique' => 'O nome da categoria deve ser único',
-            'descricao.min' => 'Somente letras e números para o nickname',
-            'descricao.required' => 'A desscriçao é obrigatória'
+            'maestria.required' => 'O nome é obrigatório',
+            'maestria.min' => 'Número mínimo de caracteres: 02',
+            'maestria.unique' => 'O nome da maestria deve ser único',
         ];
     }
 }

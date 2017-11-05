@@ -26,8 +26,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => '/maestria'], function () {
+        Route::post('/', 'User\MaestriaController@create')->name('maestriaCreate');
         Route::get('/', 'User\MaestriaController@view')->name('maestrias');
-        Route::post('/', 'User\MaestriaController@view')->name('maestriaCreate');
+        Route::get('/{id}', 'User\MaestriaController@update')->name('maestriasUpdate');
     });
 });
 
