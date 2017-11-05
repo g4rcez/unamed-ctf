@@ -8,11 +8,11 @@ Route::group(['middleware' => ['auth']], function () {
             return view('user.scoreboard');
         })->name('scoreUsers');
     });
-// Route::group([ 'middleware' => ['admin'] ], function () {
-//   Route::get('/viewUser', 'Challs\ChallengesController@viewCreate')->name('viewChall');
-//   Route::post('/adicionar', 'Challs\ChallengesController@create')->name('createChall');
-// });
+
+
+
     Route::group(['prefix' => '/challs'], function () {
+        Route::get('/adicionar', 'Challs\ChallengesController@adminCreateView')->name('createChall');
         Route::get('/', 'Challs\ChallengesController@userView')->name('challs');
     });
 
@@ -20,15 +20,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', 'Challs\CategoryController@view')->name('categorias');
         Route::get('/nova', 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
         Route::post('/nova', 'Challs\CategoryController@create')->name('categoriasCreate');
-        Route::get('/editar/{nome}/{id}', 'Challs\CategoryController@viewUpdate');
-        Route::post('/editar/{nome}/{id}', 'Challs\CategoryController@update')->name('updateCategoria');
-        Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete')->name('updateCategoria');
+        Route::post('/editar/{nome}/{id}', 'Challs\CategoryController@update');
+        Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete');
     });
 
     Route::group(['prefix' => '/maestria'], function () {
-        Route::post('/', 'User\MaestriaController@create')->name('maestriaCreate');
         Route::get('/', 'User\MaestriaController@view')->name('maestrias');
-        Route::get('/{id}', 'User\MaestriaController@update')->name('maestriasUpdate');
+        Route::post('/', 'User\MaestriaController@create')->name('maestriaCreate');
+        Route::post('/editar/{nome}/{id}', 'User\MaestriaController@update')->name('maestriasUpdate');
+        Route::post('/deletar/{nome}/{id}', 'User\MaestriaController@delete');
     });
 });
 

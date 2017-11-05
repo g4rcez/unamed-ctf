@@ -35,10 +35,21 @@ class MaestriaController extends Controller
 
     public function update(MaestriaRequest $request, $nome, $id)
     {
-        $updated = Category::all()->find($id);
+        $updated = Maestria::all()->find($id);
         $updated->update($request->all());
         $novo = $request->input('maestria');
-        \Session::flash('atualizado', "A categoria $nome foi atualizada para $novo");
-        return \Redirect::route('maestria');
+        $novo = str_replace(' ', '', $novo);
+        \Session::flash('atualizado', "A maestria $nome foi atualizada para $novo");
+        return redirect()->route('maestrias');
+    }
+
+    public function delete($nome, $id)
+    {
+        $maestria = $this->maestria->findOrFail($id)->where('maestria', $nome)->first();
+        if(!$maestria->delete()){
+            abort(500);
+        }
+        \Session::flash('deletado', "A maestria $nome foi deletada com sucesso");
+        return redirect()->route('maestrias');
     }
 }
