@@ -1,6 +1,6 @@
 @extends('layout.user')
 @section('challs','active')
-@section('title','Visualizar categorias')
+@section('titulo',' - Categorias')
 @section('conteudo')
     @if (Session::has('nova'))
         <div class="row">
@@ -38,13 +38,12 @@
             </div>
         </div>
     @endif
-    <h2 class="page-title text-center">
-        Categorias
-    </h2>
+    <h2 class="page-title text-center">Categorias</h2>
     <h2 class="text-center">
         <small><a href="{{route('categoriasViewCreate')}}">
                 <i class="fa fa-plus"></i> Adicionar Categoria
-            </a></small>
+            </a> - Total: {{$categorias->count()}}
+        </small>
     </h2>
     <div class="espacos"></div>
     <div class="espacos"></div>
@@ -52,8 +51,8 @@
         <div class="container">
             @foreach($categorias as $categoria)
                 <div class="col-md-3 col-lg-3">
-                    <div class="box-users" style="background-color:{{$categoria->color}}40">
-                        <h3><a data-toggle="modal" data-target="#{{$categoria->nome}}"
+                    <div class="box-users" style="background-color:{{$categoria->color}}20">
+                        <h3><a data-toggle="modal" data-target="#{{str_replace(' ','',$categoria->nome)}}"
                                style="color:#fff;cursor:pointer">
                                 {{$categoria->nome}}
                             </a></h3>
@@ -67,9 +66,8 @@
         </div>
     </div>
     @foreach($categorias as $categoria)
-        <div id="{{$categoria->nome}}" class="modal fade" role="dialog">
+        <div id="{{str_replace(' ','',$categoria->nome)}}" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>

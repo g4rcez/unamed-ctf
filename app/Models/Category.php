@@ -14,7 +14,7 @@ class Category extends Model
 
     public function challenges()
     {
-        return $this->belongsToMany(
+        return $this->hasMany(
             Challenge::class, 'challenges_resolvidos',
             'challenges_id', 'users_id'
         );

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('titulo')</title>
+    <title>UnameCTF @yield('titulo')</title>
     <!-- Styles and Fonts -->
     <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/beautify.min.css') !!}" />
     <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/font-awesome.min.css') !!}" />

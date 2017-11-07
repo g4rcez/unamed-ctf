@@ -9,10 +9,9 @@ Route::group(['middleware' => ['auth']], function () {
         })->name('scoreUsers');
     });
 
-
-
     Route::group(['prefix' => '/challs'], function () {
         Route::get('/adicionar', 'Challs\ChallengesController@adminCreateView')->name('createChall');
+        Route::post('/adicionar', 'Challs\ChallengesController@createFlag')->name('createChall');
         Route::get('/', 'Challs\ChallengesController@userView')->name('challs');
     });
 
@@ -20,6 +19,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', 'Challs\CategoryController@view')->name('categorias');
         Route::get('/nova', 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
         Route::post('/nova', 'Challs\CategoryController@create')->name('categoriasCreate');
+        Route::get('/editar/{nome}/{id}', 'Challs\CategoryController@viewUpdate');
         Route::post('/editar/{nome}/{id}', 'Challs\CategoryController@update');
         Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete');
     });

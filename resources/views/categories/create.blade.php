@@ -1,6 +1,6 @@
 @extends('layout.user')
 @section('challs', 'active')
-@section('titulo',"UnameCTF - Categoria: ")
+@section('titulo'," - Criar Categoria")
 @section('conteudo')
     <h2 class='text-center'>Criar Categoria</h2>
     <div class="espacos"></div>
@@ -8,9 +8,9 @@
     <form class="form-horizontal" role="form" method="POST" action="{{route('categoriasCreate')}}">
         {{ csrf_field() }}
         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
-            <label for="nickname" class="col-md-4 control-label">Nome da Categoria: </label>
+            <label for="nome" class="col-md-4 control-label">Nome da Categoria: </label>
             <div class="col-md-6">
-                <input id="nome" type="text" class="form-control input" name="nome" value="{{ old('nome') }}" required autofocus placeholder="Nome da categoria...">
+                <input id="nome" type="text" class="form-control input" name="nome" value="{{ old('nome') }}" required autofocus placeholder="Nome da categoria..." onchange="tituloAlter()">
                 @if ($errors->has('nome'))
                     <span class="help-block">
                           <strong>{{ $errors->first('nome') }}</strong>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="form-group{{ $errors->has('color') ? ' has-error' : '' }}">
-            <label for="nickname" class="col-md-4 control-label">Cor da Categoria: </label>
+            <label for="color" class="col-md-4 control-label">Cor da Categoria: </label>
             <div class="col-md-1">
                 <input id="color" type="color" class="form-control input" name="color" value="{{ old('color') }}" required autofocus placeholder="Cor da categoria..." onchange="getRgb(this)">
                 @if ($errors->has('color'))
@@ -32,7 +32,7 @@
         <div class="form-group{{ $errors->has('descricao') ? ' has-error' : '' }}">
             <label for="descricao" class="col-md-4 control-label">Descrição: </label>
             <div class="col-md-6">
-                <textarea class="form-control input" name="descricao" id="descricao">{{ old('descricao') }}</textarea>
+                <textarea class="form-control input" name="descricao" id="descricao" onchange="descAlter()">{{ old('descricao') }}</textarea>
                 @if ($errors->has('descricao'))
                     <span class="help-block">
                           <strong>{{ $errors->first('descricao') }}</strong>
@@ -48,12 +48,61 @@
             </div>
         </div>
     </form>
+    <div class="row">
+      <div class="col-md-offset-4 col-md-3 col-lg-3">
+          <div class="box-users" style="background-color:#f1f1f120" id='box-categoria'>
+              <h3><a data-toggle="modal" data-target="#teste" style="color:#fff;cursor:pointer" id='novoTitulo'>
+                      Nova categoria
+                  </a></h3>
+              <ul>
+                  <li>Total de Challs: <strong>X</strong></li>
+                  <li>Total de pontos: <strong>X</strong></li>
+              </ul>
+          </div>
+      </div>
+    </div>
+    <div id="teste" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id='novoTituloModal'>Nova Categoria</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="paragrafos" id="descricaoModal">
+                        Descrição
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <form>
+                        <a href="#" class="button button-blue">Editar</a>
+                        <input type="submit" class="button button-red" value="Deletar"/>
+                        <button type="button" class="button button-black" data-dismiss="modal" value="">Fechar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         function getRgb(button){
-            var colorReturn = hexToRgba(button.value, 0.85);
+          var colorReturn = hexToRgba(button.value, 0.85);
+          document.getElementById('box-categoria').style.backgroundColor = colorReturn;
+          document.getElementById('box-categoria').style.borderColor = colorReturn;
         }
         function hexToRgba(hex, opacity) {
             return 'rgba(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) { return parseInt(hex.length%2 ? l+l : l, 16) }).concat(opacity||1).join(',') + ')';
+        }
+        function tituloAlter(){
+          var titulo = document.getElementById("nome").value;
+          var div = document.getElementById("novoTitulo");
+          var div2 = document.getElementById("novoTituloModal");
+          div.innerText = titulo;
+          div2.innerText = titulo;
+        }
+        function descAlter(){
+          var titulo = document.getElementById("descricao").value;
+          var div = document.getElementById("descricaoModal");
+          div.innerText = titulo;
         }
     </script>
 @endsection

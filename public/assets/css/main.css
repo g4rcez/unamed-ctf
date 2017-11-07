@@ -3,7 +3,7 @@ body {
   padding-top: 70px;
   overflow-x: hidden;
   font-family: 'Cantarell', sans-serif;
-  background-color: #2c313d;
+  background-color: #22242a;
   color: #fff;
 }
 
@@ -135,13 +135,13 @@ a:hover {
 
 .modal-desafio-title {
   font-size: 1.8em;
-  background-color: #2c313d;
+  background-color: #22242a;
 }
 
 .modal-desafio-body {
   text-align: justify;
   padding-top: 0.6em;
-  background-color: #2c313d;
+  background-color: #22242a;
   padding-left: 1em;
 }
 
@@ -163,15 +163,15 @@ a:hover {
   text-align: right;
   padding-bottom: 1em;
   padding-right: 1em;
-  background-color: #2c313d;
+  background-color: #22242a;
 }
 
 .modal-dialog {
-  background-color: #2c313d;
+  background-color: #22242a;
 }
 
 .modal-content {
-  background-color: #2c313d;
+  background-color: #22242a;
   color: #fff;
 }
 
@@ -185,6 +185,12 @@ a:hover {
 .box-challs{
   padding: 2px;
   margin-bottom: 10px;
+}
+
+.chall-box{
+  padding: 20px 0;
+  border: 3px solid transparent;
+  text-align: center;
 }
 
 /*Footer Style*/
