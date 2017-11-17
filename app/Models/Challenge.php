@@ -14,11 +14,7 @@ class Challenge extends Model
     protected $guarded = ['id'];
     protected $dates = ['deleted_at'];
 
-    public function categories()
-    {
-        return $this->belongsTo(
-            Category::class, 'challenges_resolvidos',
-            'categories_id'
-        );
+    public function category(){
+        return $this->belongsTo("ctf\Models\Category", "categories_id");
     }
 }

@@ -12,12 +12,9 @@ class Category extends Model
     protected $guarded = ['id'];
     protected $dates = ['deleted_at'];
 
-    public function challenges()
+    public function challenge()
     {
-        return $this->hasMany(
-            Challenge::class, 'challenges_resolvidos',
-            'challenges_id', 'users_id'
-        );
+        return $this->hasMany("ctf\Models\Challenge", 'categories_id');
     }
 
 }

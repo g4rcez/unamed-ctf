@@ -81,7 +81,7 @@
                     <div class="modal-footer">
                         <form action="{{url("/categorias/deletar/$categoria->nome/$categoria->id")}}" method="POST">
                             {{ csrf_field() }}
-                            <a href="{{url("/categorias/editar/$categoria->nome/$categoria->id")}}"
+                            <a href="{{url(getenv('ADMIN_ROUTE', true)."/categorias/editar/$categoria->nome/$categoria->id")}}"
                                class="button button-blue">Editar</a>
                             <input type="submit" class="button button-red" value="Deletar"/>
                             <button type="button" class="button button-black" data-dismiss="modal" value="">Fechar

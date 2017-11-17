@@ -8,7 +8,7 @@
             border-radius: 0;
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
     @if (Session::has('nova'))
         <div class="row">
             <div class="container">
@@ -21,8 +21,6 @@
             </div>
         </div>
     @endif
-
-
     <h2 class="page-title text-center">
         Maestrias
     </h2>
@@ -32,14 +30,14 @@
             </a></small>
     </h2>
     <div class="collapse" id="cadastrar">
-        <form class="form-horizontal" method="POST" action="{{route('maestriaCreate')}}">
+        <form class="form-inline text-center" method="POST" action="{{route('maestriaCreate')}}">
             {{csrf_field()}}
             <label for="nova-maestria">Adicionar Maestria: </label>
             <input name="maestria" class="form-control input" id="novamaestria" placeholder="Nova maestria..."
                    data-toggle="popover" data-trigger="hover" data-style="primary"
-                   data-content="Item que caracteriza os jogadores" data-placement="left"/>
-            <div class="espacos"></div>
-            <div class="espacos"></div>
+                   data-content="Item que caracteriza os jogadores" data-placement="bottom"/>
+            {{-- <div class="espacos"></div>
+            <div class="espacos"></div> --}}
             <input type="submit" class="button button-black" value="Criar Maestria">
         </form>
     </div>
@@ -67,12 +65,12 @@
                         <h4 class="modal-title">{{$maestria->maestria}}</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="{{url("maestria/editar/$maestria->maestria/$maestria->id")}}" method="POST" class="form-inline">
+                        <form action="{{url(getenv('ADMIN_ROUTE', true)."/maestria/editar/$maestria->maestria/$maestria->id")}}" method="POST" class="form-inline">
                             {{ csrf_field() }}
                             <label for="nova-maestria">Adicionar Maestria: </label>
                             <input name="maestria" class="form-control input" id="novamaestria" placeholder="Nova maestria..."
                                    data-toggle="popover" data-trigger="hover" data-style="primary"
-                                   data-content="Item que caracteriza os jogadores" data-placement="left"/>
+                                   data-content="Item que caracteriza os jogadores" data-placement="bottom"/>
                             <input type="submit" class="button button-blue" value="Editar"/>
                         </form>
                         <hr>
@@ -84,7 +82,7 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <form action="{{url("maestria/deletar/$maestria->maestria/$maestria->id")}}" method="POST">
+                        <form action="{{url(getenv('ADMIN_ROUTE', true)."/maestria/deletar/$maestria->maestria/$maestria->id")}}" class="form-inline" method="POST">
                             {{ csrf_field() }}
                             <input type="submit" class="button button-red" value="Deletar"/>
                             <button type="button" class="button button-black" data-dismiss="modal">Fechar</button>

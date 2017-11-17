@@ -23,8 +23,13 @@ class ChallengesController extends Controller
 
     public function userView()
     {
-        $categorias = Category::all();
-        return view('challenges.index_user', compact('categorias'));
+        $challenges = Challenge::all();
+        return view('challenges.index_user', compact('challenges'));
+    }
+
+    public function adminView(){
+        $challenges = Challenge::all();
+        return view('challenges.index', compact('challenges'));
     }
 
     public function adminCreateView()
@@ -39,16 +44,22 @@ class ChallengesController extends Controller
     public function createFlag(ChallsRequest $request){
         $this->challenge->fill($request->all());
         $this->challenge->flag = hash("sha256", $request->flag);
+        $this->challenge->categories_id = $request->categories_id;
+        if(!$this->challenge->save()){
+            abort(500, 'Erro ao salvar a categoria.');
+        }
+        $challenge = $this->challenge->nome;
+        \Session::flash('nova', "A categoria $challenge foi criada com sucesso");
+        return redirect()->route('adminChall', compact('challenge'));
     }
 
-    public function create(CategoryRequest $request)
-    {
-        $this->category->fill($request->all());
-        if (!$this->category->save()) {
-            abort(503, 'Erro ao salvar a categoria.');
+    public function submitFlag(){
+        $assert = $this->challenge->where("flag", hash("sha256", Request::input("flag")));
+        if ($assert->count() == 1){
+            $flagCaptured = $assert->first()->nome;
+            \Session::flash('flagCaptured', "Você capturou a flag: $flagCaptured");
+            return redirect()->route("challs");
         }
-        $novaCategoria = $this->category->nome;
-        \Session::flash('nova', "A categoria $novaCategoria foi criada com sucesso");
-        return \Redirect::route('categorias', compact('novaCategoria'));
+        return "Deu ruim";
     }
 }

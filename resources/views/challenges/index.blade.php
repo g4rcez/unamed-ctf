@@ -1,63 +1,77 @@
-@extends('layout.user')
+@extends('layout.admin') 
 @section('challs','active')
-@section('title','ChallengesController')
+@section('titulo',"{{get_env("CTF_NAME",true)}} - Challenges")
 @section('conteudo')
-<div class="row">
-    <div class="container">
-        @for ($i = 1; $i <= 6; $i++)
-          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-              <div class="alert desafio-box">
-                  <h3>{{ "$i - Ola" }}</h3>
-                  <div class="paragrafos">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                        qui officia deserunt mollit anim id est laborum.
-                    </p>
-                  </div>
-                  <p class="desafio-informacao">
-                      <a data-toggle="modal" data-target="#{{ "modal$i" }}">
-                          <i class="fa fa-eye" aria-hidden="true"></i> Mais informações...
-                      </a>
-                  </p>
-              </div>
-          </div>
-        @endfor
+<div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+  <h2 class="text-center page-title">
+    <i class="fa fa-flag" aria-hidden="true"></i> Capture the Flags</h2>
+  <div class="espacos"></div>
+  <div class="espacos"></div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <h3 class="text-left">Challenges disponíveis: {{$challenges->count()}}</h3>
     </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <h3 class="text-right">Pontuação total: {{$challenges->sum("pontos")}}</h3>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-12">
+    <hr>
+  </div>
+  <div class="row">
+    @foreach($challenges as $challenge)
+    <div class="col-md-3 col-lg-3">
+      <div class="chall-box" style="background-color:{{$challenge->category->color}}20">
+        <h3>
+          <a data-toggle="modal" data-target="#{{str_replace(' ','',$challenge->nome)}}" style="color:#fff;cursor:pointer">
+            <i class="fa fa-flag" aria-hidden="true"></i>
+            {{$challenge->nome}}
+          </a>
+        </h3>
+        <h4>
+          <small>{{$challenge->category->nome}}</small>
+        </h4>
+        <h4>{{$challenge->pontos}}</h4>
+      </div>
+      <div class="espacos"></div>
+    </div>
+    @endforeach
+  </div>
 </div>
-
-@for ($i = 1; $i <= 6; $i++)
-<div id="{{ "modal$i" }}" class="modal fade" role="dialog">
+<div class="espacos"></div>
+<div class="espacos"></div>
+<div class="espacos"></div>
+@foreach($challenges as $challenge)
+<div id="{{str_replace(' ','',$challenge->nome)}}" class="modal fade" role="dialog">
   <div class="modal-dialog">
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{ "$i - Ola" }}</h4>
+        <h4 class="modal-title">{{$challenge->nome}}</h4>
       </div>
       <div class="modal-body">
-        <p class="paragrafos">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-          fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          qui officia deserunt mollit anim id est laborum.
-        </p>
+        <p class="paragrafos">{{$challenge->enunciado}}</p>
+        <div class="espacos"></div>
+        <h4>Downloads</h4>
         <ul>
-          <li>Autor: {{ $autor or 'Fulano de Tal'}}</li>
-          <li>Link: <a href="{{ $link or 'Linkão bolado'}}">{{ $link or 'Linkão bolado'}}</a></li>
         </ul>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-lg-12">
+            <div class="espacos"></div>
+              <form class="form-inline" action="" method="POST">
+                <a href="" class="button button-blue">Editar</a>
+                <input type="submit" class="button button-red" value="Deletar" />
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="button button-blue" data-dismiss="modal">Editar</button>
-        <button type="button" class="button button-red" data-dismiss="modal">Deletar</button>
-        <button type="button" class="button button-black" data-dismiss="modal">Fechar</button>
+        <button type="button" class="button button-black" data-dismiss="modal" value="">Fechar
+        </button>
       </div>
     </div>
   </div>
 </div>
-@endfor
+@endforeach 

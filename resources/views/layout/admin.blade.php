@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" ng-app="ctfplatform">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UnameCTF @yield('titulo')</title>
+    <title>
+      @yield('titulo')
+    </title>
     <!-- Styles and Fonts -->
     <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/beautify.min.css') !!}" />
     <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/font-awesome.min.css') !!}" />
     <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/main.css') !!}" />
     <!-- Scripts -->
     <script src="{!! asset('assets/js/beautify.min.js') !!}"></script>
+    <script src="{!! asset('assets/js/angular.js') !!}"></script>
 </head>
 <body>
 <header>
@@ -32,12 +35,12 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="@yield('home')"><a href="{{route('root')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicial<span class="sr-only">(current)</span></a></li>
-                    <li class="@yield('perfil')"><a href=""><i class="fa fa-user" aria-hidden="true"></i> Perfil</a></li>
-                    <li class="@yield('challs')"><a href=""><i class="fa fa-flag" aria-hidden="true"></i> Desafios</a></li>
-                    <li class="@yield('ranking')"><a href="{{route('scoreUsers')}}"><i class="fa fa-desktop" aria-hidden="true"></i> Classificação</a></li>
-                    <li class="@yield('team')"><a href=""><i class="fa fa-users" aria-hidden="true"></i> Equipe</a></li>
-                    <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+                    <li class="@yield('home')"><a href="{{route('root')}}"><i class="fa fa-dashboard" aria-hidden="true"></i> @lang('admin.home')<span class="sr-only">(current)</span></a></li>
+                    <li class="@yield('users')"><a href=""><i class="fa fa-user" aria-hidden="true"></i> @lang('admin.users')</a></li>
+                    <li class="@yield('challs')"><a href=""><i class="fa fa-flag" aria-hidden="true"></i> @lang('admin.challs')</a></li>
+                    <li class="@yield('categories')"><a href=""><i class="fa fa-group" aria-hidden="true"></i> @lang('admin.categories')</a></li>
+                    <li class="@yield('team')"><a href=""><i class="fa fa-users" aria-hidden="true"></i> @lang('admin.team')</a></li>
+                    <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> @lang('admin.logout')</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

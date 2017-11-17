@@ -7,7 +7,7 @@ class LoginController extends Controller
 {
 
     use AuthenticatesUsers;
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/hacker';
 
     /**
      * Create a new controller instance.

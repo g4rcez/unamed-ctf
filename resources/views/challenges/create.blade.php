@@ -26,7 +26,7 @@
 </h2>
 <div class="espacos"></div>
 <div class="espacos"></div>
-     <form class="form-horizontal" role="form" method="POST" action="">
+     <form class="form-horizontal" role="form" method="POST" action="{{route("createChall")}}">
           {{ csrf_field() }}
           <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
               <label for="nome" class="col-md-4 control-label">Nome do Desafio: </label>
@@ -43,7 +43,7 @@
             <label for="categorias" class="col-md-4 control-label">Categoria do desafio: </label>
               <div class="col-md-6">
              @if($categorias->count() > 0)
-                <select class="form-control input" id="categorias" name='categories_id'>
+                <select class="form-control input" name="categories_id">
               @endif
               @forelse($categorias as $categoria)
                  <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
@@ -57,7 +57,7 @@
           <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
               <label for="disponivel" class="col-md-4 control-label">Desafio liberado: </label>
               <div class="col-md-6">
-                <select class="form-control input" id="categorias" name='categories_id'>
+                <select class="form-control input" id="categorias">
                   <option value="true">Disponível</option>
                   <option value="false">Bloqueado</option>
                 </select>
@@ -82,7 +82,7 @@
           <div class="form-group{{ $errors->has('enunciado') ? ' has-error' : '' }}">
               <label for="enunciado" class="col-md-4 control-label">Enunciado: </label>
               <div class="col-md-6">
-                  <textarea rows="10" cols="66" class="input form-input"></textarea>
+                  <textarea rows="10" cols="66" class="input form-input" name="enunciado"></textarea>
                   @if ($errors->has('enunciado'))
                       <span class="help-block">
                           <strong>{{ $errors->first('enunciado') }}</strong>

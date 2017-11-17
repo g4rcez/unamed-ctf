@@ -2,7 +2,7 @@
 Route::get('/', 'User\UserController@index')->name('root');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['prefix' => '/home'], function () {
+    Route::group(['prefix' => '/hacker'], function () {
         Route::get('/', 'User\UserController@index')->name('home');
         Route::get('/scoreboard', function () {
             return view('user.scoreboard');
@@ -10,26 +10,37 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => '/challs'], function () {
-        Route::get('/adicionar', 'Challs\ChallengesController@adminCreateView')->name('createChall');
-        Route::post('/adicionar', 'Challs\ChallengesController@createFlag')->name('createChall');
         Route::get('/', 'Challs\ChallengesController@userView')->name('challs');
+        Route::post('/submit', 'Challs\ChallengesController@submitFlag');
     });
 
-    Route::group(['prefix' => '/categorias'], function () {
-        Route::get('/', 'Challs\CategoryController@view')->name('categorias');
-        Route::get('/nova', 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
-        Route::post('/nova', 'Challs\CategoryController@create')->name('categoriasCreate');
-        Route::get('/editar/{nome}/{id}', 'Challs\CategoryController@viewUpdate');
-        Route::post('/editar/{nome}/{id}', 'Challs\CategoryController@update');
-        Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete');
+    Route::group(['prefix'=>"/".getenv('ADMIN_ROUTE', true)], function (){
+        Route::get('/', 'AdminController@index')->name('admin');
+
+        Route::group(['prefix' => '/challs'], function () {
+            Route::get('/', 'Challs\ChallengesController@adminView')->name('adminChall');
+            Route::get('/adicionar', 'Challs\ChallengesController@adminCreateView')->name('createChall');
+            Route::post('/adicionar', 'Challs\ChallengesController@createFlag');
+        });
+
+        Route::group(['prefix' => '/categorias'], function () {
+            Route::get('/', 'Challs\CategoryController@view')->name('categorias');
+            Route::get('/adicionar', 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
+            Route::post('/adicionar', 'Challs\CategoryController@create')->name('categoriasCreate');
+            Route::get('/editar/{nome}/{id}', 'Challs\CategoryController@viewUpdate');
+            Route::post('/editar/{nome}/{id}', 'Challs\CategoryController@update');
+            Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete');
+        });
+
+        Route::group(['prefix' => '/maestria'], function () {
+            Route::get('/', 'User\MaestriaController@view')->name('maestrias');
+            Route::post('/', 'User\MaestriaController@create')->name('maestriaCreate');
+            Route::post('/editar/{nome}/{id}', 'User\MaestriaController@update')->name('maestriasUpdate');
+            Route::post('/deletar/{nome}/{id}', 'User\MaestriaController@delete');
+        });
+
     });
 
-    Route::group(['prefix' => '/maestria'], function () {
-        Route::get('/', 'User\MaestriaController@view')->name('maestrias');
-        Route::post('/', 'User\MaestriaController@create')->name('maestriaCreate');
-        Route::post('/editar/{nome}/{id}', 'User\MaestriaController@update')->name('maestriasUpdate');
-        Route::post('/deletar/{nome}/{id}', 'User\MaestriaController@delete');
-    });
 });
 
 

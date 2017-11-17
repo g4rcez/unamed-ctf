@@ -25,7 +25,7 @@
                 </button>
                 <div class="navbar-header">
                     <a class="navbar-brand" href="{{route('root')}}">
-                        <i class="fa fa-flag fa-lg"></i> C.T.F
+                        <i class="fa fa-flag fa-lg"></i> {{getenv('CTF_NAME', true)}}
                     </a>
                 </div>
             </div>
