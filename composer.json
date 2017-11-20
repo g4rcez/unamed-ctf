@@ -11,6 +11,7 @@
         "laravelcollective/html": "^5.4.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.4",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.7",

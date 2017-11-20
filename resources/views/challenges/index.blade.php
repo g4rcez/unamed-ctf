@@ -1,6 +1,6 @@
 @extends('layout.admin') 
 @section('challs','active')
-@section('titulo',"{{get_env("CTF_NAME",true)}} - Challenges")
+@section('titulo', getenv('CTF_NAME', true)."- Challenges")
 @section('conteudo')
 <div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
   <h2 class="text-center page-title">
@@ -47,19 +47,23 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">{{$challenge->nome}}</h4>
+        <h4 class="modal-title">{{$challenge->nome}} - {{$challenge->category->nome}}</h4>
       </div>
       <div class="modal-body">
         <p class="paragrafos">{{$challenge->enunciado}}</p>
         <div class="espacos"></div>
-        <h4>Downloads</h4>
-        <ul>
-        </ul>
+        @if(isset($challenge->arquivo))
+          <h4>Downloads</h4>
+          <ul>
+            <li>{{$challenge->arquivo}}</li>
+          </ul>
+        @endif
         <div class="container">
           <div class="row">
             <div class="col-md-12 col-lg-12">
             <div class="espacos"></div>
-              <form class="form-inline" action="" method="POST">
+              <form class="form-inline" action="{{url(getenv('ADMIN_ROUTE', true)."/challs/deletar/$challenge->nome/$challenge->id")}}" method="POST">
+              {{csrf_field()}}
                 <a href="" class="button button-blue">Editar</a>
                 <input type="submit" class="button button-red" value="Deletar" />
               </form>

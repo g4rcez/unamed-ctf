@@ -17,6 +17,8 @@ class User extends Authenticatable
         'avatar', 'categoria_favorita',
     ];
 
+    public $incrementing = false;
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -33,5 +35,15 @@ class User extends Authenticatable
             $model->{$model->getKeyName()} = md5(rand());
             return true;
         });
+    }
+
+    public function challenges()
+    {
+        return $this->belongsToMany(
+            'ctf\Models\Challenge',
+            'challenges_resolvidos',
+            'users_id',
+            'challenges_id'
+        );
     }
 }

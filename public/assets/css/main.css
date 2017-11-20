@@ -189,8 +189,13 @@ a:hover {
 
 .chall-box{
   padding: 20px 0;
-  border: 3px solid transparent;
+  border: 0px solid transparent;
   text-align: center;
+}
+
+.chall-box:hover {
+  background-color:#000;
+  cursor: pointer;
 }
 
 /*Footer Style*/

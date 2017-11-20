@@ -2,6 +2,8 @@
 
 namespace ctf\Http\Controllers\Challs;
 
+use Auth;
+use ctf\Models\ChallengesResolvido;
 use Request;
 use ctf\Models\Challenge;
 use ctf\Models\Category;
@@ -13,12 +15,10 @@ class ChallengesController extends Controller
 {
 
     private $challenge;
-    private $category;
 
-    public function __construct(Challenge $challenge, Category $category)
+    public function __construct(Challenge $challenge)
     {
         $this->challenge = $challenge;
-        $this->category = $category;
     }
 
     public function userView()
@@ -32,7 +32,7 @@ class ChallengesController extends Controller
         return view('challenges.index', compact('challenges'));
     }
 
-    public function adminCreateView()
+    public function adminCreateView(Category $category)
     {
         $categorias = Category::all();
         if($categorias->count() == 0){
@@ -53,13 +53,50 @@ class ChallengesController extends Controller
         return redirect()->route('adminChall', compact('challenge'));
     }
 
-    public function submitFlag(){
+    public function submitFlag(ChallengesResolvido $challengesResolvido){
         $assert = $this->challenge->where("flag", hash("sha256", Request::input("flag")));
         if ($assert->count() == 1){
-            $flagCaptured = $assert->first()->nome;
-            \Session::flash('flagCaptured', "Você capturou a flag: $flagCaptured");
-            return redirect()->route("challs");
+            $values = ['users_id' => Auth::user()->id,
+                'challenges_id' => $assert->first()->id
+            ];
+            $challengesResolvido->fill($values);
+            $resolvido = ChallengesResolvido::all()->where(
+                'challenges_id',$values['challenges_id']
+            )->where('users_id',$values['users_id']);
+
+            if($resolvido->count() == 0){
+                $challengesResolvido->saveOrFail();
+                $flagCaptured = $assert->first()->nome;
+                \Session::flash('flagCaptured', "Você capturou a flag: $flagCaptured");
+                return redirect()->route("challs");
+            }
+            return "Você já resolveu essa porra";
         }
         return "Deu ruim";
+    }
+
+    public function delete($nome, $id)
+    {
+        $challenge = $this->challenge->findOrFail($id)->where('nome', $nome)->first();
+        if(!$challenge->delete()){
+            abort(500);
+        }
+        \Session::flash('deletado', "A categoria $nome foi deletada com sucesso");
+        return redirect()->route('adminChall');
+    }
+
+    public function viewUpdate($nome, $id)
+    {
+        $challenge = Challenge::all()->where('nome', $nome)->where('id', $id)->first();
+        return view('challenge.edit', compact('challenge'));
+    }
+
+    public function update(CategoryRequest $request, $nome, $id)
+    {
+        $updated = Challenge::all()->find($id);
+        $updated->update($request->all());
+        $novo = $request->input('nome');
+        \Session::flash('atualizado', "A categoria $nome foi atualizada para $novo");
+        return \Redirect::route('adminChall');
     }
 }

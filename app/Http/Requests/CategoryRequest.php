@@ -25,9 +25,9 @@ class CategoryRequest extends FormRequest
     {
         if ($this->method() == 'POST') {
             return [
-                'nome' => 'string|min:2|required',
+                'nome' => 'string|min:2|max:64|required|unique:categories',
                 'color' => 'string|required',
-                'descricao' => 'string|min:5|required'
+                'descricao' => 'string|min:5|required|max:2048'
             ];
         }
         return [];
@@ -38,9 +38,11 @@ class CategoryRequest extends FormRequest
         return [
             'nome.required' => 'O nome é obrigatório',
             'nome.min' => 'Número mínimo de caracteres: 02',
+            'nome.max' => 'Número máximo de caracteres: 64',
             'nome.unique' => 'O nome da categoria deve ser único',
-            'descricao.min' => 'Somente letras e números para o nickname',
-            'descricao.required' => 'A desscriçao é obrigatória'
+            'descricao.min' => 'Número mínimo de caracteres: 05',
+            'descricao.required' => 'A desscriçao é obrigatória',
+            'descricao.max' => 'Número máximo de caracteres: 2048'
         ];
     }
 }

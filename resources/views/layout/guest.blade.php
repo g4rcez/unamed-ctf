@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="@yield('home')"><a href="{{route('root')}}" class=""><i class="fa fa-home" aria-hidden="true"></i> Inicial<span class="sr-only">(current)</span></a></li>
-                    <li class="@yield('score')"><a href="" class=""><i class="fa fa-desktop" aria-hidden="true"></i> Classificação</a></li>
+                    <li class="@yield('score')"><a href="{{route('scoreUsers')}}" class=""><i class="fa fa-desktop" aria-hidden="true"></i> Classificação</a></li>
                     <li class="@yield('register')"><a href="{!! route('register') !!}"><i class="fa fa-plus" aria-hidden="true"></i> Registrar</a></li>
                     <li class="@yield('login')"><a href="{!! route('login') !!}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
                 </ul>

@@ -1,5 +1,5 @@
 @extends('layout.user')
-@section('challs','active')
+@section('maestrias','active')
 @section('title','Visualizar categorias')
 @section('conteudo')
     <style>
@@ -8,7 +8,6 @@
             border-radius: 0;
         }
     </style>
-    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> --}}
     @if (Session::has('nova'))
         <div class="row">
             <div class="container">

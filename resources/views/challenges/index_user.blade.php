@@ -34,14 +34,9 @@
   </div>
   <div class="row">
     @foreach($challenges as $challenge)
-    <div class="col-md-3 col-lg-3">
-      <div class="chall-box" style="background-color:{{$challenge->category->color}}20">
-        <h3>
-          <a data-toggle="modal" data-target="#{{str_replace(' ','',$challenge->nome)}}" style="color:#fff;cursor:pointer">
-            <i class="fa fa-flag" aria-hidden="true"></i>
-            {{$challenge->nome}}
-          </a>
-        </h3>
+    <div class="col-md-3 col-lg-3" data-toggle="modal" data-target="#{{str_replace(' ','',$challenge->nome)}}">
+      <div class="chall-box" style="background:{{$challenge->category->color}}20" onMouseOver="this.style.background='#080808'" onMouseOut="this.style.background='{{$challenge->category->color}}20'">
+        <h3><i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->nome}}</h3>
         <h4>
           <small>{{$challenge->category->nome}}</small>
         </h4>
@@ -69,7 +64,7 @@
         <div class="container">
           <div class="row">
             <div class="col-md-12 col-lg-12">
-              <form class="form-inline" action="{{url(" /challs/submit ")}}" method="POST">
+              <form class="form-inline" action="{{url("/challs/submit")}}" method="POST">
                 {{csrf_field()}}
                 <label for="flag" class="control-label">Flag: </label>
                 <input id="flag" class="form-control input" name="flag" value="{{ old('flag') }}" required autofocus placeholder="UCTF{S0U_M357R3_D05_1337}"

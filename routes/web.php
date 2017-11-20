@@ -1,5 +1,5 @@
 <?php
-Route::get('/', 'User\UserController@index')->name('root');
+Route::get('/', 'User\UserController@news')->name('root');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/hacker'], function () {
@@ -21,6 +21,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'Challs\ChallengesController@adminView')->name('adminChall');
             Route::get('/adicionar', 'Challs\ChallengesController@adminCreateView')->name('createChall');
             Route::post('/adicionar', 'Challs\ChallengesController@createFlag');
+            Route::post('/deletar/{nome}/{id}', 'Challs\ChallengesController@delete');
+            Route::post('/editar/{nome}/{id}', 'Challs\ChallengesController@update');
+            Route::get('/editar/{nome}/{id}', 'Challs\ChallengesController@viewUpdate');
         });
 
         Route::group(['prefix' => '/categorias'], function () {

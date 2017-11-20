@@ -1,6 +1,6 @@
 @extends('layout.user')
 @section('perfil','active')
-@section('titulo',"UnameCTF - Bem vindo $usuario->nickname")
+@section('titulo',getenv("CTF_NAME",true)." - Bem vindo $usuario->nickname")
 @section('conteudo')
     <script src="{!!asset('assets/js/exporting.js')!!}"></script>
     <script src='{!!asset('assets/js/highcharts.src.js')!!}'></script>
@@ -26,9 +26,7 @@
                       </figure>
                       <h4 class="card-title mt-3">{{ $usuario->nickname }}</h4>
                       <div class="card-text" style="color:#fff">
-                          @for($i=0; $i<10; $i++)
-                              <span class="sticker sticker-blue" style="font-size:1em; margin-bottom: 5px;">#Forense</span>
-                          @endfor
+                        <span class="sticker sticker-blue" style="font-size:1em; margin-bottom: 5px;">#{{$usuario->categoria_favorita}}</span>
                       </div>
                   </div>
                   <div class="card-footer">
@@ -45,7 +43,7 @@
               <script>
                   Highcharts.chart('container', {
                       chart: {
-                          backgroundColor: '#090909',
+                          backgroundColor: '#121212',
                           type: 'bar',
                           shadow: true,
                       },
@@ -54,7 +52,9 @@
                           text: 'Histório de Flags',
                       },
                       xAxis: {
-                          categories: ['Forense', 'Reverse', 'WebXploitation', 'Criptografia  '],
+                          categories: [
+                              'Forense', 'Reverse', 'WebXploitation', 'Criptografia'
+                            ],
                           style: { "color": "#fff" },
                           title: {
                               style: { "color": "#fff" },
@@ -103,8 +103,9 @@
           </div>
           <div class="modal-body">
             <ul>
-                <li>Total de flags capturadas: <strong>X</strong></li>
-                <li>Usuário desde <strong>X</strong></li>
+                <li>Total de flags capturadas: <strong>{{$usuario->challenges()->count()}}</strong></li>
+                <li>Total de pontos capturadas: <strong>{{}}</strong></li>
+                <li>Usuário desde: <strong>{{$usuario->created_at}}</strong></li>
             </ul>
           </div>
           <div class="modal-footer">

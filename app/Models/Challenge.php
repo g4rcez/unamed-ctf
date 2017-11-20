@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Challenge extends Model
 {
-    protected $table = 'challenges';
     protected $fillable = [
         'nome', 'pontos', 'enunciado', 'autor', 'flag'
     ];
@@ -16,5 +15,15 @@ class Challenge extends Model
 
     public function category(){
         return $this->belongsTo("ctf\Models\Category", "categories_id");
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(
+            'ctf\User',
+            'challenges_resolvidos',
+            'challenges_id',
+            'users_id'
+        );
     }
 }
