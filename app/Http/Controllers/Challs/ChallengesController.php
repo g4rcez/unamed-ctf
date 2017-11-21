@@ -55,6 +55,7 @@ class ChallengesController extends Controller
 
     public function submitFlag(ChallengesResolvido $challengesResolvido){
         $assert = $this->challenge->where("flag", hash("sha256", Request::input("flag")));
+//        dd($assert->count());
         if ($assert->count() == 1){
             $values = ['users_id' => Auth::user()->id,
                 'challenges_id' => $assert->first()->id

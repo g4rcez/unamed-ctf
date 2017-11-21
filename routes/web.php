@@ -4,9 +4,7 @@ Route::get('/', 'User\UserController@news')->name('root');
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => '/hacker'], function () {
         Route::get('/', 'User\UserController@index')->name('home');
-        Route::get('/scoreboard', function () {
-            return view('user.scoreboard');
-        })->name('scoreUsers');
+        Route::get('/scoreboard', 'User\UserController@scoreboard')->name('scoreUsers');
     });
 
     Route::group(['prefix' => '/challs'], function () {
