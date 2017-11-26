@@ -11,28 +11,28 @@
       <div class="espacos"></div>
       <table class="table table-responsive table-bordered table-hover">
         <thead>
-          <td class="table-body-dark" align="center">
+          <td valign="middle" class="table-body-dark" align="center">
             <h3>Colocação</h3>
           </td>
-          <td class="table-body-dark" align="center">
+          <td valign="middle" class="table-body-dark" align="center">
             <h3>Jogador</h3>
           </td>
-          <td class="table-body-dark" align="center">
+          <td valign="middle" class="table-body-dark" align="center">
             <h3>Pontuação</h3>
           </td>
-          <td class="table-body-dark" align="center">
+          <td valign="middle" class="table-body-dark" align="center">
             <h3>Avatar</h3>
           </td>
         </thead>
           @php $count=1 @endphp
         @foreach($score as $usuario)
           <tbody class="table-hover">
-            <td align="center" class="table-body-transparent">{{ $count }}</td>
-            <td align="center" class="table-body-transparent">
+            <td valign="middle" align="center" class="table-body-transparent">{{ $count }}</td>
+            <td valign="middle" align="center" class="table-body-transparent">
               <a href="http://google.com">{{$usuario->getNome()}}</a>
             </td>
-            <td align="center" class="table-body-transparent">{{$usuario->getScore()}}</td>
-            <td align="center" class="table-body-transparent">
+            <td valign="middle" align="center" class="table-body-transparent">{{$usuario->getScore()}}</td>
+            <td valign="middle" align="center" class="table-body-transparent">
               <img src="{{$usuario->getAvatar()}}" class="img-responsive" width="32px" height="32px">
             </td>
           </tbody>

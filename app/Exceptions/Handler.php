@@ -33,6 +33,7 @@ class Handler extends ExceptionHandler
     public function report(Exception $exception)
     {
         parent::report($exception);
+//        return view("errors.404");
     }
 
     /**
@@ -45,6 +46,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+//        return view('errors.404');
     }
 
     /**
@@ -61,5 +63,6 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->guest(route('login'));
+//        return view('errors.404');
     }
 }

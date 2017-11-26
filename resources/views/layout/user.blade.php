@@ -36,7 +36,7 @@
                     <li class="@yield('home')"><a href="{{route('home')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->nickname}}</a></li>
                     <li class="@yield('challs')"><a href="{{route('challs')}}"><i class="fa fa-flag" aria-hidden="true"></i> Desafios</a></li>
                     <li class="@yield('ranking')"><a href="{{route('scoreUsers')}}"><i class="fa fa-desktop" aria-hidden="true"></i> Classificação</a></li>
-                    <li class="@yield('team')"><a href=""><i class="fa fa-users" aria-hidden="true"></i> Equipe</a></li>
+                    {{--<li class="@yield('team')"><a href=""><i class="fa fa-users" aria-hidden="true"></i> Equipe</a></li>--}}
                     <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->

@@ -1,5 +1,6 @@
 @extends('layout.guest')
 @section('register', 'active')
+@section('titulo', getenv('CTF_NAME',true).' - Registrar')
 @section('conteudo')
 <div class="container">
     <div class="row">
@@ -49,9 +50,17 @@
                     </div>
                 </div>
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label for="favorita" class="col-md-4 control-label">Categoria Favorita: </label>
+                    <label for="favorita" class="col-md-4 control-label">Melhor Maestria: </label>
                     <div class="col-md-8">
-                        <input id="favorita" type="text" class="form-control input" name="categoria_favorita" value="{{ old('email') }}" required>
+                        @if($maestrias->count() == 0)
+                            <input id="favorita" type="text" class="form-control input" name="categoria_favorita" value="{{ old('email') }}" required>
+                        @else
+                        <select name="categoria_favorita" class="form-control input">
+                            @foreach($maestrias as $maestria)
+                                <option value="{{$maestria->$maestria}}">{{$maestria->maestria}}</option>
+                            @endforeach
+                        </select>
+                        @endif
                         @if ($errors->has('categoria_favorita'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('categoria_favorita') }}</strong>
@@ -59,10 +68,10 @@
                         @endif
                     </div>
                 </div>
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                <div class="form-group{{ $errors->has('avatar') ? ' has-error' : '' }}">
                     <label for="favorita" class="col-md-4 control-label">Avatar: </label>
                     <div class="col-md-8">
-                        <input id="avatar" type="text" class="form-control input" name="avatar" value="{{ old('email') }}" required>
+                        <input id="avatar" type="text" class="form-control input" name="avatar" value="{{ old('avatar') }}" required>
                         @if ($errors->has('avatar'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('avatar') }}</strong>

@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('challs', 'active')
-@section('titulo',"UnameCTF - Categoria: ")
+@section('titulo',getenv('CTF_NAME',true).'- Editar Desafio')
 @section('conteudo')
 @if (Session::has('zeroCategorias'))
     <div class="row">
@@ -22,16 +22,16 @@
 
 <h2 class='text-center'>
   <i class="fa fa-flag" aria-hidden="true"></i>
-  Nova challenge
+  Editar challenge
 </h2>
 <div class="espacos"></div>
 <div class="espacos"></div>
-     <form class="form-horizontal" role="form" method="POST" action="{{route("createChall")}}">
+     <form class="form-horizontal" role="form" method="POST" action="{{url(getenv('ADMIN_ROUTE',true).'/challs/editar/'.$challenge->id.'/'.$challenge->nome)}}">
           {{ csrf_field() }}
           <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
               <label for="nome" class="col-md-4 control-label">Nome do Desafio: </label>
               <div class="col-md-6">
-                  <input id="nome" type="text" class="form-control input" name="nome" value="{{ old('nome') }}" required autofocus placeholder="Nome do desafio...">
+                  <input id="nome" type="text" class="form-control input" name="nome" value="{{$challenge->nome}}" required autofocus placeholder="Nome do desafio...">
                   @if ($errors->has('nome'))
                       <span class="help-block">
                           <strong>{{ $errors->first('nome') }}</strong>
@@ -58,8 +58,8 @@
               <label for="disponivel" class="col-md-4 control-label">Desafio liberado: </label>
               <div class="col-md-6">
                 <select class="form-control input" id="categorias">
-                  <option value="true">Disponível</option>
-                  <option value="false">Bloqueado</option>
+                  <option value=true>Disponível</option>
+                  <option value=false>Bloqueado</option>
                 </select>
                   @if ($errors->has('disponivel'))
                       <span class="help-block">
@@ -71,7 +71,7 @@
           <div class="form-group{{ $errors->has('pontos') ? ' has-error' : '' }}">
               <label for="pontos" class="col-md-4 control-label">Pontos: </label>
               <div class="col-md-6">
-                  <input id="pontos" type="number" class="form-control input" name="pontos" value="{{ old('pontos') }}" placeholder="Pontuação...">
+                  <input id="pontos" type="number" class="form-control input" name="pontos" value="{{$challenge->pontos}}" placeholder="Pontuação...">
                   @if ($errors->has('pontos'))
                       <span class="help-block">
                           <strong>{{ $errors->first('points') }}</strong>
@@ -82,7 +82,7 @@
           <div class="form-group{{ $errors->has('enunciado') ? ' has-error' : '' }}">
               <label for="enunciado" class="col-md-4 control-label">Enunciado: </label>
               <div class="col-md-6">
-                  <textarea rows="10" cols="66" class="input form-input" name="enunciado"></textarea>
+                  <textarea rows="10" cols="66" class="input form-input" name="enunciado">{{$challenge->enunciado}}</textarea>
                   @if ($errors->has('enunciado'))
                       <span class="help-block">
                           <strong>{{ $errors->first('enunciado') }}</strong>
@@ -93,7 +93,7 @@
           <div class="form-group{{ $errors->has('flag') ? ' has-error' : '' }}">
               <label for="flag" class="col-md-4 control-label">Flag: </label>
               <div class="col-md-6">
-                  <input id="flag" type="text" class="form-control input" name="flag" value="{{ old('flag') }}" placeholder="Flag...">
+                  <input id="flag" type="text" class="form-control input" name="flag" value="{{$challenge->flag}}" placeholder="Flag...">
                   @if ($errors->has('flag'))
                       <span class="help-block">
                           <strong>{{ $errors->first('tag') }}</strong>
@@ -104,7 +104,7 @@
           <div class="form-group{{ $errors->has('autor') ? ' has-error' : '' }}">
               <label for="autor" class="col-md-4 control-label">Autor: </label>
               <div class="col-md-6">
-                  <input id="autor" type="text" class="form-control input" name="autor" value="{{ old('autor') }}" placeholder="Nome do Autor...">
+                  <input id="autor" type="text" class="form-control input" name="autor" value="{{$challenge->autor}}" placeholder="Nome do Autor...">
                   @if ($errors->has('autor'))
                       <span class="help-block">
                           <strong>{{ $errors->first('autor') }}</strong>

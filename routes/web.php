@@ -2,7 +2,7 @@
 Route::get('/', 'User\UserController@news')->name('root');
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['prefix' => '/hacker'], function () {
+    Route::group(['prefix' => '/home'], function () {
         Route::get('/', 'User\UserController@index')->name('home');
         Route::get('/scoreboard', 'User\UserController@scoreboard')->name('scoreUsers');
     });
@@ -20,16 +20,16 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/adicionar', 'Challs\ChallengesController@adminCreateView')->name('createChall');
             Route::post('/adicionar', 'Challs\ChallengesController@createFlag');
             Route::post('/deletar/{nome}/{id}', 'Challs\ChallengesController@delete');
-            Route::post('/editar/{nome}/{id}', 'Challs\ChallengesController@update');
-            Route::get('/editar/{nome}/{id}', 'Challs\ChallengesController@viewUpdate');
+            Route::post('/editar/{id}/{nome}', 'Challs\ChallengesController@update');
+            Route::get('/editar/{id}', 'Challs\ChallengesController@viewUpdate');
         });
 
         Route::group(['prefix' => '/categorias'], function () {
             Route::get('/', 'Challs\CategoryController@view')->name('categorias');
             Route::get('/adicionar', 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
             Route::post('/adicionar', 'Challs\CategoryController@create')->name('categoriasCreate');
-            Route::get('/editar/{nome}/{id}', 'Challs\CategoryController@viewUpdate');
-            Route::post('/editar/{nome}/{id}', 'Challs\CategoryController@update');
+            Route::get('/editar/{id}', 'Challs\CategoryController@viewUpdate');
+            Route::post('/editar/{id}', 'Challs\CategoryController@update');
             Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete');
         });
 
@@ -39,11 +39,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/editar/{nome}/{id}', 'User\MaestriaController@update')->name('maestriasUpdate');
             Route::post('/deletar/{nome}/{id}', 'User\MaestriaController@delete');
         });
-
     });
-
 });
-
 
 Route::group(['prefix' => '/login'], function () {
     Route::get('/', ['as' => 'login', 'uses' => 'Auth\LoginController@showLoginForm']);
@@ -64,7 +61,7 @@ Route::group(['prefix' => '/senha'], function () {
 });
 
 Route::group(['middleware' => ['guest']], function () {
-    Route::group(['prefix' => '/register'], function () {
+    Route::group(['prefix' => getenv("CTF_REGISTER", true)], function () {
         Route::get('/', ['as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm']);
         Route::post('/', ['as' => 'post-register', 'uses' => 'Auth\RegisterController@register']);
     });

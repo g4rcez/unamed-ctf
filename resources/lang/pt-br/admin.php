@@ -15,10 +15,15 @@ return [
     'users' => 'Usuários',
     'challs' => 'Desafios',
     'categories' => 'Categorias',
+    'maestria' => 'Maestrias',
     'team' => "Equipes",
     'logout' => "Sair",
     'totalUsers' => 'Total de Usuários',
     'challsTotal' => 'Total de Desafios',
     'teamTotal' => 'Total de Equipes',
     'flagTotal' => 'Flags Capturadas',
+    'challsTitle' => 'Desafios Criados',
+    'challsCreateLink' => "Novo Desafio",
+    'challsCount' => "Desafios Disponíveis: ",
+    'challsPoints' => "Pontuação total: "
 ];

@@ -13,7 +13,8 @@ class UserController extends Controller
     {
         $usuario = Auth::user();
         if (!Auth::guest()) {
-            $challenges = User::with('challenges')->get()->where('id','=', $usuario->id)->first()['relations']['challenges'];
+            $challenges = User::with('challenges')->get()->where(
+                'id','=', $usuario->id)->first()['relations']['challenges'];
             $categories = [
                 'nome'=> [], 'id' => [], 'pontos' => []
             ];
@@ -22,7 +23,8 @@ class UserController extends Controller
                     array_push($categories['id'], $chall->category->id);
                     array_push($categories['nome'], $chall->category);
                 }
-                $categories['pontos'][$chall->category->nome] = $challenges->where('categories_id',$chall->category->id)->sum('pontos');
+                $categories['pontos'][$chall->category->nome] = $challenges->where(
+                    'categories_id',$chall->category->id)->sum('pontos');
             }
             $pontuacao = $challenges->sum('pontos');
             return view('user.index', compact(
@@ -39,21 +41,6 @@ class UserController extends Controller
         }
         return view('news.guest');
     }
-
-//    public function scoreboard(){
-//        $usuarios = User::all();
-//        $score = ['user' => [], []];
-//        $count = 1;
-//        foreach ($usuarios as $usuario){
-//            $challUser = User::with('challenges')->get()->where('id','=', $usuario->id);
-//            $score[0][$count] = $challUser->first()['relations']['challenges']->sum('pontos');
-//            array_push($score['user'], $usuario);
-//            $count += 1;
-//        }
-//        array_multisort($score[0], SORT_NUMERIC);
-//        dd($score);
-//        return view('user.scoreboard', compact('score'));
-//    }
 
     public function scoreboard(){
         $usuarios = User::all();
@@ -76,7 +63,6 @@ class UserController extends Controller
                 return ( ( $a->getScore() < $b->getScore()) ? 1 : -1 );
             }
         );
-//        dd($score);
         return view('user.scoreboard', compact('score'));
     }
 }

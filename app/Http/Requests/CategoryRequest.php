@@ -24,6 +24,13 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         if ($this->method() == 'POST') {
+            if ( preg_match('/editar/', $this->route()->uri()) ){
+                return [
+                    'nome' => 'string|min:2|max:64|required|unique:categories,id,'.$this->input('id'),
+                    'color' => 'string|required',
+                    'descricao' => 'string|min:5|required|max:2048'
+                ];
+            }
             return [
                 'nome' => 'string|min:2|max:64|required|unique:categories',
                 'color' => 'string|required',

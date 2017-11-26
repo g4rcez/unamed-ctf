@@ -1,6 +1,6 @@
-@extends('layout.user')
-@section('challs','active')
-@section('titulo',' - Categorias')
+@extends('layout.admin')
+@section('categories','active')
+@section('titulo', getenv("CTF_NAME",true)." - Categorias")
 @section('conteudo')
     @if (Session::has('nova'))
         <div class="row">
@@ -38,35 +38,45 @@
             </div>
         </div>
     @endif
-    <h2 class="page-title text-center">Categorias</h2>
-    <h2 class="text-center">
-        <small><a href="{{route('categoriasViewCreate')}}">
-                <i class="fa fa-plus"></i> Adicionar Categoria
-            </a> - Total: {{$categorias->count()}}
-        </small>
-    </h2>
-    <div class="espacos"></div>
-    <div class="espacos"></div>
-    <div class="row">
-        <div class="container">
-            @foreach($categorias as $categoria)
-                <div class="col-md-3 col-lg-3">
-                    <div class="box-users" style="background-color:{{$categoria->color}}20">
-                        <h3><a data-toggle="modal" data-target="#{{str_replace(' ','',$categoria->nome)}}"
-                               style="color:#fff;cursor:pointer">
-                                {{$categoria->nome}}
-                            </a></h3>
-                        <ul>
-                            <li>Total de Challs: <strong>X</strong></li>
-                            <li>Total de pontos: <strong>X</strong></li>
-                        </ul>
+    @if($categorias->count() == 0)
+        <h2 class="text-center">@lang('categories.empty')</h2>
+        <div class="espacos"></div>
+        <h2 class="text-center page-title">
+            <a href="{{route('categoriasCreate')}}">
+                @lang('categories.newCategory') <i class="fa fa-plus" aria-hidden="true"></i>
+            </a>
+        </h2>
+        <div class="espacos"></div>
+        <div class="espacos"></div>
+        <div class="espacos"></div>
+    @else
+        <h2 class="page-title text-center">@lang('categories.title')</h2>
+        <h2 class="text-center">
+            <small><a href="{{route('categoriasViewCreate')}}">
+                    <i class="fa fa-plus"></i> @lang('categories.create')
+                </a> - @lang("categories.total"): {{$categorias->count()}}
+            </small>
+        </h2>
+        <div class="espacos"></div>
+        <div class="espacos"></div>
+        <div class="row">
+            <div class="container">
+                @foreach($categorias as $categoria)
+                    <div class="col-md-3 col-lg-3">
+                        <div data-toggle="modal" data-target="#{{md5($categoria->nome)}}" class="box-users" style="cursor:pointer;background-color:{{$categoria->color}}">
+                            <h3>{{$categoria->nome}}</h3>
+                            <ul>
+                                <li>@lang('categories.totalFlags')<strong>{{$categoria->challenge()->where('categories_id',$categoria->id)->count()}}</strong></li>
+                                <li>@lang('categories.totalPoints')<strong>{{$categoria->challenge()->where('categories_id',$categoria->id)->sum('pontos')}}</strong></li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
+    @endif
     @foreach($categorias as $categoria)
-        <div id="{{str_replace(' ','',$categoria->nome)}}" class="modal fade" role="dialog">
+        <div id="{{md5($categoria->nome)}}" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -92,3 +102,4 @@
             </div>
         </div>
     @endforeach
+@endsection

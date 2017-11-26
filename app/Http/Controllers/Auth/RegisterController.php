@@ -1,6 +1,9 @@
-<?php namespace ctf\Http\Controllers\Auth;
+<?php
+
+namespace ctf\Http\Controllers\Auth;
 
 use ctf\User;
+use ctf\Models\Maestria;
 use ctf\Http\Requests\UserRequest;
 use ctf\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
@@ -26,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = "/hacker";
+    protected $redirectTo = "/home";
 
     /**
      * Create a new controller instance.
@@ -40,7 +43,8 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-            return view('auth.register');
+        $maestrias = Maestria::all();
+        return view('auth.register', compact('maestrias'));
     }
 
     /**

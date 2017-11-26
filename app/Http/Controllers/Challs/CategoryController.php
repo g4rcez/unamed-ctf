@@ -5,7 +5,6 @@ namespace ctf\Http\Controllers\Challs;
 use ctf\Http\Controllers\Controller;
 use ctf\Http\Requests\CategoryRequest;
 use ctf\Models\Category;
-use Request;
 
 class CategoryController extends Controller
 {
@@ -31,7 +30,7 @@ class CategoryController extends Controller
     {
         $this->category->fill($request->all());
         if (!$this->category->save()) {
-            abort(503, 'Erro ao salvar a categoria.');
+            return view('errors.404');
         }
         $novaCategoria = $this->category->nome;
         \Session::flash('nova', "A categoria $novaCategoria foi criada com sucesso");
@@ -57,7 +56,7 @@ class CategoryController extends Controller
     {
         $categoria = $this->category->findOrFail($id)->where('nome', $nome)->first();
         if(!$categoria->delete()){
-            abort(500);
+            return view('errors.404');
         }
         \Session::flash('deletado', "A categoria $nome foi deletada com sucesso");
         return redirect()->route('categorias');

@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
                 'nickname' => 'required|string|max:64|min:2|alpha_num|unique:users',
                 'email' => 'required|string|email|max:128|unique:users',
                 'password' => 'required|string|min:8|confirmed',
-                'avatar' => 'active_url|string|max:512|required',
+                'avatar' => 'string|max:512|required',
                 'categoria_favorita' => 'string|max:64'
             ];
         }
