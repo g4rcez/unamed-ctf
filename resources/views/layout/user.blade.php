@@ -5,13 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('titulo')</title>
-    <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="{!! asset('/css/beautify.min.css') !!}" />
-    <link rel="stylesheet" type="text/css" href="{!! asset('/css/font-awesome.css') !!}" />
-    <link rel="stylesheet" type="text/css" href="{!! asset('/css/main.css') !!}" />
+    <!-- Styles and Fonts -->
+    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/beautify.min.css') !!}" />
+    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/font-awesome.min.css') !!}" />
+    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/main.css') !!}" />
     <!-- Scripts -->
-    <script src="{!! asset('/js/beautify.min.js') !!}"></script>
-    <!-- Fonts -->
+    <script src="{!! asset('assets/js/beautify.min.js') !!}"></script>
 </head>
 <body>
 <header>
@@ -22,33 +21,32 @@
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> 
                 </button>
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">
                         <i class="fa fa-flag fa-lg"></i>
-                        C.T.F
+                        {{getenv('CTF_NAME', true)}}
                     </a>
                 </div>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="@yield('home')"><a href="{{route('raiz')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicial<span class="sr-only">(current)</span></a></li>
-                    <li class="@yield('perfil')"><a href=""><i class="fa fa-user" aria-hidden="true"></i> Perfil</a></li>
-                    <li class="@yield('challs')"><a href=""><i class="fa fa-flag" aria-hidden="true"></i> Desafios</a></li>
-                    <li class="@yield('ranking')"><a href=""><i class="fa fa-desktop" aria-hidden="true"></i> Classificação</a></li>
-                    <li class="@yield('team')"><a href=""><i class="fa fa-users" aria-hidden="true"></i> Equipe</a></li>
+                    <li class="@yield('root')"><a href="{{route('root')}}"><i class="fa fa-home" aria-hidden="true"></i> Inicial<span class="sr-only">(current)</span></a></li>
+                    <li class="@yield('home')"><a href="{{route('home')}}"><i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->nickname}}</a></li>
+                    <li class="@yield('challs')"><a href="{{route('challs')}}"><i class="fa fa-flag" aria-hidden="true"></i> Desafios</a></li>
+                    <li class="@yield('ranking')"><a href="{{route('scoreUsers')}}"><i class="fa fa-desktop" aria-hidden="true"></i> Classificação</a></li>
+                    {{--<li class="@yield('team')"><a href=""><i class="fa fa-users" aria-hidden="true"></i> Equipe</a></li>--}}
                     <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
 </header>
-<div class="conteiner-fluid">
+<div class="container-fluid">
     @yield('conteudo')
-    <div class="espacos"></div>
-    <div class="espacos"></div>
-    @include('layout.footer')
+    <div class="espacos"></div><div class="espacos"></div>
 </div>
+@include('layout.footer')
 </body>
 </html>

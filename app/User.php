@@ -14,7 +14,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'id', 'nickname', 'email', 'password',
+        'avatar', 'categoria_favorita',
     ];
+
+    public $incrementing = false;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -28,11 +31,24 @@ class User extends Authenticatable
     public static function boot()
     {
         parent::boot();
-        static::creating(function($model)
-        {
+        static::creating(function ($model) {
             $model->{$model->getKeyName()} = md5(rand());
             return true;
         });
     }
 
+    public function challenges()
+    {
+        return $this->belongsToMany(
+            'ctf\Models\Challenge',
+            'challenges_resolvidos',
+            'users_id',
+            'challenges_id'
+        );
+    }
+
+    public function news()
+    {
+        return $this->hasMany("ctf\Models\Noticia", 'users_id');
+    }
 }

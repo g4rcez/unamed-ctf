@@ -1,14 +1,17 @@
 @extends('layout.guest')
+@section('login','active')
 @section('conteudo')
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h2 class="text-center">Login do Usuário</h2>
+                <h2 class="text-center">
+                  Login do Usuário
+                </h2>
 
                 <div class="espacos"></div>
                 <div class="espacos"></div>
 
-                <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+                <form class="form-horizontal" role="form" method="POST" action="{{route('login')}}">
                     {{ csrf_field() }}
                     <div class="form-group{{ $errors->has('nickname') ? ' has-error' : '' }}">
                         <label for="email" class="col-md-4 control-label">Nickname: </label>

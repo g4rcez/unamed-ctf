@@ -24,11 +24,12 @@ class ChallsRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => '',
-            'flag' => '',
-            'autor' => '',
-            'pontos' => '',
-            'enunciado' => '',
+            'nome' => 'string|unique:challenges',
+            'flag' => 'string',
+            'autor' => 'string',
+            'pontos' => 'string',
+            'enunciado' => 'string',
+            'categories_id' => 'string',
         ];
     }
 }

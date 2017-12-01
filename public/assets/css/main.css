@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css?family=Cantarell|Montserrat');
+
+body {
+    padding-top: 70px;
+    overflow-x: hidden;
+    font-family: 'Cantarell', sans-serif;
+    background-color: #22242a;
+    color: #fff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-dark {
+    color: #fff;
+    background-color: #121212;
+    box-shadow: 1px 1px 2px #000;
+}
+
+.espacos {
+    padding-top: 1em;
+}
+
+.paragrafos {
+    text-align: justify;
+    word-wrap: break-word;
+    word-break: break-all;
+    word-spacing: normal;
+}
+
+.success {
+    color: #25f129;
+}
+
+.danger {
+    color: #ff2d2d;
+}
+
+.warn {
+    color: #f5d91c;
+}
+
+.dark {
+    color: #111;
+}
+
+.light {
+    color: #eee;
+}
+
+.page-title {
+    font-size: 3em;
+}
+
+a {
+    color: #52a2c4;
+}
+
+a:hover {
+    color: #6ad2ff;
+}
+
+/*NavBar Style*/
+
+.navbar-inverse {
+    background-color: #121212;
+    box-shadow: 1px 1px 5px #000;
+}
+
+.navbar-collapse > ul > li:hover {
+    background-color: #24262a;
+}
+
+/*inputs de autenticação*/
+
+.input {
+    background: #121212;
+    color: #fff;
+    border: 1px groove #090909;
+}
+
+.input:disabled {
+    background: #171717;
+    opacity: 0.8;
+    color: #000;
+    border: 1px groove #090909;
+}
+
+.itens-register {
+    font-size: 1.25em;
+}
+
+/*Tabelas do Scoreboards*/
+
+.table-body-dark {
+    background-color: #121212;
+    border: 0px solid #121212;
+    border-top: 0px;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #202020;
+}
+
+.table-body-transparent {
+    background-color: transparent;
+    border: 0px solid #121212;
+    border-top: 0px;
+    vertical-align: middle;
+}
+
+/*Classes da View desafios */
+
+.desafio-box {
+    background-color: #171717;
+    padding: 0.5em;
+    margin-top: 0.8em;
+    border-radius: 0;
+    box-shadow: 1px 1px 3px #000;
+    min-height: 200px;
+    max-height: 100%;
+}
+
+.desafio-box:hover {
+    background-color: #202020;
+    cursor: pointer;
+}
+
+.desafio-informacao {
+    padding-top: 2.5em;
+    text-align: right;
+}
+
+.modal-desafio-title {
+    font-size: 1.8em;
+    background-color: #22242a;
+}
+
+.modal-desafio-body {
+    text-align: justify;
+    padding-top: 0.6em;
+    background-color: #22242a;
+    padding-left: 1em;
+}
+
+.modal-desafio-body > ul {
+    list-style: none;
+}
+
+.modal-desafio-body > ul > li > a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.modal-desafio-body > ul > li > a:hover {
+    text-decoration: underline;
+    color: #6ad2ff;
+}
+
+.modal-desafio-footer {
+    text-align: right;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    background-color: #22242a;
+}
+
+.modal-dialog {
+    background-color: #22242a;
+}
+
+.modal-content {
+    background-color: #22242a;
+    color: #fff;
+}
+
+.box-users {
+    background-color: #121212;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.box-challs {
+    padding: 2px;
+    margin-bottom: 10px;
+}
+
+.chall-box {
+    padding: 20px 0;
+    border: 0px solid transparent;
+    text-align: center;
+}
+
+.chall-box:hover {
+    background-color: #000;
+    cursor: pointer;
+}
+
+.grid {
+    margin: 0 auto;
+}
+
+.grid-item {
+    width: 22.5em;
+}
+
+.multiselect-ui{
+    background-color: #202020;
+}
+
+span.multiselect-native-select {
+    position: relative;
+}
+
+span.multiselect-native-select select {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px -1px -1px -3px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important;
+    left: 50%;
+    top: 30px;
+}
+
+.multiselect-container {
+    position: absolute;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #202020;
+}
+
+.multiselect-container .input-group {
+    margin: 5px;
+    background-color: #202020;
+
+}
+
+.multiselect-container > li {
+    padding: 0;
+    color: #fff;
+}
+
+.multiselect-container > li > a.multiselect-all label {
+    font-weight: 700
+}
+
+.multiselect-container > li.multiselect-group label {
+    margin: 0;
+    padding: 3px 20px 3px 20px;
+    height: 100%;
+    font-weight: 700
+}
+
+.multiselect-container > li.multiselect-group-clickable label {
+    cursor: pointer
+}
+
+.multiselect-container > li > a {
+    padding: 0
+}
+
+.multiselect-container > li > a > label {
+    margin: auto;
+    height: 100%;
+    cursor: pointer;
+    font-weight: 400;
+    padding: 3px 3px 3px 30px;
+    color: #fff;
+}
+.multiselect-container > li > a > label:hover {
+    color: #000;
+}
+
+.multiselect-container > li > a > label.radio, .multiselect-container > li > a > label.checkbox {
+    margin: 0
+}
+
+.multiselect-container > li > a > label > input[type=checkbox] {
+    margin-bottom: 5px
+}
+
+.btn-group > .btn-group:nth-child(2) > .multiselect.btn {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px
+}
+
+.form-inline .multiselect-container label.checkbox, .form-inline .multiselect-container label.radio {
+    padding: 3px 20px 3px 40px
+}
+
+.form-inline .multiselect-container li a label.checkbox input[type=checkbox], .form-inline .multiselect-container li a label.radio input[type=radio] {
+    margin-left: -20px;
+    margin-right: 0
+}
+
+/*Footer Style*/
+
+footer {
+    width: 100%;
+    text-align: center;
+    background-color: #121212;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.icon-box {
+    color: #fff;
+    background: #000;
+    padding: 5px 3px 2px 3px;
+}
