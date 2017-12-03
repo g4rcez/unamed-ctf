@@ -25,9 +25,9 @@
                                  class="profile-avatar" alt="avatar for user">
                         </figure>
                         <h4 class="card-title mt-3">{{ $usuario->nickname }}</h4>
-                        {{--<div class="card-text" style="color:#fff">--}}
-                            {{--<span class="sticker sticker-blue" style="font-size:1em; margin-bottom: 5px;">#{{$usuario->categoria_favorita}}</span>--}}
-                        {{--</div>--}}
+                        <div class="card-text" style="color:#fff">
+                            <span class="sticker sticker-blue" style="font-size:1em; margin-bottom: 5px;">#{{$usuario->categoria_favorita}}</span>
+                        </div>
                     </div>
                     <div class="card-footer">
                         <span class="dark">Nome da equipe: time</span><br  />

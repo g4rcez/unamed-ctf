@@ -14,10 +14,10 @@
             </div>
         </div>
     @endif
-    <div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+    <div class="col-md-12 col-lg-12">
         <div class="espacos"></div>
         <div class="espacos"></div>
-        <div class="row">
+        <div class="grid center-block text-center text-capitalize">
             @if($challenges->count() == 0)
                 <h2 class="text-center">@lang('challenges.empty')</h2>
                 <div class="espacos"></div>
@@ -49,8 +49,7 @@
                     <hr>
                 </div>
                 @foreach($challenges as $challenge)
-                    <div class="col-md-3 col-lg-3 grid-item" data-toggle="modal"
-                         data-target="#{{md5($challenge->nome)}}">
+                    <div class="col-md-3 col-lg-3 grid-item" data-toggle="modal" data-target="#{{md5($challenge->nome)}}">
                         <div class="chall-box" style="background:{{$challenge->category->color}}"
                              onMouseOver="this.style.background='#080808'"
                              onMouseOut="this.style.background='{{$challenge->category->color}}'">
@@ -87,15 +86,16 @@
                                 <li>{{$challenge->arquivo}}</li>
                             </ul>
                         @endif
-                         @isset($maestrias)
+                         @if(!empty($maestria['skills']))
+                             {{$maestrias->count()}}
                              @lang('challenges.skillsNeeded')
                             <ul>
                                 @foreach($maestrias as $maestria)
-                                    @if($maestria['skills'][0]->pivot['challenges_id'] == $challenge->id)
-                                        @foreach($maestria['skills'] as $skill)
-                                            <li>{{ $skill->maestria }}</li>
-                                        @endforeach
-                                    @endif
+                                    @foreach($maestria['skills'] as $skills)
+                                        @if($skills->pivot->challenges_id == $challenge->id)
+                                            <li>{{ $skills->maestria }}</li>
+                                        @endif
+                                    @endforeach
                                 @endforeach
                             </ul>
                         @endisset
@@ -121,4 +121,18 @@
                 </div>
             </div>
         </div>
+        <script src="{!! asset('assets/js/masonry.pkgd.min.js') !!}"></script>
+        <script>
+            $('.grid').masonry({
+                // set itemSelector so .grid-sizer is not used in layout
+                itemSelector: '.grid-item',
+                // use element for option
+                columnWidth: 0,
+                horizontalOrder: true,
+                initLayout: true,
+                fitWidth: false,
+                resize: true,
+                percentPosition: true
+            });
+        </script>
     @endforeach

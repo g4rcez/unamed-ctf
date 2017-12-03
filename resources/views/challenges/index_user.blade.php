@@ -33,7 +33,11 @@
                 <div class="col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
                     <div class="alert alert-danger alert-dismissable">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        @lang("challenges.wrong")
+                        @lang("challenges.wrong") <strong>
+                            @if(Session::get('naoCerto') != 'null')
+                                {{Session::get('naoCerto')}}
+                            @endif
+                        </strong>
                     </div>
                 </div>
             </div>
@@ -52,7 +56,7 @@
                 <i class="fa fa-flag" aria-hidden="true"></i> Capture the Flags</h2>
             <div class="espacos"></div>
             <h4 class="text-center">
-                {{Auth::user()->nickname}}: {{$pontos}} pontos -
+                {{Auth::user()->nickname}}: {{$pontos->sum('pontos')}} pontos -
                 <a data-toggle="collapse" data-target="#submitFlag">Submeter Flag</a>
                 <div class="espacos"></div>
                 <div class='collapse' id="submitFlag">
@@ -93,17 +97,19 @@
                 <div class="espacos"></div>
                 <div class="grid center-block text-center text-capitalize">
                     @foreach($challenges as $challenge)
-                        <div class="col-md-3 col-lg-3 grid-item" data-toggle="modal"
-                             data-target="#{{md5($challenge->nome)}}">
-                            <div class="chall-box" style="background:{{$challenge->category->color}}"
-                                 onMouseOver="this.style.background='#080808'"
-                                 onMouseOut="this.style.background='{{$challenge->category->color}}'">
+                        <div class="col-md-3 col-lg-3 grid-item" data-toggle="modal" data-target="#{{md5($challenge->nome)}}">
+                            <div class="chall-box" style="background:{{$challenge->category->color}}" onMouseOver="this.style.background='#080808'" onMouseOut="this.style.background='{{$challenge->category->color}}'">
                                 <h3>
                                     <i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->nome}}</h3>
                                 <h4>
                                     <small>{{$challenge->category->nome}}</small>
                                 </h4>
                                 <h4>{{$challenge->pontos}}</h4>
+                                <small style="margin:65%;font-weight:bolder" class="text-right">
+                                    @if($pontos->where('nome',$challenge->nome)->count() > 0)
+                                        <i class="fa fa-flag" aria-hidden="true"></i> Já Resolvido
+                                    @endif
+                                </small>
                             </div>
                             <div class="espacos"></div>
                         </div>
@@ -128,23 +134,22 @@
                                         @lang('challenges.skillsNeeded')
                                         <ul>
                                             @foreach($maestrias as $maestria)
-                                                @if($maestria['skills']->first()->pivot['challenges_id'] == $challenge->id)
-                                                    @foreach($maestria['skills'] as $skill)
-                                                        <li>{{ $skill->maestria }}</li>
-                                                    @endforeach
-                                                @endif
+                                                @foreach($maestria['skills'] as $skills)
+                                                    @if($skills->pivot->challenges_id == $challenge->id)
+                                                        <li>{{ $skills->maestria }}</li>
+                                                    @endif
+                                                @endforeach
                                             @endforeach
                                         </ul>
                                     @endisset
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-12">
-                                                <form class="form-inline"
-                                                      action="{{url(getenv('CHALLS_ROUTE', true)."/submit")}}"
-                                                      method="POST">
+                                                <form class="form-inline" action="{{url(getenv('CHALLS_ROUTE', true)."/submitFlag")}}" method="POST">
                                                     {{csrf_field()}}
                                                     <label for="flag" class="control-label">Flag: </label>
                                                     <div class="input-group">
+                                                        <input type="hidden" name="nome" value="{{$challenge->nome}}" />
                                                         <input id="flag" class="form-control input" type="password"
                                                                name="flag"
                                                                value="{{ old('flag') }}" required autofocus

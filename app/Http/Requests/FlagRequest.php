@@ -23,15 +23,23 @@ class FlagRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'flag' => 'string|required'
-        ];
+        if (explode('@', $this->route()->action['uses'])['1'] == 'submitFlag') {
+            return [
+                'flag' => 'string|required'
+            ];
+        } else if (explode('@', $this->route()->action['uses'])['1'] == 'submitFlagWithName') {
+            return [
+                'flag' => 'string | required',
+                'nome' => 'string|required'
+            ];
+        }
+        return [];
     }
 
     public function messages()
     {
         return [
-          'flag.required' => 'Não esqueça de submeter sua flag'
+            'flag.required' => 'Não esqueça de submeter sua flag'
         ];
     }
 }

@@ -8,6 +8,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => getenv('CHALLS_ROUTE', true)], function () {
         Route::get('/', 'Challs\ChallengesController@userView')->name('challs');
         Route::post('/submit', 'Challs\ChallengesController@submitFlag');
+        Route::post('/submitFlag', 'Challs\ChallengesController@submitFlagWithName');
     });
 
     Route::group(['prefix' => getenv('ADMIN_ROUTE', true)], function () {

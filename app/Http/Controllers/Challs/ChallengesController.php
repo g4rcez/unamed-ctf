@@ -36,8 +36,8 @@ class ChallengesController extends Controller
         $maestrias = Challenge::with('skills')->get();
         $challenges = Challenge::all()->where('disponivel', true);
         $pontos = User::with('challenges')->get()->where(
-            'id', '=', Auth::user()->id)->first()['relations']['challenges']->sum('pontos');
-        return view('challenges.index_user', compact('challenges', 'pontos','maestrias'));
+            'id', '=', Auth::user()->id)->first()['relations']['challenges'];
+        return view('challenges.index_user', compact('challenges', 'pontos', 'maestrias'));
     }
 
     /**
@@ -81,19 +81,22 @@ class ChallengesController extends Controller
             return view('erros.404');
         }
         $challenge = $this->challenge->nome;
-        $arrayTeste = [];
-        try{
-            foreach ($request->maestrias as $maestria){
-                array_push($arrayTeste, [
-                    'maestrias_id' => $maestria,
-                    'challenges_id' => $this->challenge->id,
-                    'challenges_categories_id' => $this->challenge->categories_id
-                ]);
-            }
-            $this->challenge->skills()->attach($arrayTeste);
-            $this->challenge->skills()->save(new MaestriaRequired());
-        }catch (\Exception $exception){}
         \Session::flash('nova', "A categoria $challenge foi criada com sucesso");
+        $arrayTeste = [];
+        if (!empty($request->maestrias)) {
+            try {
+                foreach ($request->maestrias as $maestria) {
+                    array_push($arrayTeste, [
+                        'maestrias_id' => $maestria,
+                        'challenges_id' => $this->challenge->id,
+                        'challenges_categories_id' => $this->challenge->categories_id
+                    ]);
+                }
+                $this->challenge->skills()->attach($arrayTeste);
+                $this->challenge->skills()->save(new MaestriaRequired());
+            } catch (\Exception $exception) {
+            }
+        }
         return redirect()->route('adminChall', compact('challenge'));
     }
 
@@ -102,17 +105,32 @@ class ChallengesController extends Controller
      * @param FlagRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
+    public function submitFlagWithName(ChallengesResolvido $challengesResolvido, FlagRequest $request)
+    {
+        $assert = $this->challenge->where(
+            "flag", $this->encodeFlag($request->flag))->where(
+            "nome", $request->nome
+        );
+        if ($assert->count() == 1) {
+            list($flag, $resolvido) = $this->searchFlag($challengesResolvido, $assert);
+            if ($resolvido->count() == 0) {
+                $challengesResolvido->saveOrFail();
+                \Session::flash('flagCaptured', $request->nome);
+            } else {
+                \Session::flash('jaCapturado', $request->nome);
+            }
+        } else {
+            \Session::flash('naoCerto', $request->nome);
+        }
+        return redirect()->route("challs");
+    }
+
     public function submitFlag(ChallengesResolvido $challengesResolvido, FlagRequest $request)
     {
         $assert = $this->challenge->where("flag", $this->encodeFlag($request->flag));
         $flag = 'null';
         if ($assert->count() == 1) {
-            $flag = $assert->first()->nome;
-            $values = ['users_id' => Auth::user()->id, 'challenges_id' => $assert->first()->id];
-            $challengesResolvido->fill($values);
-            $resolvido = ChallengesResolvido::all()->where(
-                'challenges_id', $values['challenges_id']
-            )->where('users_id', $values['users_id']);
+            list($flag, $resolvido) = $this->searchFlag($challengesResolvido, $assert);
             if ($resolvido->count() == 0) {
                 $challengesResolvido->saveOrFail();
                 \Session::flash('flagCaptured', "$flag");
@@ -200,5 +218,21 @@ class ChallengesController extends Controller
             )
         );
         return $flag;
+    }
+
+    /**
+     * @param ChallengesResolvido $challengesResolvido
+     * @param $assert
+     * @return array
+     */
+    private function searchFlag(ChallengesResolvido $challengesResolvido, $assert)
+    {
+        $flag = $assert->first()->nome;
+        $values = ['users_id' => Auth::user()->id, 'challenges_id' => $assert->first()->id];
+        $challengesResolvido->fill($values);
+        $resolvido = ChallengesResolvido::all()->where(
+            'challenges_id', $values['challenges_id']
+        )->where('users_id', $values['users_id']);
+        return array($flag, $resolvido);
     }
 }
