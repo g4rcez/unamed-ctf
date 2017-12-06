@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $table = 'categories';
-    protected $fillable = ['nome', 'color', 'descricao'];
+    protected $fillable = ['nome', 'color', 'descricao', 'modificado_por'];
     protected $softDelete = true;
     protected $guarded = ['id'];
     protected $dates = ['deleted_at'];

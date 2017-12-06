@@ -2,6 +2,7 @@
 
 namespace ctf\Http\Controllers\Challs;
 
+use Auth;
 use ctf\Http\Controllers\Controller;
 use ctf\Http\Requests\CategoryRequest;
 use ctf\Models\Category;
@@ -29,6 +30,7 @@ class CategoryController extends Controller
     public function create(CategoryRequest $request)
     {
         $this->category->fill($request->all());
+        $this->category->modificado_por = Auth::user()->nickname;
         if (!$this->category->save()) {
             return view('errors.404');
         }
@@ -47,6 +49,7 @@ class CategoryController extends Controller
     {
         $updated = Category::all()->find($id);
         $updated->update($request->all());
+        $updated->update(["modificado_por" => Auth::user()->nickname]);
         $novo = $request->input('nome');
         \Session::flash('atualizado', "A categoria $nome foi atualizada para $novo");
         return \Redirect::route('categorias');

@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'Challs\CategoryController@view')->name('categorias');
             Route::get('/adicionar', 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
             Route::post('/adicionar', 'Challs\CategoryController@create')->name('categoriasCreate');
-            Route::get('/editar/{id}', 'Challs\CategoryController@viewUpdate');
+            Route::get(getenv('EDIT_ROUTE'  , true).'{id}', 'Challs\CategoryController@viewUpdate');
             Route::post('/editar/{id}', 'Challs\CategoryController@update');
             Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete');
         });
