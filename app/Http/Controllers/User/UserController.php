@@ -60,6 +60,13 @@ class UserController extends Controller
                 return ( ( $a->getScore() < $b->getScore()) ? 1 : -1 );
             }
         );
+        usort(
+            $score,
+            function($a, $b) {
+                if( $a->getNome() == $b->getNome() ) return 0;
+                return ( ( $a->getNome() < $b->getNome()) ? 1 : -1 );
+            }
+        );
         return view('user.scoreboard', compact('score'));
     }
 }

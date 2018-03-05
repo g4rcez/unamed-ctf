@@ -35,11 +35,12 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="@yield('home')"><a href="{{route('root')}}"><i class="fa fa-dashboard" aria-hidden="true"></i> @lang('admin.home')<span class="sr-only">(current)</span></a></li>
-                    <li class="@yield('users')"><a href=""><i class="fa fa-user" aria-hidden="true"></i> @lang('admin.users')</a></li>
-                    <li class="@yield('challs')"><a href="{{route('adminChall')}}"><i class="fa fa-flag" aria-hidden="true"></i> @lang('admin.challs')</a></li>
-                    <li class="@yield('categories')"><a href="{{route('categorias')}}"><i class="fa fa-group" aria-hidden="true"></i> @lang('admin.categories')</a></li>
+                    <li class="@yield('permissions')"><a href="{{route('permissions')}}"><i class="fa fa-users" aria-hidden="true"></i> @lang('admin.permissions')</a></li>
                     <li class="@yield('maestrias')"><a href="{{route('maestrias')}}"><i class="fa fa-certificate" aria-hidden="true"></i> @lang('admin.maestria')</a></li>
+                    <li class="@yield('categories')"><a href="{{route('categorias')}}"><i class="fa fa-group" aria-hidden="true"></i> @lang('admin.categories')</a></li>
+                    <li class="@yield('challs')"><a href="{{route('adminChall')}}"><i class="fa fa-flag" aria-hidden="true"></i> @lang('admin.challs')</a></li>
                     <li class="@yield('team')"><a href=""><i class="fa fa-users" aria-hidden="true"></i> @lang('admin.team')</a></li>
+                    <li class="@yield('users')"><a href=""><i class="fa fa-user" aria-hidden="true"></i> @lang('admin.users')</a></li>
                     <li><a href="{{route('logout')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> @lang('admin.logout')</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->

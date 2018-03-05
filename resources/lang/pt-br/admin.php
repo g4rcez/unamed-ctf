@@ -25,5 +25,6 @@ return [
     'challsTitle' => 'Desafios Criados',
     'challsCreateLink' => "Novo Desafio",
     'challsCount' => "Desafios Disponíveis: ",
-    'challsPoints' => "Pontuação total: "
+    'challsPoints' => "Pontuação total: ",
+    'permissions' => "Permissões",
 ];

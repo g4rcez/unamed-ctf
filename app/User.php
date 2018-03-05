@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany("ctf\Models\Noticia", 'users_id');
     }
+
+    public function permission()
+    {
+        return $this->belongsTo('ctf\Models\Permission','permissao_id');
+    }
 }

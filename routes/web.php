@@ -1,5 +1,5 @@
 <?php
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','isAdmin']], function () {
     Route::group(['prefix' => getenv('USER_ROUTE', true)], function () {
         Route::get('/', 'User\UserController@index')->name('home');
         Route::get('/scoreboard', 'User\UserController@scoreboard')->name('scoreUsers');
@@ -27,9 +27,15 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', 'Challs\CategoryController@view')->name('categorias');
             Route::get('/adicionar', 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
             Route::post('/adicionar', 'Challs\CategoryController@create')->name('categoriasCreate');
-            Route::get(getenv('EDIT_ROUTE'  , true).'{id}', 'Challs\CategoryController@viewUpdate');
+            Route::get(getenv('EDIT_ROUTE', true) . '{id}', 'Challs\CategoryController@viewUpdate');
             Route::post('/editar/{id}', 'Challs\CategoryController@update');
             Route::post('/deletar/{nome}/{id}', 'Challs\CategoryController@delete');
+        });
+        Route::group(['prefix' => getenv('PERM_ROUTE', true)], function () {
+            Route::get('/', 'PermissionController@view')->name('permissions');
+            Route::post('/', 'PermissionController@create')->name('permissionCreate');
+            Route::post(getenv('EDIT_ROUTE') . '{nome}/{id}', 'PermissionController@update')->name('permissionUpdate');
+            Route::post(getenv('DELETE_ROUTE') . '{nome}/{id}', 'PermissionController@delete');
         });
 
         Route::group(['prefix' => getenv('MAESTRIAS_ROUTE', true)], function () {

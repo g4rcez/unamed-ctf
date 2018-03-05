@@ -27,14 +27,14 @@
           @php $count=1 @endphp
         @foreach($score as $usuario)
           <tbody class="table-hover">
+            <td valign="middle" align="center" class="table-body-transparent">
+              <img src="{{$usuario->getAvatar()}}" class="img-responsive" width="32px" height="32px">
+            </td>
             <td valign="middle" align="center" class="table-body-transparent">{{ $count }}</td>
             <td valign="middle" align="center" class="table-body-transparent">
               <a href="http://google.com">{{$usuario->getNome()}}</a>
             </td>
             <td valign="middle" align="center" class="table-body-transparent">{{$usuario->getScore()}}</td>
-            <td valign="middle" align="center" class="table-body-transparent">
-              <img src="{{$usuario->getAvatar()}}" class="img-responsive" width="32px" height="32px">
-            </td>
           </tbody>
               @php $count+=1 @endphp
         @endforeach
