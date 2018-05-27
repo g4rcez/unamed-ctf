@@ -5,7 +5,7 @@
     <h2 class='text-center'>Editar {{$categoria->nome}}</h2>
     <div class="espacos"></div>
     <div class="espacos"></div>
-    <form class="form-horizontal" role="form" method="POST" action="{{url(getenv('ADMIN_ROUTE', true)."/".getenv('CATEGORIES_ROUTE', true).'/'.getenv('EDIT_ROUTE', true).'/'.$categoria->nome/$categoria->id)}}">
+    <form class="form-horizontal" role="form" method="POST" action="{{url(getenv('ADMIN_ROUTE')."/".getenv('CATEGORIES_ROUTE')."/".getenv("EDIT_ROUTE")."/".$categoria->nome."/".$categoria->id)}}">
         {{ csrf_field() }}
         <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
             <label for="nome" class="col-md-4 control-label">Nome da Categoria: </label>

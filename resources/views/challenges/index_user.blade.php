@@ -57,18 +57,15 @@
             <div class="espacos"></div>
             <h4 class="text-center">
                 {{Auth::user()->nickname}}: {{$pontos->sum('pontos')}} pontos -
-                <a data-toggle="collapse" data-target="#submitFlag">Submeter Flag</a>
+                <a data-toggle="collapse" data-target="#submitFlag">Submeter Flag</a> -
+                <a data-toggle="collapse" data-target="#pesquisar">Pesquisar</a>
                 <div class="espacos"></div>
                 <div class='collapse' id="submitFlag">
                     <div class="espacos"></div>
                     <form class="form-inline" action="{{url(getenv('CHALLS_ROUTE',true)."/submit")}}" method="POST">
                         {{csrf_field()}}
-                        <input id="flag" class="form-control input" type="password" name="flag"
-                               value="{{ old('flag') }}" required autofocus placeholder="Flag..."
-                               data-toggle="password">
-                        <script type="text/javascript">
-                            $("#password").password('toggle');
-                        </script>
+                        <input id="flag" class="form-control input" type="text" name="flag"
+                               value="{{ old('flag') }}" required autofocus placeholder="Flag...">
                         @if ($errors->has('flag'))
                             <span class="help-block">
           <strong>{{ $errors->first('flag') }}</strong>
@@ -76,6 +73,16 @@
                         @endif
                         <input type="submit" class="button button-black" value="Capture"/>
                     </form>
+                </div>
+                <div class='collapse' id="pesquisar">
+                    <div class="espacos"></div>
+                    <div class="tc">Exibir somente challenges de:</div>
+                    <div class="espacos"></div>
+                    @foreach($categories as $category)
+                        <a href="{{url(getenv('CHALLS_ROUTE', true).'/search/'.$category->id)}}"
+                           class="mr2 ml2 mb2">{{$category->nome}}</a>
+                    @endforeach<br/>
+                    <a class="mt3" href="{{url(getenv('CHALLS_ROUTE',true))}}">Exibir todos</a>
                 </div>
             </h4>
             <div class="espacos"></div>
@@ -97,15 +104,22 @@
                 <div class="espacos"></div>
                 <div class="grid center-block text-center text-capitalize">
                     @foreach($challenges as $challenge)
-                        <div class="col-md-3 col-lg-3 grid-item" data-toggle="modal" data-target="#{{md5($challenge->nome)}}">
-                            <div class="chall-box" style="background:{{$challenge->category->color}}" onMouseOver="this.style.background='#080808'" onMouseOut="this.style.background='{{$challenge->category->color}}'">
+                        <div class="col-md-3 col-lg-3 grid-item" data-toggle="modal"
+                             data-target="#{{md5($challenge->nome)}}">
+                            <div class="chall-box grow" style="background:{{$challenge->category->color}}"
+                                 onMouseOver="this.style.background='{{$challenge->category->color}}80'"
+                                 onMouseOut="this.style.background='{{$challenge->category->color}}'">
                                 <h3>
                                     <i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->nome}}</h3>
+                                <h5>
+                                    <strong class="white-40"><i class="fa fa-user"></i> {{$challenge->autor}}
+                                    </strong>
+                                </h5>
                                 <h4>
-                                    <small>{{$challenge->category->nome}}</small>
+                                    <small class="mr2">{{$challenge->category->nome}}</small>
+                                    <small class="ml2">{{$challenge->pontos}}</small>
                                 </h4>
-                                <h4>{{$challenge->pontos}}</h4>
-                                <small style="margin:65%;font-weight:bolder" class="text-right">
+                                <small style="margin:65%;" class="text-right white-40">
                                     @if($pontos->where('nome',$challenge->nome)->count() > 0)
                                         <i class="fa fa-flag" aria-hidden="true"></i> Já Resolvido
                                     @endif
@@ -145,16 +159,18 @@
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-12 col-lg-12">
-                                                <form class="form-inline" action="{{url(getenv('CHALLS_ROUTE', true)."/submitFlag")}}" method="POST">
+                                                <form class="form-inline"
+                                                      action="{{url(getenv('CHALLS_ROUTE', true)."/submitFlag")}}"
+                                                      method="POST">
                                                     {{csrf_field()}}
                                                     <label for="flag" class="control-label">Flag: </label>
                                                     <div class="input-group">
-                                                        <input type="hidden" name="nome" value="{{$challenge->nome}}" />
-                                                        <input id="flag" class="form-control input" type="password"
+                                                        <input type="hidden" name="nome" value="{{$challenge->nome}}"/>
+                                                        <input id="flag" class="form-control input"
                                                                name="flag"
                                                                value="{{ old('flag') }}" required autofocus
                                                                placeholder="{{getenv('CTF_NAME', true).'{hello_world}'}}"
-                                                               data-toggle="password" size=40>
+                                                               size=40>
                                                         @if ($errors->has('flag'))
                                                             <span class="help-block">
                     <strong>{{ $errors->first('flag') }}</strong>
@@ -176,20 +192,20 @@
                         </div>
                     </div>
             </div>
-            </div>
-            @endforeach
-            <script src="{!! asset('assets/js/masonry.pkgd.min.js') !!}"></script>
-            <script>
-                $('.grid').masonry({
-                    // set itemSelector so .grid-sizer is not used in layout
-                    itemSelector: '.grid-item',
-                    // use element for option
-                    columnWidth: 0,
-                    horizontalOrder: true,
-                    initLayout: true,
-                    fitWidth: false,
-                    resize: true,
-                    percentPosition: true
-                });
-            </script>
+        </div>
+        @endforeach
+        <script src="{!! asset('assets/js/masonry.pkgd.min.js') !!}"></script>
+        <script>
+            $('.grid').masonry({
+                // set itemSelector so .grid-sizer is not used in layout
+                itemSelector: '.grid-item',
+                // use element for option
+                columnWidth: 0,
+                horizontalOrder: true,
+                initLayout: true,
+                fitWidth: false,
+                resize: true,
+                percentPosition: true
+            });
+        </script>
 @endsection

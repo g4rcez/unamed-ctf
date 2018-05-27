@@ -2,10 +2,11 @@
 
 namespace ctf\Http\Controllers\Auth;
 
-use ctf\User;
-use ctf\Models\Maestria;
-use ctf\Http\Requests\UserRequest;
 use ctf\Http\Controllers\Controller;
+use ctf\Http\Requests\UserRequest;
+use ctf\Models\Maestria;
+use ctf\Models\Permission;
+use ctf\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -36,8 +37,11 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    private $permission;
+
+    public function __construct(Permission $permission)
     {
+        $this->permission = $permission;
         $this->middleware('guest');
     }
 
@@ -45,17 +49,6 @@ class RegisterController extends Controller
     {
         $maestrias = Maestria::all();
         return view('auth.register', compact('maestrias'));
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(UserRequest $data)
-    {
-        return $data;
     }
 
     /**
@@ -79,12 +72,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'id' => md5(rand()),
-            'nickname' => $data['nickname'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'avatar' => $data['avatar']
-        ]);
+        $user = ['id' => md5(rand()), 'nickname' => $data['nickname'], 'email' => $data['email'],
+            'password' => bcrypt($data['password']), 'avatar' => $data['avatar'],];
+        if ($countUsers = User::all()->count() === 0) {
+            try {
+                $this->permission->fill(['permissao' => getenv('ADMIN_PERM')])->save();
+            } catch (\Exception $e) {
+            }
+            $user['permissao_id'] = $this->permission->where(
+                'permissao', getenv('ADMIN_PERM'))->first()->id;
+        }
+        return (new \ctf\User)->create($user);
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(UserRequest $data)
+    {
+        return $data;
     }
 }

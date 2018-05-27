@@ -8,7 +8,14 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <header>
-                    <h2><i class="fa fa-newspaper-o" aria-hidden="true"></i> Painel do {{ $usuario->nickname }}</h2>
+                    <h2>
+                        <i class="fa fa-newspaper-o" aria-hidden="true"></i> Painel do {{ $usuario->nickname }}
+                        <small>
+                            @isset($team)
+                                {{ "$team->nome - token: $team->token" }}
+                            @endisset
+                        </small>
+                    </h2>
                     <div class="espacos"></div>
                 </header>
             </div>
@@ -24,13 +31,15 @@
                             <img src="{{ $usuario->avatar }}"
                                  class="profile-avatar" alt="avatar for user">
                         </figure>
-                        <h4 class="card-title mt-3">{{ $usuario->nickname }}</h4>
-                        <div class="card-text" style="color:#fff">
-                            <span class="sticker sticker-blue" style="font-size:1em; margin-bottom: 5px;">#{{$usuario->categoria_favorita}}</span>
-                        </div>
+                        <h4 class="card-title mt-3">
+                            {{ $usuario->nickname }}
+                            <small>{{$team->nome or ''}}</small>
+                        </h4>
                     </div>
                     <div class="card-footer">
-                        <span class="dark">Nome da equipe: time</span><br  />
+                        @isset($team)
+                            <span class="dark">Nome da equipe: {{$team->token}}</span><br/>
+                        @endisset
                         <a data-toggle="modal" data-target="#myModal">For nerds</a>
                     </div>
                 </div>
@@ -45,10 +54,10 @@
                         chart: {
                             backgroundColor: '#121212',
                             type: 'bar',
-                            shadow: true,
+                            shadow: true
                         },
                         title: {
-                            style: { "color": "#fff" },
+                            style: {"color": "#fff"},
                             text: 'Histórico de Flags',
                         },
                         xAxis: {
@@ -57,15 +66,15 @@
                                     '{{$key}}',
                                 @endforeach
                             ],
-                            style: { "color": "#fff" },
+                            style: {"color": "#fff"},
                             title: {
-                                style: { "color": "#fff" }
+                                style: {"color": "#fff"}
                             }
                         },
                         yAxis: {
                             min: 0,
                             title: {
-                                text: 'Flags',
+                                text: 'Pontos',
                                 align: 'high'
                             },
                             labels: {
@@ -89,7 +98,7 @@
                             name: "{{ $usuario->nickname }}",
                             data: [
                                 @foreach($categories['pontos'] as $category)
-                                    {{"$category"}},
+                                {{"$category"}},
                                 @endforeach
                             ]
                         }]
@@ -102,16 +111,22 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close light" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+                    <button type="button" class="close light" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">
               <i class="fa fa-times"></i>
             </span></button>
-                    <h4 class="modal-title" id="myModalLabel">Estátisticas de {{ $usuario->nickname }}</h4>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Estátisticas de {{ $usuario->nickname }}
+                    </h4>
                 </div>
                 <div class="modal-body">
                     <ul>
                         <li>Total de flags capturadas: <strong>{{$usuario->challenges()->count()}}</strong></li>
                         <li>Total de pontos: <strong>{{$pontuacao}}</strong></li>
                         <li>Usuário desde: <strong>{{$usuario->created_at}}</strong></li>
+                        @isset($team)
+                            <li>Nome do time: {{$team->nome}}</li>
+                        @endisset
                     </ul>
                 </div>
                 <div class="modal-footer">

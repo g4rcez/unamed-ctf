@@ -58,7 +58,7 @@ class CategoryController extends Controller
     public function delete($nome, $id)
     {
         $categoria = $this->category->findOrFail($id)->where('nome', $nome)->first();
-        if(!$categoria->delete()){
+        if (!$categoria->delete()) {
             return view('errors.404');
         }
         \Session::flash('deletado', "A categoria $nome foi deletada com sucesso");

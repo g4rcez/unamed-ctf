@@ -1,10 +1,11 @@
 <?php
 
-namespace ctf\Http\Controllers;
+namespace ctf\Http\Controllers\Admin;
 
-
+use ctf\Http\Controllers\Controller;
 use ctf\Http\Requests\PermissionRequest;
 use ctf\Models\Permission;
+
 
 class PermissionController extends Controller
 {

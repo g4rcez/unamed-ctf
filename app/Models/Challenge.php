@@ -4,6 +4,9 @@ namespace ctf\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property bool disponivel
+ */
 class Challenge extends Model
 {
     protected $fillable = [
@@ -13,7 +16,8 @@ class Challenge extends Model
     protected $guarded = ['id'];
     protected $dates = ['deleted_at'];
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo("ctf\Models\Category", "categories_id");
     }
 
@@ -26,6 +30,7 @@ class Challenge extends Model
             'users_id'
         );
     }
+
     public function skills()
     {
         return $this->belongsToMany(

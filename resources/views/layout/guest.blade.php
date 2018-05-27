@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('titulo')</title>
     <!-- Styles and Fonts -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/beautify.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/tachyons.min.css') !!}"/>
+    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/beautify.min.css') !!}"/>
+    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/font-awesome.min.css') !!}"/>
+    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/main.css') !!}"/>
     <!-- Scripts -->
     <script src="{{ asset('assets/js/beautify.min.js') }}"></script>
 </head>

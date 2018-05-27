@@ -24,12 +24,12 @@ class ChallsRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'string|unique:challenges',
+            'nome' => 'string|min:2|max:64|required|unique:categories,id,'.$this->input('id'),
             'flag' => 'string',
             'autor' => 'string',
             'pontos' => 'string',
             'enunciado' => 'string',
-            'categories_id' => 'string',
+            'categories_id' => '',
         ];
     }
 }

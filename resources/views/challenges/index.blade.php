@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('challs','active')
-@section('titulo', getenv('CTF_NAME', true)."- Challenges")
+@section('titulo', getenv('CTF_NAME', true)." - Challenges")
 @section('conteudo')
     @if (Session::has('atualizado'))
         <div class="row">
@@ -32,11 +32,11 @@
             @else
                 <h2 class="text-center page-title">
                     <i class="fa fa-flag" aria-hidden="true"></i> @lang("admin.challsTitle")</h2>
-                    <h4 class="text-center">
-                        <a href="{{route('createChall')}}">
-                            @lang("admin.challsCreateLink") <i class="fa fa-plus" aria-hidden="true"></i>
-                        </a>
-                    </h4>
+                <h4 class="text-center">
+                    <a href="{{route('createChall')}}">
+                        @lang("admin.challsCreateLink") <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                </h4>
                 <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <h3 class="text-left">@lang('admin.challsCount'){{$challenges->count()}}</h3>
@@ -48,25 +48,36 @@
                 <div class="col-md-12 col-lg-12">
                     <hr>
                 </div>
-                @foreach($challenges as $challenge)
-                    <div class="col-md-3 col-lg-3 grid-item" data-toggle="modal" data-target="#{{md5($challenge->nome)}}">
-                        <div class="chall-box" style="background:{{$challenge->category->color}}"
-                             onMouseOver="this.style.background='#080808'"
-                             onMouseOut="this.style.background='{{$challenge->category->color}}'">
-                            <h3>
-                                <i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->nome}}</h3>
-                            <h4>
-                                <small>{{$challenge->category->nome}}</small>
-                            </h4>
-                            <h4>{{$challenge->pontos}}</h4>
-                        </div>
-                        <div class="espacos"></div>
+                <div class="row tc center">
+                    <div class="espacos"></div>
+                    <div class="espacos"></div>
+                    <div class="grid center-block text-center text-capitalize">
+                        @foreach($challenges as $challenge)
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 grid-item mb3 tc center"
+                                 data-toggle="modal"
+                                 data-target="#{{md5($challenge->nome)}}">
+                                <div class="chall-box" style="background:{{$challenge->category->color}}"
+                                     onMouseOver="this.style.background='#080808'"
+                                     onMouseOut="this.style.background='{{$challenge->category->color}}'">
+                                    <h3>
+                                        <i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->nome}}
+                                    </h3>
+                                    <h5>
+                                        <strong class="white-40"><i class="fa fa-user"></i> {{$challenge->autor}}
+                                        </strong>
+                                    </h5>
+                                    <h4>
+                                        <small class="mr2">{{$challenge->category->nome}}</small>
+                                        <small class="ml2">{{$challenge->pontos}}</small>
+                                    </h4>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
+                </div>
             @endif
         </div>
     </div>
-    <div class="espacos"></div>
     <div class="espacos"></div>
     <div class="espacos"></div>
     @foreach($challenges as $challenge)
@@ -86,9 +97,9 @@
                                 <li>{{$challenge->arquivo}}</li>
                             </ul>
                         @endif
-                         @if(!empty($maestria['skills']))
-                             {{$maestrias->count()}}
-                             @lang('challenges.skillsNeeded')
+                        @if(!empty($maestria['skills']))
+                            {{$maestrias->count()}}
+                            @lang('challenges.skillsNeeded')
                             <ul>
                                 @foreach($maestrias as $maestria)
                                     @foreach($maestria['skills'] as $skills)
@@ -103,10 +114,12 @@
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
                                     <div class="espacos"></div>
-                                    <form class="form-inline" action="{{url(getenv("ADMIN_ROUTE",true).'/'.getenv('CHALLS_ROUTE', true).'/'.getenv('DELETE_ROUTE', true).'/'.$challenge->id)}}"
+                                    <form class="form-inline"
+                                          action="{{url(getenv("ADMIN_ROUTE",true).'/'.getenv('CHALLS_ROUTE', true).'/'.getenv('DELETE_ROUTE', true).'/'.$challenge->id)}}"
                                           method="POST">
                                         {{csrf_field()}}
-                                        <a href="{{url(getenv("ADMIN_ROUTE",true).'/'.getenv('CHALLS_ROUTE', true).'/'.getenv('EDIT_ROUTE', true).'/'.$challenge->id)}}" class="button button-blue">Editar</a>
+                                        <a href="{{url(getenv("ADMIN_ROUTE",true).'/'.getenv('CHALLS_ROUTE', true).'/'.getenv('EDIT_ROUTE', true).'/'.$challenge->id)}}"
+                                           class="button button-blue">Editar</a>
                                         <input type="submit" class="button button-red" value="Deletar"/>
                                     </form>
                                 </div>
@@ -121,12 +134,10 @@
                 </div>
             </div>
         </div>
-        <script src="{!! asset('assets/js/masonry.pkgd.min.js') !!}"></script>
+        <script src="{{ asset('assets/js/masonry.pkgd.min.js') }}"></script>
         <script>
             $('.grid').masonry({
-                // set itemSelector so .grid-sizer is not used in layout
                 itemSelector: '.grid-item',
-                // use element for option
                 columnWidth: 0,
                 horizontalOrder: true,
                 initLayout: true,
@@ -136,3 +147,4 @@
             });
         </script>
     @endforeach
+@endsection

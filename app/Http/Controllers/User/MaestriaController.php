@@ -28,8 +28,8 @@ class MaestriaController extends Controller
         if (!$this->maestria->save()) {
             abort(503, 'Erro ao salvar a categoria.');
         }
-        $maestria = $this->maestria->nome;
-        \Session::flash('nova', "A categoria $maestria foi criada com sucesso");
+        $maestria = $this->maestria->maestria;
+        \Session::flash('nova', "A maestria $maestria foi criada com sucesso");
         return \Redirect::route('maestrias', compact('maestria'));
     }
 
@@ -46,7 +46,7 @@ class MaestriaController extends Controller
     public function delete($nome, $id)
     {
         $maestria = $this->maestria->findOrFail($id)->where('maestria', $nome)->first();
-        if(!$maestria->delete()){
+        if (!$maestria->delete()) {
             abort(500);
         }
         \Session::flash('deletado', "A maestria $nome foi deletada com sucesso");

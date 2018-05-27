@@ -63,11 +63,16 @@
             <div class="container">
                 @foreach($categorias as $categoria)
                     <div class="col-md-3 col-lg-3">
-                        <div data-toggle="modal" data-target="#{{md5($categoria->nome)}}" class="box-users" style="cursor:pointer;background-color:{{$categoria->color}}">
+                        <div data-toggle="modal" data-target="#{{md5($categoria->nome)}}" class="box-users"
+                             style="cursor:pointer;background-color:{{$categoria->color}}">
                             <h3>{{$categoria->nome}}</h3>
                             <ul>
-                                <li>@lang('categories.totalFlags')<strong>{{$categoria->challenge()->where('categories_id',$categoria->id)->count()}}</strong></li>
-                                <li>@lang('categories.totalPoints')<strong>{{$categoria->challenge()->where('categories_id',$categoria->id)->sum('pontos')}}</strong></li>
+                                <li>@lang('categories.totalFlags')
+                                    <strong>{{$categoria->challenge()->where('categories_id',$categoria->id)->count()}}</strong>
+                                </li>
+                                <li>@lang('categories.totalPoints')
+                                    <strong>{{$categoria->challenge()->where('categories_id',$categoria->id)->sum('pontos')}}</strong>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -91,7 +96,7 @@
                     <div class="modal-footer">
                         <form action="{{url("/categorias/deletar/$categoria->nome/$categoria->id")}}" method="POST">
                             {{ csrf_field() }}
-                            <a href="{{url(getenv('ADMIN_ROUTE', true)."/categorias/editar/$categoria->nome/$categoria->id")}}"
+                            <a href="{{url(getenv('ADMIN_ROUTE', true)."/".getenv('CATEGORIES_ROUTE', true)."/".getenv('EDIT_ROUTE', true)."/$categoria->nome/$categoria->id")}}"
                                class="button button-blue">Editar</a>
                             <input type="submit" class="button button-red" value="Deletar"/>
                             <button type="button" class="button button-black" data-dismiss="modal" value="">Fechar

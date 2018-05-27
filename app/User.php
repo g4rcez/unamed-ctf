@@ -1,24 +1,22 @@
 <?php namespace ctf;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
+    public $incrementing = false;
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id', 'nickname', 'email', 'password',
-        'avatar', 'categoria_favorita',
+        'id', 'nickname', 'email', 'password', 'capitao',
+        'avatar', 'categoria_favorita', 'permissao_id', 'team_id'
     ];
-
-    public $incrementing = false;
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -54,6 +52,11 @@ class User extends Authenticatable
 
     public function permission()
     {
-        return $this->belongsTo('ctf\Models\Permission','permissao_id');
+        return $this->belongsTo('ctf\Models\Permission', 'permissao_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo('ctf\Models\Team', 'team_id');
     }
 }

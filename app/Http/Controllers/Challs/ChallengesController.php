@@ -35,9 +35,22 @@ class ChallengesController extends Controller
     {
         $maestrias = Challenge::with('skills')->get();
         $challenges = Challenge::all()->where('disponivel', true);
+        $categories = Category::all();
         $pontos = User::with('challenges')->get()->where(
             'id', '=', Auth::user()->id)->first()['relations']['challenges'];
-        return view('challenges.index_user', compact('challenges', 'pontos', 'maestrias'));
+        return view('challenges.index_user',
+            compact('challenges', 'pontos', 'maestrias', 'categories'));
+    }
+
+    public function userSearch($categoryId)
+    {
+        $categories = Category::all();
+        $maestrias = Challenge::with('skills')->get();
+        $challenges = Challenge::all()->where('disponivel', true)->where("categories_id", $categoryId);
+        $pontos = User::with('challenges')->get()->where(
+            'id', '=', Auth::user()->id)->first()['relations']['challenges'];
+        return view('challenges.index_user',
+            compact('challenges', 'categories', 'pontos', 'maestrias'));
     }
 
     /**
@@ -51,7 +64,6 @@ class ChallengesController extends Controller
     }
 
     /**
-     * @param Category $category
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function adminCreateView()
@@ -71,7 +83,7 @@ class ChallengesController extends Controller
      * @param ChallsRequest $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function createFlag(ChallsRequest $request, MaestriaRequired $maestriaRequired)
+    public function createFlag(ChallsRequest $request)
     {
         $this->challenge->fill($request->all());
         $this->challenge->disponivel = true;
@@ -100,10 +112,21 @@ class ChallengesController extends Controller
         return redirect()->route('adminChall', compact('challenge'));
     }
 
+    public function encodeFlag($pure)
+    {
+        $flag = base64_encode(
+            base64_encode(
+                base64_encode($pure)
+            )
+        );
+        return $flag;
+    }
+
     /**
      * @param ChallengesResolvido $challengesResolvido
      * @param FlagRequest $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Throwable
      */
     public function submitFlagWithName(ChallengesResolvido $challengesResolvido, FlagRequest $request)
     {
@@ -125,6 +148,22 @@ class ChallengesController extends Controller
         return redirect()->route("challs");
     }
 
+    /**
+     * @param ChallengesResolvido $challengesResolvido
+     * @param $assert
+     * @return array
+     */
+    private function searchFlag(ChallengesResolvido $challengesResolvido, $assert)
+    {
+        $flag = $assert->first()->nome;
+        $values = ['users_id' => Auth::user()->id, 'challenges_id' => $assert->first()->id];
+        $challengesResolvido->fill($values);
+        $resolvido = ChallengesResolvido::all()->where(
+            'challenges_id', $values['challenges_id']
+        )->where('users_id', $values['users_id']);
+        return array($flag, $resolvido);
+    }
+
     public function submitFlag(ChallengesResolvido $challengesResolvido, FlagRequest $request)
     {
         $assert = $this->challenge->where("flag", $this->encodeFlag($request->flag));
@@ -144,9 +183,9 @@ class ChallengesController extends Controller
     }
 
     /**
-     * @param $nome
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @throws \Exception
      */
     public function delete($id)
     {
@@ -174,10 +213,21 @@ class ChallengesController extends Controller
         abort(404);
     }
 
+    public function decodeFlag($encode)
+    {
+        $flag = base64_decode(
+            base64_decode(
+                base64_decode($encode)
+            )
+        );
+        return $flag;
+    }
+
     /**
      * @param ChallsRequest $request
      * @param $id
      * @param $nome
+     * @param MaestriaRequired $maestriaRequired
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ChallsRequest $request, $id, $nome, MaestriaRequired $maestriaRequired)
@@ -198,41 +248,5 @@ class ChallengesController extends Controller
         $novo = $request->input('nome');
         \Session::flash('atualizado', "A categoria $nome foi atualizada para $novo");
         return \Redirect::route('adminChall');
-    }
-
-    public function encodeFlag($pure)
-    {
-        $flag = base64_encode(
-            base64_encode(
-                base64_encode($pure)
-            )
-        );
-        return $flag;
-    }
-
-    public function decodeFlag($encode)
-    {
-        $flag = base64_decode(
-            base64_decode(
-                base64_decode($encode)
-            )
-        );
-        return $flag;
-    }
-
-    /**
-     * @param ChallengesResolvido $challengesResolvido
-     * @param $assert
-     * @return array
-     */
-    private function searchFlag(ChallengesResolvido $challengesResolvido, $assert)
-    {
-        $flag = $assert->first()->nome;
-        $values = ['users_id' => Auth::user()->id, 'challenges_id' => $assert->first()->id];
-        $challengesResolvido->fill($values);
-        $resolvido = ChallengesResolvido::all()->where(
-            'challenges_id', $values['challenges_id']
-        )->where('users_id', $values['users_id']);
-        return array($flag, $resolvido);
     }
 }

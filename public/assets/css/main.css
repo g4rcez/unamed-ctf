@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Cantarell|Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu|Cabin');
 
 body {
     padding-top: 70px;
     overflow-x: hidden;
-    font-family: 'Cantarell', sans-serif;
-    background-color: #22242a;
-    color: #fff;
+    font-family: 'Ubuntu', sans-serif;
+    background-color: #202222;
+    color: #efefef;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Cabin', sans-serif;
 }
 
 .btn-dark {
@@ -75,8 +75,8 @@ a:hover {
 /*inputs de autenticação*/
 
 .input {
-    background: #121212;
-    color: #fff;
+    background: #101010;
+    color: #eee;
     border: 1px groove #090909;
 }
 
@@ -95,8 +95,7 @@ a:hover {
 
 .table-body-dark {
     background-color: #121212;
-    border: 0px solid #121212;
-    border-top: 0px;
+    border: 0 solid #121212;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
@@ -166,11 +165,11 @@ a:hover {
 }
 
 .modal-dialog {
-    background-color: #22242a;
+    background-color: #131313;
 }
 
 .modal-content {
-    background-color: #22242a;
+    background-color: #131313;
     color: #fff;
 }
 

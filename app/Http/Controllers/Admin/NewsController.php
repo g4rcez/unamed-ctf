@@ -1,6 +1,7 @@
 <?php
 
-namespace ctf\Http\Controllers;
+namespace ctf\Http\Controllers\Admin;
+use ctf\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -40,5 +41,10 @@ class NewsController extends Controller
             return view('errors.404');
         }
         return \Redirect::route('categorias', compact('novaCategoria'));
+    }
+
+    public function patrocinadores()
+    {
+        return view("patrocinadores.index");
     }
 }

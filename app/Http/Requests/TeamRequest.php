@@ -4,7 +4,7 @@ namespace ctf\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PermissionRequest extends FormRequest
+class TeamRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +23,10 @@ class PermissionRequest extends FormRequest
      */
     public function rules()
     {
-        if ($this->method() == 'POST') {
-            return [
-                'permissao' => 'string|min:2|required',
-            ];
-        }
+        return [
+            'nome' => 'required|max:64|unique:team',
+            'tag' => 'required|string|max:5',
+            'avatar' => 'max:128|required',
+        ];
     }
 }
