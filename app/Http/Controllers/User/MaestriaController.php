@@ -30,7 +30,7 @@ class MaestriaController extends Controller
         }
         $maestria = $this->maestria->maestria;
         \Session::flash('nova', "A maestria $maestria foi criada com sucesso");
-        return \Redirect::route('maestrias', compact('maestria'));
+        return redirect()->route('maestrias');
     }
 
     public function update(MaestriaRequest $request, $nome, $id)

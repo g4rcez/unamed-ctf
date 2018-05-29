@@ -1,7 +1,6 @@
 @extends('layout.admin')
 @section('challs', 'active')
 @section('titulo', getenv("CTF_NAME",true)." - Criar Categoria")
-
 @section('conteudo')
     <h2 class='text-center'>@lang("categories.create")</h2>
     <div class="espacos"></div>

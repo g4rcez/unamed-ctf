@@ -1,21 +1,20 @@
 <?php
 
 namespace ctf\Http\Controllers\Admin;
+
 use ctf\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Auth;
-
-use ctf\User;
-use ctf\Models\Noticia;
 use ctf\Http\Requests\NewsRequest;
+use ctf\Models\Noticia;
+use ctf\User;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
-    private $noticia;
+    private $news;
 
     public function __construct(Noticia $news)
     {
-        $this->noticia = $news;
+        $this->news = $news;
     }
 
     public function viewNews()
@@ -24,8 +23,8 @@ class NewsController extends Controller
         if (!Auth::guest())
             $view = "news.index";
         $users = User::all();
-        $noticias = Noticia::all();
-        return view($view, compact('noticias', 'users'));
+        $news = Noticia::all();
+        return view($view, compact('news', 'users'));
     }
 
     public function viewCreate()
@@ -35,12 +34,12 @@ class NewsController extends Controller
 
     public function create(NewsRequest $request)
     {
-        $this->noticia->fill($request->all());
-        $this->noticia->users_id = Auth::user()->id;
-        if (!$this->noticia->save()) {
+        $this->news->fill($request->all());
+        $this->news->users_id = Auth::user()->id;
+        if (!$this->news->save()) {
             return view('errors.404');
         }
-        return \Redirect::route('categorias', compact('novaCategoria'));
+        return redirect()->route('categorias');
     }
 
     public function patrocinadores()

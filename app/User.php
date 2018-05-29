@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Webpatser\Uuid\Uuid;
 
 class User extends Authenticatable
 {
@@ -30,8 +31,7 @@ class User extends Authenticatable
     {
         parent::boot();
         static::creating(function ($model) {
-            $model->{$model->getKeyName()} = md5(rand());
-            return true;
+            $model->{$model->getKeyName()} = Uuid::generate(4)->string;
         });
     }
 

@@ -3,7 +3,7 @@
 @section('categories','active')
 @section('titulo', getenv("CTF_NAME",true)." - Noticias")
 @section('conteudo')
-    @forelse($noticias as $noticia)
+    @forelse($news as $new)
         <div class="container">
             <h2>{{$noticia->titulo}}</h2>
             <img src="{{$users->where('id', $noticia->users_id)->first()->avatar}}" alt="" style="float:left; margin-right: 10px;"

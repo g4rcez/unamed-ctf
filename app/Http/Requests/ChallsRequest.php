@@ -4,6 +4,9 @@ namespace ctf\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property mixed maestrias
+ */
 class ChallsRequest extends FormRequest
 {
     /**

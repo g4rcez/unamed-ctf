@@ -77,8 +77,8 @@
             <label for="disponivel" class="col-md-4 control-label">Desafio liberado: </label>
             <div class="col-md-6">
                 <select class="form-control input" id="disponivel" name="disponivel">
-                    <option value=true>Disponível</option>
-                    <option value=false>Bloqueado</option>
+                    <option value="1">Disponível</option>
+                    <option value="0">Bloqueado</option>
                 </select>
                 @if ($errors->has('disponivel'))
                     <span class="help-block">

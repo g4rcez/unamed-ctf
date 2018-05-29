@@ -9,28 +9,28 @@ use ctf\Models\Permission;
 
 class PermissionController extends Controller
 {
-    private $permissao;
+    private $permission;
 
-    public function __construct(Permission $permissao)
+    public function __construct(Permission $permission)
     {
-        $this->permissao = $permissao;
+        $this->permission = $permission;
     }
 
     public function view()
     {
-        $permissoes = Permission::all();
-        return view('auth.permissions.index', compact('permissoes'));
+        $permissions = Permission::all();
+        return view('auth.permissions.index', compact('permissions'));
     }
 
     public function create(PermissionRequest $request)
     {
-        $this->permissao->fill($request->all());
-        if (!$this->permissao->save()) {
+        $this->permission->fill($request->all());
+        if (!$this->permission->save()) {
             abort(503, 'Erro ao salvar a categoria.');
         }
-        $permissao = $this->permissao->permissao;
-        \Session::flash('nova', "A categoria $permissao foi criada com sucesso");
-        return \Redirect::route('permissions', compact('permissao'));
+        $permission = $this->permission->permissao;
+        \Session::flash('nova', "$permission");
+        return \Redirect::route('permissions', compact('permission'));
     }
 
     public function update(PermissionRequest $request, $nome, $id)
@@ -39,17 +39,25 @@ class PermissionController extends Controller
         $updated->update($request->all());
         $novo = $request->input('permissao');
         $novo = str_replace(' ', '', $novo);
-        \Session::flash('atualizado', "A maestria $nome foi atualizada para $novo");
+        \Session::flash('atualizado', "$nome||$novo");
         return redirect()->route('permissions');
     }
 
+    /**
+     * @param $nome
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
     public function delete($nome, $id)
     {
-        $permissao = $this->permissao->findOrFail($id)->where('permissao', $nome)->first();
-        if (!$permissao->delete()) {
+        $permission = $this->permission->findOrFail($id)->where('permission', $nome)->first();
+        try {
+            $permission->delete();
+        } catch (\Exception $e) {
             abort(500);
         }
-        \Session::flash('deletado', "A permissão $nome foi deletada com sucesso");
+        \Session::flash('deletado', "$nome");
         return redirect()->route('permissions');
     }
 }

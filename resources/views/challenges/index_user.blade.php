@@ -35,7 +35,7 @@
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         @lang("challenges.wrong") <strong>
                             @if(Session::get('naoCerto') != 'null')
-                                {{Session::get('naoCerto')}}
+                                @lang("challenges.wrong")<strong>{{ Session::get('naoCerto') }}</strong>
                             @endif
                         </strong>
                     </div>
@@ -43,7 +43,7 @@
             </div>
         </div>
     @endif
-    @if($challenges->count() == 0)
+    @if($challenges->count() === 0)
         <h2 class="text-center">
             @lang('challenges.empty')
             <div class="espacos"></div>
@@ -97,7 +97,6 @@
             <div class="col-md-12 col-lg-12">
                 <hr>
             </div>
-
             <div class="row">
                 <div class="espacos"></div>
                 <div class="espacos"></div>
@@ -130,9 +129,6 @@
                     @endforeach
                 </div>
                 @endif
-                <div class="espacos"></div>
-                <div class="espacos"></div>
-                <div class="espacos"></div>
                 @foreach($challenges as $challenge)
                     <div id="{{md5($challenge->nome)}}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
@@ -144,15 +140,11 @@
                                 <div class="modal-body">
                                     <p class="paragrafos">{{$challenge->enunciado}}</p>
                                     <div class="espacos"></div>
-                                    @isset($maestrias)
+                                    @if($challenge->skills()->get() != [])
                                         @lang('challenges.skillsNeeded')
                                         <ul>
-                                            @foreach($maestrias as $maestria)
-                                                @foreach($maestria['skills'] as $skills)
-                                                    @if($skills->pivot->challenges_id == $challenge->id)
-                                                        <li>{{ $skills->maestria }}</li>
-                                                    @endif
-                                                @endforeach
+                                            @foreach($challenge->skills()->get() as $maestria)
+                                                <li>{{ $maestria->maestria }}</li>
                                             @endforeach
                                         </ul>
                                     @endisset
@@ -173,8 +165,8 @@
                                                                size=40>
                                                         @if ($errors->has('flag'))
                                                             <span class="help-block">
-                    <strong>{{ $errors->first('flag') }}</strong>
-                  </span>
+                                                                <strong>{{ $errors->first('flag') }}</strong>
+                                                            </span>
                                                         @endif
                                                     </div>
                                                     <input type="submit" class="button button-black" value="Capture"/>
@@ -194,12 +186,10 @@
             </div>
         </div>
         @endforeach
-        <script src="{!! asset('assets/js/masonry.pkgd.min.js') !!}"></script>
+        <script src="{{ asset('assets/js/masonry.pkgd.min.js') }}"></script>
         <script>
             $('.grid').masonry({
-                // set itemSelector so .grid-sizer is not used in layout
                 itemSelector: '.grid-item',
-                // use element for option
                 columnWidth: 0,
                 horizontalOrder: true,
                 initLayout: true,

@@ -15,10 +15,10 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['prefix' => getenv('CHALLS_ROUTE', true)], function () {
-        Route::get('/', 'Challs\ChallengesController@userView')->name('challs');
-        Route::get('/search/{categoryId}', 'Challs\ChallengesController@userSearch');
-        Route::post('/submit', 'Challs\ChallengesController@submitFlag');
-        Route::post('/submitFlag', 'Challs\ChallengesController@submitFlagWithName');
+        Route::get('/', 'Challenges\UserChallengeController@userView')->name('challs');
+        Route::get('/search/{categoryId}', 'Challenges\UserChallengeController@userSearch');
+        Route::post('/submit', 'Challenges\UserChallengeController@submitFlag');
+        Route::post('/submitFlag', 'Challenges\UserChallengeController@submitFlagWithName');
     });
 });
 
@@ -27,21 +27,21 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function () {
         Route::get('/', 'Admin\AdminController@index')->name('admin');
 
         Route::group(['prefix' => getenv('CHALLS_ROUTE', true)], function () {
-            Route::get('/', 'Challs\ChallengesController@adminView')->name('adminChall');
-            Route::get(getenv('CREATE_ROUTE'), 'Challs\ChallengesController@adminCreateView')->name('createChall');
-            Route::post(getenv('CREATE_ROUTE'), 'Challs\ChallengesController@createFlag');
-            Route::post(getenv('DELETE_ROUTE', true) . '/{id}', 'Challs\ChallengesController@delete');
-            Route::post(getenv('EDIT_ROUTE') . '/{id}/{nome}', 'Challs\ChallengesController@update');
-            Route::get(getenv('EDIT_ROUTE') . '/{id}', 'Challs\ChallengesController@viewUpdate');
+            Route::get('/', 'Challenges\ChallengesController@adminView')->name('adminChall');
+            Route::get(getenv('CREATE_ROUTE'), 'Challenges\ChallengesController@adminCreateView')->name('createChall');
+            Route::post(getenv('CREATE_ROUTE'), 'Challenges\ChallengesController@createFlag');
+            Route::post(getenv('DELETE_ROUTE', true) . '/{id}', 'Challenges\ChallengesController@delete');
+            Route::post(getenv('EDIT_ROUTE') . '/{id}/{nome}', 'Challenges\ChallengesController@update');
+            Route::get(getenv('EDIT_ROUTE') . '/{id}', 'Challenges\ChallengesController@viewUpdate');
         });
 
         Route::group(['prefix' => getenv('CATEGORIES_ROUTE')], function () {
-            Route::get('/', 'Challs\CategoryController@view')->name('categorias');
-            Route::get(getenv('CREATE_ROUTE'), 'Challs\CategoryController@viewCreate')->name('categoriasViewCreate');
-            Route::post(getenv('CREATE_ROUTE'), 'Challs\CategoryController@create')->name('categoriasCreate');
-            Route::get(getenv('EDIT_ROUTE') . '/{nome}/{id}', 'Challs\CategoryController@viewUpdate');
-            Route::post(getenv('EDIT_ROUTE') . '/{nome}/{id}', 'Challs\CategoryController@update');
-            Route::post(getenv('DELETE_ROUTE') . '/{nome}/{id}', 'Challs\CategoryController@delete');
+            Route::get('/', 'Challenges\CategoryController@view')->name('categorias');
+            Route::get(getenv('CREATE_ROUTE'), 'Challenges\CategoryController@viewCreate')->name('categoriasViewCreate');
+            Route::post(getenv('CREATE_ROUTE'), 'Challenges\CategoryController@create')->name('categoriasCreate');
+            Route::get(getenv('EDIT_ROUTE') . '/{nome}/{id}', 'Challenges\CategoryController@viewUpdate');
+            Route::post(getenv('EDIT_ROUTE') . '/{nome}/{id}', 'Challenges\CategoryController@update');
+            Route::post(getenv('DELETE_ROUTE') . '/{nome}/{id}', 'Challenges\CategoryController@delete');
         });
         Route::group(['prefix' => getenv('PERM_ROUTE', true)], function () {
             Route::get('/', 'Admin\PermissionController@view')->name('permissions');
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function () {
         });
 
         Route::group(['prefix' => getenv('NEWS_ROUTE')], function () {
-            Route::get('/', 'NewsController@viewNews');
+            Route::get('/', 'Admin\NewsController@viewNews');
             Route::get(getenv('CREATE_ROUTE'), 'Admin\NewsController@viewCreate');
             Route::post(getenv('CREATE_ROUTE'), 'Admin\NewsController@create')->name("newsCreate");
         });
@@ -92,4 +92,4 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 Route::get('/', 'Admin\NewsController@viewNews')->name('root');
-Route::get('/patrocinadores', 'NewsController@patrocinadores');
+Route::get('/patrocinadores', 'Admin\NewsController@patrocinadores');

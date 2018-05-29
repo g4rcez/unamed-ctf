@@ -53,15 +53,12 @@
                     <div class="espacos"></div>
                     <div class="grid center-block text-center text-capitalize">
                         @foreach($challenges as $challenge)
-                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 grid-item mb3 tc center"
-                                 data-toggle="modal"
-                                 data-target="#{{md5($challenge->nome)}}">
+                            <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 grid-item mb7 tc center grow"
+                                 data-toggle="modal" data-target="#{{md5($challenge->nome)}}">
                                 <div class="chall-box" style="background:{{$challenge->category->color}}"
-                                     onMouseOver="this.style.background='#080808'"
+                                     onMouseOver="this.style.background='{{$challenge->category->color}}90'"
                                      onMouseOut="this.style.background='{{$challenge->category->color}}'">
-                                    <h3>
-                                        <i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->nome}}
-                                    </h3>
+                                    <h3><i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->nome}}</h3>
                                     <h5>
                                         <strong class="white-40"><i class="fa fa-user"></i> {{$challenge->autor}}
                                         </strong>

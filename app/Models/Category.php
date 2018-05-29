@@ -3,14 +3,23 @@
 namespace ctf\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Webpatser\Uuid\Uuid;
 
 class Category extends Model
 {
-    protected $table = 'categories';
-    protected $fillable = ['nome', 'color', 'descricao', 'modificado_por'];
+    public $incrementing = false;
     protected $softDelete = true;
-    protected $guarded = ['id'];
-    protected $dates = ['deleted_at'];
+    protected $table = 'categories';
+    protected $dates = ['deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'nome', 'color', 'descricao', 'modificado_por'];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = Uuid::generate(4)->string;
+        });
+    }
 
     public function challenge()
     {

@@ -1,11 +1,11 @@
 <?php
 
-namespace ctf\Http\Controllers\Challs;
+namespace ctf\Http\Controllers\Challenges;
 
-use Auth;
 use ctf\Http\Controllers\Controller;
 use ctf\Http\Requests\CategoryRequest;
 use ctf\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -16,15 +16,33 @@ class CategoryController extends Controller
         $this->category = $category;
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function view()
     {
-        $categorias = Category::all();
-        return view('categories.index', compact('categorias'));
+        $categories = Category::all();
+        return view('categories.index', compact('categories'));
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function viewCreate()
     {
         return view('categories.create');
+    }
+
+    /**
+     * @param $nome
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function viewUpdate($nome, $id)
+    {
+        $category = Category::all()->where('nome', $nome)
+            ->where('id', $id)->first();
+        return view('categories.edit', compact('category'));
     }
 
     public function create(CategoryRequest $request)
@@ -32,17 +50,11 @@ class CategoryController extends Controller
         $this->category->fill($request->all());
         $this->category->modificado_por = Auth::user()->nickname;
         if (!$this->category->save()) {
-            return view('errors.404');
+            abort(500, "Could not be save that shit");
         }
         $novaCategoria = $this->category->nome;
-        \Session::flash('nova', "A categoria $novaCategoria foi criada com sucesso");
-        return \Redirect::route('categorias', compact('novaCategoria'));
-    }
-
-    public function viewUpdate($nome, $id)
-    {
-        $categoria = Category::all()->where('nome', $nome)->where('id', $id)->first();
-        return view('categories.edit', compact('categoria'));
+        \Session::flash('nova', "$novaCategoria");
+        return redirect()->route('categorias');
     }
 
     public function update(CategoryRequest $request, $nome, $id)
@@ -51,17 +63,19 @@ class CategoryController extends Controller
         $updated->update($request->all());
         $updated->update(["modificado_por" => Auth::user()->nickname]);
         $novo = $request->input('nome');
-        \Session::flash('atualizado', "A categoria $nome foi atualizada para $novo");
+        \Session::flash('atualizado', "$nome||$novo");
         return \Redirect::route('categorias');
     }
 
     public function delete($nome, $id)
     {
-        $categoria = $this->category->findOrFail($id)->where('nome', $nome)->first();
-        if (!$categoria->delete()) {
+        $category = $this->category->findOrFail($id)->where('nome', $nome)->first();
+        try {
+            $category->delete();
+        } catch (\Exception $e) {
             return view('errors.404');
         }
-        \Session::flash('deletado', "A categoria $nome foi deletada com sucesso");
+        \Session::flash('deletado', "A category $nome foi deletada com sucesso");
         return redirect()->route('categorias');
     }
 }

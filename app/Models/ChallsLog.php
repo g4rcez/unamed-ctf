@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChallsLog extends Model
 {
-    protected $fillable = ['status', 'users_id', 'challenges_id'];
+    protected $guarded = ['id'];
+    protected $fillable = [
+        'users_id', 'status', 'challenges_id'
+    ];
     protected $softDelete = true;
-    public $timestamps = true;
+    protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 }
