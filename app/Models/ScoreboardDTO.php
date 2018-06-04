@@ -3,10 +3,10 @@
 namespace ctf\Models;
 
 
-class Scoreboard
+class ScoreboardDTO
 {
 
-    private $nome;
+    private $name;
     private $score;
     private $avatar;
     private $lastChall;
@@ -21,7 +21,8 @@ class Scoreboard
     }
 
     /**
-     * @param mixed $teamId
+     * @param $team
+     * @return ScoreboardDTO
      */
     public function setTeam($team)
     {
@@ -64,18 +65,18 @@ class Scoreboard
     /**
      * @return mixed
      */
-    public function getNome()
+    public function getName()
     {
-        return $this->nome;
+        return $this->name;
     }
 
     /**
-     * @param mixed $nome
-     * @return Scoreboard
+     * @param mixed $name
+     * @return ScoreboardDTO
      */
-    public function setNome($nome)
+    public function setName($name)
     {
-        $this->nome = $nome;
+        $this->name = $name;
         return $this;
     }
 
@@ -89,7 +90,7 @@ class Scoreboard
 
     /**
      * @param mixed $score
-     * @return Scoreboard
+     * @return ScoreboardDTO
      */
     public function setScore($score)
     {
@@ -103,8 +104,8 @@ class Scoreboard
     }
 
     /**
-     * @param mixed $nome
-     * @return Scoreboard
+     * @param $avatar
+     * @return ScoreboardDTO
      */
     public function setAvatar($avatar)
     {

@@ -138,7 +138,7 @@
                                     <h4 class="modal-title">{{$challenge->nome}}</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="paragrafos">{{$challenge->enunciado}}</p>
+                                    <p class="paragrafos">{{str_replace_array('\n', '<br/>', $challenge->enunciado)}}</p>
                                     <div class="espacos"></div>
                                     @if($challenge->skills()->get() != [])
                                         @lang('challenges.skillsNeeded')

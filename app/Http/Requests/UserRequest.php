@@ -1,5 +1,6 @@
 <?php namespace ctf\Http\Requests;
 
+use ctf\Utils\RuleValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
@@ -23,10 +24,10 @@ class UserRequest extends FormRequest
     {
         if ($this->method() == 'POST') {
             return [
-                'nickname' => 'required|string|max:64|min:2|alpha_num|unique:users',
-                'email' => 'required|string|email|max:128|unique:users',
+                'nickname' => RuleValidation::nickname() . "|unique:users",
+                'email' => 'required | string | email | max:128 | unique:users',
                 'password' => 'required|string|min:8|confirmed',
-                'avatar' => 'string|max:512|required',
+                'avatar' => 'string | max:512 | required | url',
                 'categoria_favorita' => 'string|max:64'
             ];
         }
@@ -39,7 +40,7 @@ class UserRequest extends FormRequest
             'nickname.required' => 'O nickname é obrigatório',
             'nickname.max' => 'Número máximo de caracteres: 64',
             'nickname.min' => 'Número mínimo de caracteres: 02',
-            'nickname.alpha_num' => 'Somente letras e números para o nickname',
+            'nickname.regex' => 'Fora do padrão',
             'nickname.unique' => 'Já existe esse login no sistema',
             'email.email' => "Não é um email válido",
             'email.max' => "Número máximo de caracteres: 128",

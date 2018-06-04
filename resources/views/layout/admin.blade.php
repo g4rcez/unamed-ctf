@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-br" ng-app="ctfplatform">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        @yield('titulo')
-    </title>
-    <!-- Styles and Fonts -->
-    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/tachyons.min.css') !!}"/>
-    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/beautify.min.css') !!}"/>
-    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/font-awesome.min.css') !!}"/>
-    <link rel="stylesheet" type="text/css" href="{!! asset('assets/css/main.css') !!}"/>
-    <!-- Scripts -->
+    <title>@yield('titulo')</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/tachyons.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/beautify.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/font-awesome.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main.css') }}"/>
     <script src="{{ asset('assets/js/beautify.min.js') }}"></script>
 </head>
 <body>
@@ -23,15 +19,11 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </button>
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{route('root')}}">
-                        <i class="fa fa-flag fa-lg"></i>
-                        {{getenv('CTF_NAME', true)}}
-                    </a>
+                    <a class="navbar-brand" href="{{route('root')}}"><i
+                                class="fa fa-flag fa-lg"></i>{{getenv('CTF_NAME')}}</a>
                 </div>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -42,10 +34,10 @@
                     <li class="@yield('permissions')"><a href="{{route('permissions')}}"><i class="fa fa-users"
                                                                                             aria-hidden="true"></i> @lang('admin.permissions')
                         </a></li>
-                    <li class="@yield('maestrias')"><a href="{{route('maestrias')}}"><i class="fa fa-certificate"
+                    <li class="@yield('maestrias')"><a href="{{route('skills')}}"><i class="fa fa-certificate"
                                                                                         aria-hidden="true"></i> @lang('admin.maestria')
                         </a></li>
-                    <li class="@yield('categories')"><a href="{{route('categorias')}}"><i class="fa fa-group"
+                    <li class="@yield('categories')"><a href="{{route('categories')}}"><i class="fa fa-group"
                                                                                           aria-hidden="true"></i> @lang('admin.categories')
                         </a></li>
                     <li class="@yield('challs')"><a href="{{route('adminChall')}}"><i class="fa fa-flag"

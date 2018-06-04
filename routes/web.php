@@ -36,12 +36,12 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function () {
         });
 
         Route::group(['prefix' => getenv('CATEGORIES_ROUTE')], function () {
-            Route::get('/', 'Challenges\CategoryController@view')->name('categorias');
-            Route::get(getenv('CREATE_ROUTE'), 'Challenges\CategoryController@viewCreate')->name('categoriasViewCreate');
+            Route::get('/', 'Challenges\CategoryController@view')->name('categories');
+            Route::get(getenv('CREATE_ROUTE'), 'Challenges\CategoryController@viewCreate')->name('categoryViewCreate');
             Route::post(getenv('CREATE_ROUTE'), 'Challenges\CategoryController@create')->name('categoriasCreate');
-            Route::get(getenv('EDIT_ROUTE') . '/{nome}/{id}', 'Challenges\CategoryController@viewUpdate');
-            Route::post(getenv('EDIT_ROUTE') . '/{nome}/{id}', 'Challenges\CategoryController@update');
-            Route::post(getenv('DELETE_ROUTE') . '/{nome}/{id}', 'Challenges\CategoryController@delete');
+            Route::get(getenv('EDIT_ROUTE') . '/{name}/{id}', 'Challenges\CategoryController@viewUpdate');
+            Route::post(getenv('EDIT_ROUTE') . '/{name}/{id}', 'Challenges\CategoryController@update');
+            Route::post(getenv('DELETE_ROUTE') . '/{name}/{id}', 'Challenges\CategoryController@delete');
         });
         Route::group(['prefix' => getenv('PERM_ROUTE', true)], function () {
             Route::get('/', 'Admin\PermissionController@view')->name('permissions');
@@ -50,11 +50,11 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function () {
             Route::post(getenv('DELETE_ROUTE') . '{nome}/{id}', 'Admin\PermissionController@delete');
         });
 
-        Route::group(['prefix' => getenv('MAESTRIAS_ROUTE', true)], function () {
-            Route::get('/', 'User\MaestriaController@view')->name('maestrias');
-            Route::post('/', 'User\MaestriaController@create')->name('maestriaCreate');
-            Route::post('/editar/{nome}/{id}', 'User\MaestriaController@update')->name('maestriasUpdate');
-            Route::post('/deletar/{nome}/{id}', 'User\MaestriaController@delete');
+        Route::group(['prefix' => getenv('MAESTRIAS_ROUTE')], function () {
+            Route::get('/', 'User\SkillsController@view')->name('skills');
+            Route::post('/', 'User\SkillsController@create')->name('skillsCreate');
+            Route::post(getenv('EDIT_ROUTE').'/{name}/{id}', 'User\SkillsController@update')->name('skillsUpdate');
+            Route::post(getenv('DELETE_ROUTE').'/{name}/{id}', 'User\SkillsController@delete');
         });
 
         Route::group(['prefix' => getenv('NEWS_ROUTE')], function () {

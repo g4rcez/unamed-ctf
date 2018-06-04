@@ -1,19 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: garcez
- * Date: 4/28/18
- * Time: 2:09 AM
- */
 
 namespace ctf\Models;
 
-
-class UserTeam
+class UserTeamDTO
 {
-    private $nickname;
-    private $pontos;
     private $id;
+    private $points;
+    private $nickname;
     private $challenges;
 
     public function __construct()
@@ -31,6 +24,7 @@ class UserTeam
 
     /**
      * @param mixed $nickname
+     * @return UserTeamDTO
      */
     public function setNickname($nickname)
     {
@@ -41,17 +35,18 @@ class UserTeam
     /**
      * @return mixed
      */
-    public function getPontos()
+    public function getPoints()
     {
-        return $this->pontos;
+        return $this->points;
     }
 
     /**
-     * @param mixed $pontos
+     * @param mixed $points
+     * @return UserTeamDTO
      */
-    public function setPontos($pontos)
+    public function setPoints($points)
     {
-        $this->pontos = $pontos;
+        $this->points = $points;
         return $this;
     }
 
@@ -65,6 +60,7 @@ class UserTeam
 
     /**
      * @param mixed $id
+     * @return UserTeamDTO
      */
     public function setId($id)
     {
@@ -82,6 +78,7 @@ class UserTeam
 
     /**
      * @param mixed $challenges
+     * @return UserTeamDTO
      */
     public function setChallenges($challenges)
     {

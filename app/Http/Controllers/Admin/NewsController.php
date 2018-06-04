@@ -4,7 +4,7 @@ namespace ctf\Http\Controllers\Admin;
 
 use ctf\Http\Controllers\Controller;
 use ctf\Http\Requests\NewsRequest;
-use ctf\Models\Noticia;
+use ctf\Models\News;
 use ctf\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +12,7 @@ class NewsController extends Controller
 {
     private $news;
 
-    public function __construct(Noticia $news)
+    public function __construct(News $news)
     {
         $this->news = $news;
     }
@@ -23,7 +23,7 @@ class NewsController extends Controller
         if (!Auth::guest())
             $view = "news.index";
         $users = User::all();
-        $news = Noticia::all();
+        $news = News::all();
         return view($view, compact('news', 'users'));
     }
 

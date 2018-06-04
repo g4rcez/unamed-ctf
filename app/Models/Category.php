@@ -11,7 +11,7 @@ class Category extends Model
     protected $softDelete = true;
     protected $table = 'categories';
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];
-    protected $fillable = ['id', 'nome', 'color', 'descricao', 'modificado_por'];
+    protected $fillable = ['name', 'color', 'description', 'modified_by'];
 
     public static function boot()
     {
@@ -23,7 +23,7 @@ class Category extends Model
 
     public function challenge()
     {
-        return $this->hasMany("ctf\Models\Challenge", 'categories_id');
+        return $this->hasMany(Challenge::class, 'categories_id');
     }
 
 }

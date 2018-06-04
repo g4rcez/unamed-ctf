@@ -20,56 +20,49 @@
             </div>
         </div>
     @endif
-    <h2 class="page-title text-center">
-        Maestrias
-    </h2>
+    <h2 class="page-title text-center">Maestrias</h2>
     <h2 class="text-center">
-        <small><a data-toggle="collapse" data-target="#cadastrar">
-                <i class="fa fa-plus"></i> Adicionar Maestria
-            </a></small>
+        <small><a data-toggle="collapse" data-target="#cadastrar"><i class="fa fa-plus"></i> Adicionar Maestria</a>
+        </small>
     </h2>
     <div class="collapse" id="cadastrar">
-        <form class="form-inline text-center" method="POST" action="{{route('maestriaCreate')}}">
+        <form class="form-inline text-center" method="POST" action="{{route('skillsCreate')}}">
             {{csrf_field()}}
             <label for="nova-maestria">Adicionar Maestria: </label>
-            <input name="maestria" class="form-control input" id="novamaestria" placeholder="Nova maestria..."
+            <input name="name" class="form-control input" id="novamaestria" placeholder="Nova maestria..."
                    data-toggle="popover" data-trigger="hover" data-style="primary"
                    data-content="Item que caracteriza os jogadores" data-placement="bottom"/>
-            {{-- <div class="espacos"></div>
-            <div class="espacos"></div> --}}
             <input type="submit" class="button button-black" value="Criar Maestria">
         </form>
     </div>
     <div class="espacos"></div>
     <div class="row">
         <div class="container">
-            @foreach($maestrias as $maestria)
+            @foreach($skills as $skill)
                 <div class="col-xs-2 col-sm-3 col-lg-3 col-md-3">
-                    <a data-toggle="modal" data-target="#{{md5($maestria->maestria)}}"
+                    <a data-toggle="modal" data-target="#{{md5($skill->name)}}"
                        style="color:#fff;cursor:pointer;font-size: 1.4em">
-                        <i class="fa fa-user-secret" aria-hidden="true"></i> {{ $maestria->maestria }}
+                        <i class="fa fa-user-secret" aria-hidden="true"></i> {{ $skill->name }}
                     </a>
                     <div class="espacos"></div>
                 </div>
             @endforeach
         </div>
     </div>
-
-    @foreach($maestrias as $maestria)
-        <div id="{{md5($maestria->maestria)}}" class="modal fade" role="dialog">
+    @foreach($skills as $skill)
+        <div id="{{md5($skill->name)}}" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{$maestria->maestria}}</h4>
+                        <h4 class="modal-title">{{$skill->name}}</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="{{url(getenv('ADMIN_ROUTE', true)."/".getenv('MAESTRIAS_ROUTE',true)."/".getenv('EDIT_ROUTE',true)."/"."$maestria->maestria/$maestria->id")}}"
+                        <form action="{{url(getenv('ADMIN_ROUTE')."/".getenv('MAESTRIAS_ROUTE')."/".getenv('EDIT_ROUTE')."/"."$skill->name/$skill->id")}}"
                               method="POST" class="form-inline">
                             {{ csrf_field() }}
-                            <label for="nova-maestria">Adicionar Maestria: </label>
-                            <input name="maestria" class="form-control input" id="novamaestria"
+                            <label for="nova-maestria">Editar Maestria: </label>
+                            <input name="name" class="form-control input" id="novamaestria"
                                    placeholder="Nova maestria..."
                                    data-toggle="popover" data-trigger="hover" data-style="primary"
                                    data-content="Item que caracteriza os jogadores" data-placement="bottom"/>
@@ -84,7 +77,7 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <form action="{{url(getenv('ADMIN_ROUTE', true)."/maestria/deletar/$maestria->maestria/$maestria->id")}}"
+                        <form action="{{url(getenv('ADMIN_ROUTE')."/".getenv('MAESTRIAS_ROUTE')."/".getenv('DELETE_ROUTE')."/$skill->name/$skill->id")}}"
                               class="form-inline" method="POST">
                             {{ csrf_field() }}
                             <input type="submit" class="button button-red" value="Deletar"/>

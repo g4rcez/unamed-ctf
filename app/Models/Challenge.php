@@ -2,15 +2,17 @@
 
 namespace ctf\Models;
 
+use ctf\User;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property bool disponivel
+ * @property bool available
  */
 class Challenge extends Model
 {
     protected $fillable = [
-        'nome', 'pontos', 'enunciado', 'autor', 'flag'
+        'name', 'points', 'description', 'author', 'flag',
+        'available', 'modified_by', 'categories_id'
     ];
     protected $softDelete = true;
     protected $guarded = ['id'];
@@ -24,20 +26,23 @@ class Challenge extends Model
     public function users()
     {
         return $this->belongsToMany(
-            'ctf\User',
-            'challenges_resolvidos',
+            User::class,
+            'solveds',
             'challenges_id',
             'users_id'
         );
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function skills()
     {
         return $this->belongsToMany(
-            'ctf\Models\Maestria',
-            'maestria_required',
+            Skill::class,
+            'required_skills',
             'challenges_id',
-            'maestrias_id'
+            'skills_id'
         );
     }
 }

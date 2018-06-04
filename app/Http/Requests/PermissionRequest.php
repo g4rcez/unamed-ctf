@@ -25,7 +25,7 @@ class PermissionRequest extends FormRequest
     {
         if ($this->method() == 'POST') {
             return [
-                'permissao' => 'string|min:2|required',
+                'name' => 'string | min:2 | required',
             ];
         }
     }

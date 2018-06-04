@@ -2,6 +2,7 @@
 
 namespace ctf\Http\Requests;
 
+use ctf\Utils\RuleValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
@@ -27,11 +28,11 @@ class ChallsRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'string|min:2|max:64|required|unique:categories,id,'.$this->input('id'),
+            'name' => 'string | min:2 | max:64 | required | unique:categories,id,'.$this->input('id'),
             'flag' => 'string',
-            'autor' => 'string',
-            'pontos' => 'string',
-            'enunciado' => 'string',
+            'author' => RuleValidation::nickname(),
+            'points' => 'string',
+            'description' => 'string',
             'categories_id' => '',
         ];
     }

@@ -38,9 +38,9 @@ class CategoryController extends Controller
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function viewUpdate($nome, $id)
+    public function viewUpdate($name, $id)
     {
-        $category = Category::all()->where('nome', $nome)
+        $category = Category::all()->where('name', $name)
             ->where('id', $id)->first();
         return view('categories.edit', compact('category'));
     }
@@ -48,23 +48,23 @@ class CategoryController extends Controller
     public function create(CategoryRequest $request)
     {
         $this->category->fill($request->all());
-        $this->category->modificado_por = Auth::user()->nickname;
+        $this->category->modified_by = Auth::user()->nickname;
         if (!$this->category->save()) {
             abort(500, "Could not be save that shit");
         }
-        $novaCategoria = $this->category->nome;
-        \Session::flash('nova', "$novaCategoria");
-        return redirect()->route('categorias');
+        $newCategory = $this->category->name;
+        \Session::flash('new', "$newCategory");
+        return redirect()->route('categories');
     }
 
-    public function update(CategoryRequest $request, $nome, $id)
+    public function update(CategoryRequest $request, $name, $id)
     {
         $updated = Category::all()->find($id);
         $updated->update($request->all());
         $updated->update(["modificado_por" => Auth::user()->nickname]);
-        $novo = $request->input('nome');
-        \Session::flash('atualizado', "$nome||$novo");
-        return \Redirect::route('categorias');
+        $new = $request->input('name');
+        \Session::flash('updated', "$name||$new");
+        return redirect()->route('categories');
     }
 
     public function delete($nome, $id)
@@ -75,7 +75,7 @@ class CategoryController extends Controller
         } catch (\Exception $e) {
             return view('errors.404');
         }
-        \Session::flash('deletado', "A category $nome foi deletada com sucesso");
+        \Session::flash('deleted', "A category $nome foi deletada com sucesso");
         return redirect()->route('categorias');
     }
 }

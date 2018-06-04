@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     protected $table = 'team';
-    protected $fillable = [
-        'nome', 'tag', 'token', 'avatar'
-    ];
+    protected $fillable = ['name', 'tag', 'token', 'avatar'];
     protected $guarded = ['id'];
     protected $softDelete = true;
     protected $dates = ['deleted_at'];

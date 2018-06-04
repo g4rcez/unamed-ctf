@@ -33,7 +33,7 @@ class FlagRequest extends FormRequest
         } else if (explode('@', $this->route()->action['uses'])['1'] == 'submitFlagWithName') {
             return [
                 'flag' => 'string | required',
-                'nome' => 'string|required'
+                'name' => 'string|required'
             ];
         }
         return [];

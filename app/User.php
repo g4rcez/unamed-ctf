@@ -39,7 +39,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(
             'ctf\Models\Challenge',
-            'challenges_resolvidos',
+            'solveds',
             'users_id',
             'challenges_id'
         );
@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function permission()
     {
-        return $this->belongsTo('ctf\Models\Permission', 'permissao_id');
+        return $this->belongsTo('ctf\Models\Permission', 'permission_id');
     }
 
     public function team()

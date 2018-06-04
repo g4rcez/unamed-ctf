@@ -2,9 +2,9 @@
 
 namespace ctf\Http\Middleware;
 
-use Auth;
 use Closure;
 use ErrorException;
+use Illuminate\Support\Facades\Auth;
 
 class IsAdmin
 {
@@ -19,7 +19,7 @@ class IsAdmin
     {
         try {
             $user = Auth::user();
-            if ($user->permission->permissao == getenv('ADMIN_PERM')) {
+            if ($user->permission->name === getenv('ADMIN_PERM')) {
                 return $next($request);
             }
         } catch (ErrorException $exception) {

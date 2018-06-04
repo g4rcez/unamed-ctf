@@ -5,7 +5,7 @@ namespace ctf\Http\Controllers\User;
 use ctf\Http\Controllers\Controller;
 use ctf\Http\Transactions\RankingOrder;
 use ctf\Models\Challenge;
-use ctf\Models\ChallengesResolvido;
+use ctf\Models\Solved;
 use ctf\Models\Team;
 use ctf\User;
 use Illuminate\Support\Facades\Auth;
@@ -74,9 +74,9 @@ class UserController extends Controller
     public function timeline()
     {
         $challenges = [];
-        foreach (ChallengesResolvido::all()->sortBy('created_by') as $challenge) {
+        foreach (Solved::all()->sortBy('created_by') as $challenge) {
             $chall = Challenge::all()->where('id', $challenge->challenges_id)->first();
-            $firstBlood = ChallengesResolvido::all()->where('challenges_id', $chall->id);
+            $firstBlood = Solved::all()->where('challenges_id', $chall->id);
             $user = $this->user->where('id', $challenge->users_id)->get()->first();
             $team = Team::all()->where('id', $user->team_id)->first();
             $challenge = [

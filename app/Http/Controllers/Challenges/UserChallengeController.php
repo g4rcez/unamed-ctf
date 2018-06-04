@@ -7,7 +7,7 @@ use ctf\Http\Requests\FlagRequest;
 use ctf\Http\Transactions\LogErrors;
 use ctf\Models\Category;
 use ctf\Models\Challenge;
-use ctf\Models\ChallengesResolvido;
+use ctf\Models\Solved;
 use ctf\User;
 use Illuminate\Support\Facades\Auth;
 use Throwable;
@@ -50,11 +50,11 @@ class UserChallengeController extends Controller
     }
 
     /**
-     * @param ChallengesResolvido $challengesResolvido
+     * @param Solved $challengesResolvido
      * @param FlagRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function submitFlagWithName(ChallengesResolvido $challengesResolvido, FlagRequest $request)
+    public function submitFlagWithName(Solved $challengesResolvido, FlagRequest $request)
     {
         $assert = $this->challenge->where(
             "flag", $request->flag)->where(
@@ -81,22 +81,22 @@ class UserChallengeController extends Controller
     }
 
     /**
-     * @param ChallengesResolvido $challengesResolvido
+     * @param Solved $challengesResolvido
      * @param $assert
      * @return array
      */
-    private function searchFlag(ChallengesResolvido $challengesResolvido, $assert)
+    private function searchFlag(Solved $challengesResolvido, $assert)
     {
         $flag = $assert->first()->nome;
         $values = ['users_id' => Auth::user()->id, 'challenges_id' => $assert->first()->id];
         $challengesResolvido->fill($values);
-        $resolvido = ChallengesResolvido::all()->where(
+        $resolvido = Solved::all()->where(
             'challenges_id', $values['challenges_id']
         )->where('users_id', $values['users_id']);
         return array($flag, $resolvido);
     }
 
-    public function submitFlag(ChallengesResolvido $challengesResolvido, FlagRequest $request)
+    public function submitFlag(Solved $challengesResolvido, FlagRequest $request)
     {
         $assert = $this->challenge->where("flag", $this->encodeFlag($request->flag));
         $flag = 'null';

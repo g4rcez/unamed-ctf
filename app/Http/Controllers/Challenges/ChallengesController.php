@@ -7,8 +7,8 @@ use ctf\Http\Controllers\Controller;
 use ctf\Http\Requests\ChallsRequest;
 use ctf\Models\Category;
 use ctf\Models\Challenge;
-use ctf\Models\Maestria;
-use ctf\Models\MaestriaRequired;
+use ctf\Models\Skill;
+use ctf\Models\SkillsRequired;
 
 
 class ChallengesController extends Controller
@@ -40,7 +40,7 @@ class ChallengesController extends Controller
     public function adminCreateView()
     {
         $categorias = Category::all();
-        $maestrias = Maestria::all();
+        $maestrias = Skill::all();
         if ($categorias->count() == 0) {
             \Session::flash('zeroCategorias', "Não há nenhuma categoria cadastrada");
         }
@@ -56,7 +56,7 @@ class ChallengesController extends Controller
      */
     public function viewUpdate($id)
     {
-        $maestrias = Maestria::all();
+        $maestrias = Skill::all();
         $categorias = Category::all();
         if (is_numeric($id)) {
             $challenge = Challenge::all()->where('id', $id)->first();
@@ -80,7 +80,7 @@ class ChallengesController extends Controller
         \Session::flash('nova', "A categoria $challenge foi criada com sucesso");
         if (!empty($request->maestrias))
             foreach ($request->maestrias as $skill) {
-                $required = new MaestriaRequired();
+                $required = new SkillsRequired();
                 $required->fill([
                     'maestrias_id' => $skill,
                     'challenges_id' => $this->challenge->id,
@@ -94,10 +94,10 @@ class ChallengesController extends Controller
      * @param ChallsRequest $request
      * @param $id
      * @param $nome
-     * @param MaestriaRequired $maestriaRequired
+     * @param SkillsRequired $maestriaRequired
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(ChallsRequest $request, $id, $nome, MaestriaRequired $maestriaRequired)
+    public function update(ChallsRequest $request, $id, $nome, SkillsRequired $maestriaRequired)
     {
         $updated = Challenge::all()->where('id', $id)->first();
         $updated->update($request->all());

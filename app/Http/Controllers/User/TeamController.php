@@ -4,9 +4,9 @@ namespace ctf\Http\Controllers\User;
 
 use ctf\Http\Controllers\Controller;
 use ctf\Http\Requests\TeamRequest;
+use ctf\Http\Transactions\TeamActions;
 use ctf\Http\Transactions\TeamUsers;
 use ctf\Models\Team;
-use ctf\Models\UserTeam;
 use ctf\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,19 +34,9 @@ class TeamController extends Controller
 
     public function myTeam()
     {
-        $userSession = Auth::user();
-        $team = $this->team->where('id', $userSession->team_id)->first();
-        $allUsers = $this->user->where('team_id', '=', $team->id)->get();
-        $users = [];
-        $challenges = [];
-        $categories = [];
-        foreach ($allUsers as $user) {
-            array_push($users, $this->builtUserTeam($user));
-            foreach ($user->challenges()->get() as $challenge) {
-                array_push($challenges, $this->builtChallenge($challenge));
-                array_push($categories, $challenge->category()->first()->nome);
-            }
-        }
+        $team = $this->team->where('id', Auth::user()->team_id)->first();
+        list($users, $challenges, $categories) =
+            TeamActions::fillUsers($this->user->where('team_id', '=', $team->id)->get());
         usort($users, function ($a, $b) {
             return $a->getPontos() < $b->getPontos();
         });
@@ -56,34 +46,10 @@ class TeamController extends Controller
     }
 
     /**
-     * @param $user
-     * @return mixed
-     */
-    public function builtUserTeam($user)
-    {
-        $userTeam = new UserTeam();
-        return $userTeam
-            ->setChallenges($user->challenges()->get()->toArray())
-            ->setNickname($user['nickname'])
-            ->setId($user['id'])
-            ->setPontos($user->challenges()->sum('pontos'));
-    }
-
-    /**
-     * @param $challenge
+     * @param $allUsers
      * @return array
      */
-    public function builtChallenge($challenge)
-    {
-        return [
-            'id' => $challenge->id,
-            'nome' => $challenge->nome,
-            'pontos' => $challenge->pontos,
-            'pontos' => $challenge->pontos,
-            'autor' => $challenge->autor,
-            'categoria' => $challenge->category()->first()->nome,
-        ];
-    }
+
 
     /**
      * @param TeamRequest $request

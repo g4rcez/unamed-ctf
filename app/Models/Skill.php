@@ -4,20 +4,22 @@ namespace ctf\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Maestria extends Model
+class Skill extends Model
 {
-    protected $table = 'maestrias';
-    protected $fillable = ['maestria'];
+    protected $fillable = ['name'];
     protected $softDelete = true;
     protected $guarded = ['id'];
     protected $dates = ['deleted_at'];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function challenges()
     {
         return $this->belongsToMany(
-            'ctf\Models\Challenge',
-            'maestria_required',
-            'maestrias_id',
+            Challenge::class,
+            'required_skills',
+            'skills_id',
             'challenges_id'
         );
     }
