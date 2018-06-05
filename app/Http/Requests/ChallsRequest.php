@@ -28,12 +28,12 @@ class ChallsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string | min:2 | max:64 | required | unique:categories,id,'.$this->input('id'),
+            'name' => 'string | min:2 | max:64 | required', //| unique: challenges, id,' . $this->input('name'),
             'flag' => 'string',
             'author' => RuleValidation::nickname(),
             'points' => 'string',
             'description' => 'string',
-            'categories_id' => '',
+            'categories_id' => 'string',
         ];
     }
 }

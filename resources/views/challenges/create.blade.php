@@ -1,8 +1,8 @@
 @extends('layout.admin')
 @section('challs', 'active')
-@section('titulo',getenv('CTF_NAME', true)."Categoria: ")
+@section('titulo', getenv('CTF_NAME')."Categoria: ")
 @section('conteudo')
-    <script src="{!! asset('assets/js/multiselect.js') !!}"></script>
+    <script src="{{asset('assets/js/multiselect.js') }}"></script>
     @if (Session::has('zeroCategorias'))
         <div class="row">
             <div class="container">
@@ -29,14 +29,14 @@
     <div class="espacos"></div>
     <form class="form-horizontal" role="form" method="POST" action="{{route("createChall")}}">
         {{ csrf_field() }}
-        <div class="form-group{{ $errors->has('nome') ? ' has-error' : '' }}">
-            <label for="nome" class="col-md-4 control-label">Nome do Desafio: </label>
+        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+            <label for="name" class="col-md-4 control-label">Nome do Desafio: </label>
             <div class="col-md-6">
-                <input id="nome" type="text" class="form-control input" name="nome" value="{{ old('nome') }}" required
+                <input id="name" type="text" class="form-control input" name="name" value="{{ old('name') }}" required
                        autofocus placeholder="Nome do desafio...">
                 @if ($errors->has('nome'))
                     <span class="help-block">
-                          <strong>{{ $errors->first('nome') }}</strong>
+                          <strong>{{ $errors->first('name') }}</strong>
                       </span>
                 @endif
             </div>
@@ -48,7 +48,7 @@
                     <select class="form-control input" name="categories_id">
                         @endif
                         @forelse($categorias as $categoria)
-                            <option value="{{$categoria->id}}">{{$categoria->nome}}</option>
+                            <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                         @empty
                     </select>
                     <h3>Sem categoria cadastrada</h3>
@@ -63,8 +63,8 @@
             <div class="col-md-4">
                 <select id="dates-field2" class="multiselect-ui form-control input" multiple="multiple"
                         name="maestrias[]">
-                    @forelse($maestrias as $maestria)
-                        <option value="{{$maestria->id}}">{{$maestria->maestria}}</option>
+                    @forelse($skills as $maestria)
+                        <option value="{{$maestria->id}}">{{$maestria->name}}</option>
                     @empty
                 </select>
                 <h3>Sem maestria cadastrada</h3>
@@ -73,39 +73,39 @@
             </div>
         </div>
 
-        <div class="form-group{{ $errors->has('disponivel') ? ' has-error' : '' }}">
-            <label for="disponivel" class="col-md-4 control-label">Desafio liberado: </label>
+        <div class="form-group{{ $errors->has('available') ? ' has-error' : '' }}">
+            <label for="available" class="col-md-4 control-label">Desafio liberado: </label>
             <div class="col-md-6">
-                <select class="form-control input" id="disponivel" name="disponivel">
+                <select class="form-control input" id="available" name="available">
                     <option value="1">Disponível</option>
                     <option value="0">Bloqueado</option>
                 </select>
-                @if ($errors->has('disponivel'))
+                @if ($errors->has('available'))
                     <span class="help-block">
-                          <strong>{{ $errors->first('disponivel') }}</strong>
+                          <strong>{{ $errors->first('available') }}</strong>
                       </span>
                 @endif
             </div>
         </div>
-        <div class="form-group{{ $errors->has('pontos') ? ' has-error' : '' }}">
-            <label for="pontos" class="col-md-4 control-label">Pontos: </label>
+        <div class="form-group{{ $errors->has('points') ? ' has-error' : '' }}">
+            <label for="points" class="col-md-4 control-label">points: </label>
             <div class="col-md-6">
-                <input id="pontos" type="number" class="form-control input" name="pontos" value="{{ old('pontos') }}"
+                <input id="points" type="number" class="form-control input" name="points" value="{{ old('points') }}"
                        placeholder="Pontuação...">
-                @if ($errors->has('pontos'))
+                @if ($errors->has('points'))
                     <span class="help-block">
                           <strong>{{ $errors->first('points') }}</strong>
                       </span>
                 @endif
             </div>
         </div>
-        <div class="form-group{{ $errors->has('enunciado') ? ' has-error' : '' }}">
-            <label for="enunciado" class="col-md-4 control-label">Enunciado: </label>
+        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+            <label for="description" class="col-md-4 control-label">description: </label>
             <div class="col-md-6">
-                <textarea rows="10" cols="66" class="input form-input" name="enunciado"></textarea>
-                @if ($errors->has('enunciado'))
+                <textarea rows="10" cols="66" class="input form-input" name="description"></textarea>
+                @if ($errors->has('description'))
                     <span class="help-block">
-                          <strong>{{ $errors->first('enunciado') }}</strong>
+                          <strong>{{ $errors->first('description') }}</strong>
                       </span>
                 @endif
             </div>
@@ -122,15 +122,15 @@
                 @endif
             </div>
         </div>
-        <div class="form-group{{ $errors->has('autor') ? ' has-error' : '' }}">
-            <label for="autor" class="col-md-4 control-label">Autor: </label>
+        <div class="form-group{{ $errors->has('author') ? ' has-error' : '' }}">
+            <label for="author" class="col-md-4 control-label">author: </label>
             <div class="col-md-6">
-                <input id="autor" type="text" class="form-control input" name="autor"
+                <input id="author" type="text" class="form-control input" name="author"
                        value="{{ Auth::user()->nickname }}"
-                       placeholder="Nome do Autor...">
-                @if ($errors->has('autor'))
+                       placeholder="Nome do author...">
+                @if ($errors->has('author'))
                     <span class="help-block">
-                          <strong>{{ $errors->first('autor') }}</strong>
+                          <strong>{{ $errors->first('author') }}</strong>
                       </span>
                 @endif
             </div>

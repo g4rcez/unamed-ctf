@@ -42,7 +42,7 @@
                         <h3 class="text-left">@lang('admin.challsCount'){{$challenges->count()}}</h3>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                        <h3 class="text-right">@lang('admin.challsPoints'){{$challenges->sum("pontos")}}</h3>
+                        <h3 class="text-right">@lang('admin.challsPoints'){{$challenges->sum("points")}}</h3>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-12">
@@ -54,18 +54,18 @@
                     <div class="grid center-block text-center text-capitalize">
                         @foreach($challenges as $challenge)
                             <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 grid-item mb7 tc center grow"
-                                 data-toggle="modal" data-target="#{{md5($challenge->nome)}}">
+                                 data-toggle="modal" data-target="#{{md5($challenge->name)}}">
                                 <div class="chall-box" style="background:{{$challenge->category->color}}"
                                      onMouseOver="this.style.background='{{$challenge->category->color}}90'"
                                      onMouseOut="this.style.background='{{$challenge->category->color}}'">
-                                    <h3><i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->nome}}</h3>
+                                    <h3><i class="fa fa-flag" aria-hidden="true"></i> {{$challenge->name}}</h3>
                                     <h5>
-                                        <strong class="white-40"><i class="fa fa-user"></i> {{$challenge->autor}}
+                                        <strong class="white-40"><i class="fa fa-user"></i> {{$challenge->author}}
                                         </strong>
                                     </h5>
                                     <h4>
-                                        <small class="mr2">{{$challenge->category->nome}}</small>
-                                        <small class="ml2">{{$challenge->pontos}}</small>
+                                        <small class="mr2">{{$challenge->category->name}}</small>
+                                        <small class="ml2">{{$challenge->points}}</small>
                                     </h4>
                                 </div>
                             </div>
@@ -78,15 +78,15 @@
     <div class="espacos"></div>
     <div class="espacos"></div>
     @foreach($challenges as $challenge)
-        <div id="{{md5($challenge->nome)}}" class="modal fade" role="dialog">
+        <div id="{{md5($challenge->name)}}" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{$challenge->nome}} - {{$challenge->category->nome}}</h4>
+                        <h4 class="modal-title">{{$challenge->name}} - {{$challenge->category->name}}</h4>
                     </div>
                     <div class="modal-body">
-                        <p class="paragrafos">{{$challenge->enunciado}}</p>
+                        <p class="paragrafos">{{$challenge->description}}</p>
                         <div class="espacos"></div>
                         @if(isset($challenge->arquivo))
                             <h4>Downloads</h4>
@@ -101,7 +101,7 @@
                                 @foreach($maestrias as $maestria)
                                     @foreach($maestria['skills'] as $skills)
                                         @if($skills->pivot->challenges_id == $challenge->id)
-                                            <li>{{ $skills->maestria }}</li>
+                                            <li>{{ $skills->name }}</li>
                                         @endif
                                     @endforeach
                                 @endforeach

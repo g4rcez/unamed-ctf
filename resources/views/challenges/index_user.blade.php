@@ -138,13 +138,13 @@
                                     <h4 class="modal-title">{{$challenge->nome}}</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="paragrafos">{{str_replace_array('\n', '<br/>', $challenge->enunciado)}}</p>
+                                    <p class="paragrafos">{{str_replace_array('\n', '<br/>', $challenge->description)}}</p>
                                     <div class="espacos"></div>
                                     @if($challenge->skills()->get() != [])
                                         @lang('challenges.skillsNeeded')
                                         <ul>
                                             @foreach($challenge->skills()->get() as $maestria)
-                                                <li>{{ $maestria->maestria }}</li>
+                                                <li>{{ $maestria->name }}</li>
                                             @endforeach
                                         </ul>
                                     @endisset

@@ -64,16 +64,16 @@ class RegisterController extends Controller
         $user = [
             'nickname' => $data['nickname'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => bcrypt(base64_encode($data['password'])),
             'avatar' => $data['avatar']
         ];
         if ($countUsers = User::all()->count() === 0) {
             try {
                 $this->permission->fill(['name' => getenv('ADMIN_PERM')])->save();
+                $user['permission_id'] = $this->permission
+                    ->where('name', getenv('ADMIN_PERM'))->first()->id;
             } catch (\Exception $e) {
             }
-            $user['permission_id'] = $this->permission
-                ->where('name', getenv('ADMIN_PERM'))->first()->id;
         }
         return (new User)->create($user);
     }

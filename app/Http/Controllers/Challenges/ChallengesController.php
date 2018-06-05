@@ -29,7 +29,7 @@ class ChallengesController extends Controller
      */
     public function adminView()
     {
-        $challenges = Challenge::all();
+        $challenges = Challenge::all()->sortBy('points');
         $maestrias = Challenge::with('skills')->get();
         return view('challenges.index', compact('challenges', 'maestrias'));
     }
@@ -40,14 +40,14 @@ class ChallengesController extends Controller
     public function adminCreateView()
     {
         $categorias = Category::all();
-        $maestrias = Skill::all();
+        $skills = Skill::all();
         if ($categorias->count() == 0) {
             \Session::flash('zeroCategorias', "Não há nenhuma categoria cadastrada");
         }
-        if ($maestrias->count() == 0) {
+        if ($skills->count() == 0) {
             \Session::flash('zeroMaestrias', "Não há nenhuma maestria");
         }
-        return view('challenges.create', compact('categorias', 'maestrias'));
+        return view('challenges.create', compact('categorias', 'skills'));
     }
 
     /**
@@ -73,7 +73,7 @@ class ChallengesController extends Controller
     {
         $this->challenge->fill($request->all());
         $this->challenge->categories_id = $request->categories_id;
-        $this->challenge->disponivel = (bool)$request->disponivel;
+        $this->challenge->available = (bool)$request->available;
         if (!$this->challenge->save())
             return view('erros.404');
         $challenge = $this->challenge->nome;
@@ -82,7 +82,7 @@ class ChallengesController extends Controller
             foreach ($request->maestrias as $skill) {
                 $required = new SkillsRequired();
                 $required->fill([
-                    'maestrias_id' => $skill,
+                    'skills_id' => $skill,
                     'challenges_id' => $this->challenge->id,
                 ]);
                 $required->save();
