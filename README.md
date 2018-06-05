@@ -1,4 +1,7 @@
 # Unamed CTF - Plataforma de CTF
+
+## **Esse repositório será mantido em: [unamecorporation/unamed-ctf](https://github.com/unamecorporation/unamed-ctf)**
+
 > Deixamos o nome pra depois e acabou ficando sem xD
 
 ## Desenvolvedores
